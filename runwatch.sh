@@ -1,1 +1,1 @@
-watchify -v -t [ reactify ] -g [ uglifyify ] src/app.js -o build/app.js -d
+watchify -v -t [ reactify ] src/app.js -o build/app.js -d

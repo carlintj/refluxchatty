@@ -5,6 +5,7 @@ var styles = require("./styles.js");
 var styleutil = require("../util/styleutil.js");
 var renderChildComments = require("../util/renderchildcomments.js");
 var ChattyActions = require("../store/chattyactions.js");
+var ChildComment = require("./childcomment.js");
 
 var ParentComment = React.createClass({
     render: function() {
@@ -12,7 +13,7 @@ var ParentComment = React.createClass({
       var replies = null;
       if (this.props.replyCount > 0) {
         if(this.props.focused) {
-          replies = renderChildComments(this.props.children, this.props.expandedChildId);
+          replies = renderChildComments(this.props.threadId,this.props.children, this.props.expandedChildId);
         }
         else {
           var replyStr = this.props.replyCount > 1 ? "replies" : "reply";

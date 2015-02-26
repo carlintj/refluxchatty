@@ -13,7 +13,8 @@ var styles = {
   },
   parentContainer : {
     background: '#FFFFFF',
-    border: '5px solid #EEEEEE',
+    border: '2px solid #000000',
+    margin: '8px'
   },
   userName : {
     color: '#3F82C5'

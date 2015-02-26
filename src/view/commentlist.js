@@ -1,7 +1,8 @@
 var React = require("react");
 var ParentComment = require("./parentcomment.js");
-var CommentList = React.createClass({
+var styles = require("./styles.js");
 
+var CommentList = React.createClass({
   render: function() {
     var comments = this.props.threads.map(function(comment,i) {
       return (<ParentComment key={comment.id}
@@ -13,11 +14,12 @@ var CommentList = React.createClass({
         date = {comment.date} 
         focused = {comment.focused}
         expandedChildId = {comment.expandedChildId}
+        threadId={comment.id}
         />);
     });
     
     return (
-      <div>
+      <div style={styles.body}>
         {comments}
       </div>
     );

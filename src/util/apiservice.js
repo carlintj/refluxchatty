@@ -1,16 +1,21 @@
 var _ = require("lodash");
 
+var getPost = function(post) {
+    var fixedpost = {
+        id: post.id,
+        author: post.author,
+        body: post.body,
+        date : post.date,
+        replyCount: 0,
+        children: []
+    }
+    return fixedpost;
+}
+
 var processThread = function (thread) {
     var processPost = function (post) {
         _.remove(posts, post);
-        var fixedpost = {
-            id: post.id,
-            author: post.author,
-            body: post.body,
-            date : post.date,
-            replyCount: 0,
-            children: []
-        }
+        var fixedpost = getPost(post);
         var children = _.filter(posts, {
             parentId: fixedpost.id
         });
@@ -35,4 +40,4 @@ var processThread = function (thread) {
     return post;
 };
 
-module.exports = processThread;
+module.exports = {processThread : processThread, getPost : getPost};

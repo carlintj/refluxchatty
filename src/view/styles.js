@@ -1,6 +1,6 @@
 var styles = {
   body : {
-    	fontFamily: 'arial,helvetica,clean,sans-serif', 
+    	fontFamily: '"Ideal Sans A","Ideal Sans B",Helvetica,Arial,sans-serif', 
     	fontSize: 13, 
     	background : '#EEEEEE'
   },

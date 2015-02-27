@@ -1,10 +1,11 @@
 var Reflux = require('reflux');
 var _ = require("lodash");
 var ChattyActions = require("./chattyactions.js");
-var processThread = require("../util/apiservice.js");
-
+var processThread = require("../util/apiservice.js").processThread;
+var getPost = require("../util/apiservice.js").getPost;
 
 var findChildComment = function(parentThread, childCommentId) {
+    console.log("searching " + parentThread.id + " for " + childCommentId);
     for(var i = 0; i < parentThread.children.length; i++) {
         var child = parentThread.children[i];
         if(child.id == childCommentId) {
@@ -16,7 +17,19 @@ var findChildComment = function(parentThread, childCommentId) {
         }
     }
     return undefined;
-}
+};
+
+var mergeEvents = function(threads, events) {
+    _.forEach(events,function(event) {
+        if(event.eventType == "newPost") {
+            var newPost = event.eventData.post;
+            var thread = _.find(threads, {id : newPost.threadId});
+            var parent = findChildComment(thread,newPost.parentId);
+            parent.children.push(getPost(newPost));
+            thread.replyCount++;
+        }
+    });
+};
 
 var ChattyStore = Reflux.createStore({
     listenables: [ChattyActions],
@@ -51,7 +64,8 @@ var ChattyStore = Reflux.createStore({
     getNewestEventIdCompleted: function(data) {
       this.loading =false;
       this.eventId = data.eventId;
-      console.log("new event id: " + this.eventId)
+      console.log("new event id: " + this.eventId);
+      //ChattyActions.waitForEvent(this.eventId);
       ChattyActions.waitForEvent(this.eventId);
       //process events
       this.sendData();  
@@ -69,8 +83,9 @@ var ChattyStore = Reflux.createStore({
     waitForEventCompleted: function(data) {
         console.log(data);
         this.eventId = data.lastEventId;
+        mergeEvents(this.threads,data.events);
         this.sendData();
-        ChattyActions.waitForEvent(this.eventId);
+        //ChattyActions.waitForEvent(this.eventId);
     },
     waitForEventFailed: function(error) {
         
@@ -82,6 +97,7 @@ var ChattyStore = Reflux.createStore({
         this.sendData();
     },
     selectComment: function(parentId, commentId) {
+        console.log(commentId);
         var parent = _.find(this.threads,{id : parentId});
         parent.expandedChildId = commentId;
         this.sendData();

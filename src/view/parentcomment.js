@@ -2,6 +2,7 @@ var React = require("react");
 //var keymaster = require("keymaster");
 var XDate = require("xdate");
 var styles = require("./styles.js");
+var combine = require("../util/styleutil.js");
 var renderChildComments = require("./childcomment.js").renderChildComments;
 var ChattyActions = require("../store/chattyactions.js");
 
@@ -41,13 +42,16 @@ var ParentComment = React.createClass({
       else {
         replies = <span>No replies</span>;
       }
+      console.log("focused: " + this.props.focused);
       return (
-        <div style={styles.parentContainer}>
-          <span style={styles.userName}>
-            {this.props.author}
-          </span>
-          @ <span style={styles.date}>{dateStr.toLocaleString()}</span>
-          <div dangerouslySetInnerHTML={{__html: this.props.body}} />
+        <div style={combine(styles.parentContainer)} onClick={this.onParentClick}>
+          <div style={combine(this.props.focused && styles.highlightedParent)}>
+            <span style={styles.userName}>
+              {this.props.author}
+            </span>
+            @ <span style={styles.date}>{dateStr.toLocaleString()}</span>
+            <div dangerouslySetInnerHTML={{__html: this.props.body}} />
+          </div>
           <div>
             {replies}
           </div>
@@ -59,6 +63,10 @@ var ParentComment = React.createClass({
     },
     onCollapseClick: function() {
       ChattyActions.collapseParentComment(this.props.id);
+    },
+    onParentClick: function() {
+      
+      ChattyActions.highlightParent(this.props.id);
     },
     componentDidUpdate: function() {
       

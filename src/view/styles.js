@@ -1,15 +1,19 @@
 var styles = {
   body : {
-    	fontFamily: '"Ideal Sans A","Ideal Sans B",Helvetica,Arial,sans-serif', 
+    	fontFamily: 'Helvetica,Arial,sans-serif', 
     	fontSize: 13, 
-    	background : '#EEEEEE'
+    	background : '#5c97bf'
   },
   commentContainer : {
     marginLeft: 12,
     border: '1px solid #cdced0'
   },
   highlightedComment : {
-    background: '#D0D0EF'
+    background: '#E0F3FF'
+  },
+  highlightedParent : { 
+    background: '#A7CDF0',
+//    color : '#FFFFFF'
   },
   parentContainer : {
     background: '#FFFFFF',

@@ -95,6 +95,12 @@ var ChattyStore = Reflux.createStore({
         _.find(this.threads,{id : parentId}).expanded = false;
         this.sendData();
     },
+    highlightParent: function(parentId) {
+      _.each(this.threads,function(thread){
+          thread.focused = (thread.id == parentId);
+      });
+      this.sendData();
+    },
     selectComment: function(parentId, commentId) {
         var parent = _.find(this.threads,{id : parentId});
         parent.expandedChildId = commentId;

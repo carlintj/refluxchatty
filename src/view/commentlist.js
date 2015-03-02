@@ -15,6 +15,7 @@ var CommentList = React.createClass({
         expanded = {comment.expanded}
         expandedChildId = {comment.expandedChildId}
         threadId={comment.id}
+        focused={comment.focused}
         />);
     });
     

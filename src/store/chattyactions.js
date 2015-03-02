@@ -28,6 +28,7 @@ var Actions = Reflux.createActions({
     waitForEvent: {asyncResult : true},
     //UI events
     expandParentComment : {asyncResult: false},
+    collapseParentComment : {asyncResult : false},
     selectComment : {asyncResult: false},
     startChatty : {asyncResult : false}
 });

@@ -5,7 +5,6 @@ var processThread = require("../util/apiservice.js").processThread;
 var getPost = require("../util/apiservice.js").getPost;
 
 var findChildComment = function(parentThread, childCommentId) {
-    console.log("searching " + parentThread.id + " for " + childCommentId);
     for(var i = 0; i < parentThread.children.length; i++) {
         var child = parentThread.children[i];
         if(child.id == childCommentId) {
@@ -43,7 +42,6 @@ var ChattyStore = Reflux.createStore({
         this.sendData();
     },
     getChattyCompleted: function(data) {
-        console.log("getChattyCompleted");
         this.threads = [];
         this.loading = false;
         _.each(data.threads,function(thread) {
@@ -62,9 +60,8 @@ var ChattyStore = Reflux.createStore({
         this.sendData();
     },
     getNewestEventIdCompleted: function(data) {
-      this.loading =false;
+      this.loading = false;
       this.eventId = data.eventId;
-      console.log("new event id: " + this.eventId);
       //ChattyActions.waitForEvent(this.eventId);
       ChattyActions.waitForEvent(this.eventId);
       //process events
@@ -81,7 +78,6 @@ var ChattyStore = Reflux.createStore({
         return {threads: this.threads, loading: this.loading};
     },
     waitForEventCompleted: function(data) {
-        console.log(data);
         this.eventId = data.lastEventId;
         mergeEvents(this.threads,data.events);
         this.sendData();
@@ -91,13 +87,15 @@ var ChattyStore = Reflux.createStore({
         
     },
     expandParentComment : function(parentId) {
-        _.each(this.threads,function(thread) {
-           thread.focused = (thread.id === parentId); 
-        });
+        var thread = _.find(this.threads,{id : parentId});
+        thread.expanded = true;
+        this.sendData();
+    },
+    collapseParentComment : function(parentId) {
+        _.find(this.threads,{id : parentId}).expanded = false;
         this.sendData();
     },
     selectComment: function(parentId, commentId) {
-        console.log(commentId);
         var parent = _.find(this.threads,{id : parentId});
         parent.expandedChildId = commentId;
         this.sendData();

@@ -12,7 +12,7 @@ var CommentList = React.createClass({
         children = {comment.children}
         replyCount = {comment.replyCount}
         date = {comment.date} 
-        focused = {comment.focused}
+        expanded = {comment.expanded}
         expandedChildId = {comment.expandedChildId}
         threadId={comment.id}
         />);

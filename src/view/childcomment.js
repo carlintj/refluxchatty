@@ -10,10 +10,24 @@ var fixComment = function(comment) {
   return div.innerHTML;
 }
 
+var renderChildComments =  function(threadId,children, expandedChildId) {
+    var replies = children.map(function(comment,i) {
+        return (<ChildComment key={comment.id} 
+        id = {comment.id}
+        author={comment.author} 
+        body={comment.body} 
+        children = {comment.children}
+        date = {comment.date} 
+        expandedChildId = {expandedChildId} 
+        threadId={threadId}/>);
+      });
+    return replies;
+  };
+
 var ChildComment = React.createClass({
   render: function() {
     var dateStr = new XDate(this.props.date);
-    var replies = this.renderChildComments(this.props.threadId,this.props.children, this.props.expandedChildId)
+    var replies = renderChildComments(this.props.threadId,this.props.children, this.props.expandedChildId)
     var expanded = this.props.expandedChildId == this.props.id;
     var comment = null;
     
@@ -39,20 +53,7 @@ var ChildComment = React.createClass({
   handleClick : function(e) {
     e.stopPropagation();
     ChattyActions.selectComment(this.props.threadId,this.props.id);
-  },
-  renderChildComments:  function(threadId,children, expandedChildId) {
-    var replies = children.map(function(comment,i) {
-        return (<ChildComment key={comment.id} 
-        id = {comment.id}
-        author={comment.author} 
-        body={comment.body} 
-        children = {comment.children}
-        date = {comment.date} 
-        expandedChildId = {expandedChildId} 
-        threadId={threadId}/>);
-      });
-    return replies;
   }
 });
 
-module.exports = ChildComment;
+module.exports = { ChildComment : ChildComment,renderChildComments : renderChildComments };

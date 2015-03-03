@@ -27,11 +27,14 @@ var Actions = Reflux.createActions({
     getNewestEventId : {asyncResult: true},
     waitForEvent: {asyncResult : true},
     //UI events
-    expandParentComment : {asyncResult: false},
-    collapseParentComment : {asyncResult : false},
+    toggleParentComment : {asyncResult : false},
     highlightParent : {asyncResult : false},
     selectComment : {asyncResult: false},
-    startChatty : {asyncResult : false}
+    startChatty : {asyncResult : false},
+    selectNextParent: {asyncResult : false},
+    selectPrevParent: {asyncResult : false},
+    selectNextComment: {asyncResult : false},
+    selectPrevComment: {asyncResult : false}
 });
 
 Actions.getChatty.listen(function() {

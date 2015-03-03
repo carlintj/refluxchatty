@@ -1,5 +1,4 @@
 var React = require("react");
-//var keymaster = require("keymaster");
 var XDate = require("xdate");
 var styles = require("./styles.js");
 var combine = require("../util/styleutil.js");
@@ -42,7 +41,6 @@ var ParentComment = React.createClass({
       else {
         replies = <span>No replies</span>;
       }
-      console.log("focused: " + this.props.focused);
       return (
         <div style={combine(styles.parentContainer)} onClick={this.onParentClick}>
           <div style={combine(this.props.focused && styles.highlightedParent)}>
@@ -59,10 +57,10 @@ var ParentComment = React.createClass({
       );
     },
     onRepliesClick: function() {
-      ChattyActions.expandParentComment(this.props.id);
+      ChattyActions.toggleParentComment(this.props.id);
     },
     onCollapseClick: function() {
-      ChattyActions.collapseParentComment(this.props.id);
+      ChattyActions.toggleParentComment(this.props.id);
     },
     onParentClick: function() {
       

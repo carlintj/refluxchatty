@@ -7,10 +7,11 @@ var getPost = function(post) {
         body: post.body,
         date : post.date,
         replyCount: 0,
-        children: []
-    }
+        children: [],
+        parentId : post.parentId
+    };
     return fixedpost;
-}
+};
 
 var processThread = function (thread) {
     var processPost = function (post) {
@@ -25,7 +26,7 @@ var processThread = function (thread) {
             });
         }
         return fixedpost;
-    }
+    };
     
     var posts = thread.posts.reverse();
     var replyCount = thread.posts.length-1;

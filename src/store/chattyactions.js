@@ -3,23 +3,23 @@ var _ = require("lodash");
 var Reflux = require('reflux');
 
 //prod
-/*
+
 var URLs = {
     getChatty : "//winchatty.com/v2/getChatty",
     getNewestEventId: "//winchatty.com/v2/getNewestEventId",
     waitForEvent: "//winchatty.com/v2/waitForEvent?lastEventId=",
     verifyCredentials: "//winchatty.com/v2/verifyCredentials"
 };
-*/
 
 //dev
+/*
 var URLs = {
     getChatty : "//refluxchatty-carlintj.c9.io/dummydata/getChatty",
     getNewestEventId: "//refluxchatty-carlintj.c9.io/dummydata/getNewestEventId",
     waitForEvent: "//refluxchatty-carlintj.c9.io/dummydata/waitForEventlastEventId=",
     verifyCredentials: "//refluxchatty-carlintj.c9.io/dummydata/verifyCredentials"
 };
-
+*/
 
 var Actions = Reflux.createActions({
     //Data events
@@ -40,7 +40,7 @@ var Actions = Reflux.createActions({
 Actions.getChatty.listen(function() {
     reqwest({ url: URLs.getChatty,
       crossOrigin: true,
-      type: "json"
+      //type: "json"
     })
     .then(Actions.getChatty.completed)
     .catch(Actions.getChatty.failed);
@@ -49,7 +49,7 @@ Actions.getChatty.listen(function() {
 Actions.getNewestEventId.listen(function() {
     reqwest({ url: URLs.getNewestEventId,
       crossOrigin: true,
-      type: "json"
+      //type: "json"
     })
     .then(Actions.getNewestEventId.completed)
     .catch(Actions.getNewestEventId.failed);
@@ -58,7 +58,7 @@ Actions.getNewestEventId.listen(function() {
 Actions.waitForEvent.listen(function(eventId) {
     reqwest({ url: URLs.waitForEvent + eventId,
       crossOrigin: true,
-      type: "json"
+      //type: "json"
     })
     .then(Actions.waitForEvent.completed)
     .catch(Actions.waitForEvent.failed);

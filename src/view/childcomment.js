@@ -52,8 +52,9 @@ var ChildComment = React.createClass({
     return (<div style={styles.commentContainer}>
             {scroller}
             <div onClick={this.handleClick} style={styleutil(expanded && styles.highlightedComment)} >
-              <div style={styles.userName}>{this.props.author} @ <span style={styles.date}>{dateStr.toLocaleString()}</span>
-              <span>{this.props.id}</span></div>
+              <div style={styles.userName}>
+                {this.props.author} @ <span style={styles.date}>{dateStr.toLocaleString()}</span>
+              </div>
               <div dangerouslySetInnerHTML={{__html: comment}} />
             </div>
               <div>

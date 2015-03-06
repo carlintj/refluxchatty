@@ -3,12 +3,13 @@ var XDate = require("xdate");
 var styles = require("./styles.js");
 var styleutil = require("../util/styleutil.js");
 var ChattyActions = require("../store/chattyactions.js");
+var AutoscrollingMixin = require("./autoscrollingmixin.js");
 
 var fixComment = function(comment) {
   var div = document.createElement('div');
   div.innerHTML = comment;
   return div.innerHTML;
-}
+};
 
 var renderChildComments =  function(threadId,children, expandedChildId) {
     var replies = children.map(function(comment,i) {
@@ -40,7 +41,16 @@ var ChildComment = React.createClass({
         comment = fixComment(comment + "...");
       }
     }
+    
+    var scroller = null;
+      if(expanded) {
+        scroller = <AutoscrollingMixin parent={this} />
+      }
+      else {
+        scroller = null;
+      }
     return (<div style={styles.commentContainer}>
+            {scroller}
             <div onClick={this.handleClick} style={styleutil(expanded && styles.highlightedComment)} >
               <div style={styles.userName}>{this.props.author} @ <span style={styles.date}>{dateStr.toLocaleString()}</span>
               <span>{this.props.id}</span></div>

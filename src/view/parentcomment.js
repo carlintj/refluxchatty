@@ -4,24 +4,10 @@ var styles = require("./styles.js");
 var combine = require("../util/styleutil.js");
 var renderChildComments = require("./childcomment.js").renderChildComments;
 var ChattyActions = require("../store/chattyactions.js");
-
-function isElementInViewport (el) {
-    var rect = el.getBoundingClientRect();
-
-    return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && 
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-}
+var AutoscrollingMixin = require("./autoscrollingmixin.js");
 
 var ParentComment = React.createClass({
-    getInitialState: function() {
-      return ({
-        hasAnchored : false
-      });
-    },
+    //mixins: [AutoscrollingMixin(this.state.focused, this.getDOMNode())],
     render: function() {
       var dateStr = new XDate(this.props.date);
       var replies = null;
@@ -41,8 +27,16 @@ var ParentComment = React.createClass({
       else {
         replies = <span>No replies</span>;
       }
+      var scroller = null;
+      if(this.props.focused) {
+        scroller = <AutoscrollingMixin parent={this} />
+      }
+      else {
+        scroller = null;
+      }
       return (
         <div style={combine(styles.parentContainer)} onClick={this.onParentClick}>
+          {scroller}
           <div style={combine(this.props.focused && styles.highlightedParent)}>
             <span style={styles.userName}>
               {this.props.author}
@@ -63,12 +57,9 @@ var ParentComment = React.createClass({
       ChattyActions.toggleParentComment(this.props.id);
     },
     onParentClick: function() {
-      
       ChattyActions.highlightParent(this.props.id);
-    },
-    componentDidUpdate: function() {
-      
     }
+    
 });
 
 module.exports = ParentComment;

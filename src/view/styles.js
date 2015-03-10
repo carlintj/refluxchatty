@@ -13,7 +13,6 @@ var styles = {
   },
   highlightedParent : { 
     background: '#A7CDF0',
-//    color : '#FFFFFF'
   },
   parentContainer : {
     background: '#FFFFFF',
@@ -29,7 +28,18 @@ var styles = {
   clickable: { 
     cursor:'pointer',
     color: '#004FFF'
+  },
+  statusbar: {
+    background: '#FFFFFF',
+    border: '2px solid #000000',
+  },
+  success: {
+    color: '#3F82C5'
+  },
+  error: {
+    color: '#red !important'
   }
+  
 };
 
 module.exports = styles;

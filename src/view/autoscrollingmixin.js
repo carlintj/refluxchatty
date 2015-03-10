@@ -4,13 +4,10 @@ var React = require("react");
 
 var autoscrolling = React.createClass({
     componentDidMount: function() {
-      console.log("componentDidUpdate");
       if(!this.state.hasAnchored) {
         if(!isElementInViewport(this.props.parent.getDOMNode())) {
-          console.log("scrolling");
           scrollIntoView(this.props.parent.getDOMNode());
         }
-        console.log("setting hasAnchored");
         this.setState({hasAnchored : true});
       }
     },

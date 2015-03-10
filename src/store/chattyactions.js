@@ -34,7 +34,8 @@ var Actions = Reflux.createActions({
     selectNextParent: {asyncResult : false},
     selectPrevParent: {asyncResult : false},
     selectNextComment: {asyncResult : false},
-    selectPrevComment: {asyncResult : false}
+    selectPrevComment: {asyncResult : false},
+    fullRefresh: {asyncResult: false}
 });
 
 Actions.getChatty.listen(function() {

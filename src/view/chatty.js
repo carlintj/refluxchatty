@@ -1,6 +1,7 @@
 var React = require("react");
 var Reflux = require("reflux");
 var CommentList = require("./commentlist.js");
+var StatusBar = require("./statusbar.js");
 var ChattyActions = require("../store/chattyactions.js");
 var ChattyStore = require("../store/chattystore.js");
 var keymaster = require("keymaster");
@@ -33,7 +34,12 @@ var RefluxChatty = React.createClass({
       
     },
     render: function() {
-        return (<CommentList threads={this.state.threads}/>);
+      return (<div>
+        <StatusBar username={this.state.username} 
+         connected={this.state.connected}
+         lastEventId={this.state.eventId} />
+        <CommentList threads={this.state.threads}/>
+      </div>);
     }
 });
 

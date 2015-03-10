@@ -48,10 +48,36 @@ var ChattyStore = Reflux.createStore({
         this.threads = [];
         this.loading = false;
         this.eventId = 0;
+        this.connected = false;
+        this.username = "";
+    },
+    getInitialState: function () {
+        return {
+          threads: [], 
+          loading: false,
+          username: "", 
+          connected:false, 
+          eventId: 0
+        };
+    },
+    fullRefresh: function() {
+      this.threads = [];
+      this.startChatty();
+    },
+    sendData: function() {
+      this.trigger({threads : this.threads, 
+          loading: this.loading, 
+          eventId: this.eventId,
+          connected: this.connected,
+          username: this.username
+      });
+    },
+    startChatty: function() {
+      ChattyActions.getNewestEventId();
     },
     getChatty: function(){
-        this.loading = true;
-        this.sendData();
+      this.loading = true;
+      this.sendData();
     },
     getChattyCompleted: function(data) {
         this.threads = [];
@@ -60,7 +86,6 @@ var ChattyStore = Reflux.createStore({
             this.threads.push(processThread(thread));
         }.bind(this));
         this.sendData();
-        ChattyActions.getNewestEventId();
     },
     getChattyFailed: function(error) {
         console.error(error);
@@ -68,36 +93,38 @@ var ChattyStore = Reflux.createStore({
         this.sendData();
     },
     getNewestEventId: function() {
-        this.loading = true;
-        this.sendData();
+      this.connected=true;
+      this.loading=true;
+      this.sendData();
     },
     getNewestEventIdCompleted: function(data) {
       this.loading = false;
       this.eventId = data.eventId;
-      //ChattyActions.waitForEvent(this.eventId);
+      ChattyActions.getChatty();
       ChattyActions.waitForEvent(this.eventId);
       //process events
       this.sendData();  
     },
     getNewestEventIdFailed: function(error) {
+      this.connected = false;
       console.error(error);
       this.loading = false;
       this.sendData();
     },
-    getInitialState: function () {
-        this.threads = [];
-        this.loading = false;
-        return {threads: this.threads, loading: this.loading};
-    },
     waitForEventCompleted: function(data) {
+        this.connected = true;
         this.eventId = data.lastEventId;
         mergeEvents(this.threads,data.events);
         this.sendData();
-        //ChattyActions.waitForEvent(this.eventId);
+        ChattyActions.waitForEvent(this.eventId);
     },
     waitForEventFailed: function(error) {
-        
+        this.connected = false;
+        console.log(error);
+        this.sendData();
+        ChattyActions.waitForEvent(this.eventId);
     },
+    //UI events
     toggleParentComment : function(parentId) {
         if(parentId === undefined) {
             parentId = _.find(this.threads, {focused : true}).id;
@@ -116,15 +143,6 @@ var ChattyStore = Reflux.createStore({
         var parent = _.find(this.threads,{id : parentId});
         parent.expandedChildId = commentId;
         this.sendData();
-    },
-    sendData: function() {
-        this.trigger({threads : this.threads, 
-            loading: this.loading, 
-            eventId: this.eventId
-        });
-    },
-    startChatty: function() {
-        ChattyActions.getChatty();
     },
     selectNextParent: function() {
         var i = 0;

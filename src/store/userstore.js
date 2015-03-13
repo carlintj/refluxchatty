@@ -1,24 +1,22 @@
 var Reflux = require('reflux');
 var UserActions = require("./useractions.js");
+var localStorage = require('store');
 
 var UserStore = Reflux.createStore({
   listenables: [UserActions],
   init: function() {
     this.tempusername = "";
     this.temppassword = "";
-    
-    this.username = "";
-    this.password = "";
-    
+
     this.pms = [];
     this.totalPMs = 0;
     this.unreadPMs = 0;
     this.showLogin = false;
-    this.loginMessage = "";
+    this.loginMessage = localStorage.get('username') || "";
   },
   getInitialState: function() {
     return {
-      username: "",
+      username: localStorage.get('username') || "",
       pms: [],
       showLogin: false,
       totalPMs : 0,
@@ -32,9 +30,9 @@ var UserStore = Reflux.createStore({
   loginCompleted: function(data) {
     if(data.isValid) {
       this.showLogin = false;
-      this.username = this.tempusername;
-      this.password = this.temppassword;
-      
+      localStorage.set('username',this.tempusername);
+      localStorage.set('password', this.temppassword);
+
       this.tempusername = "";
       this.temppassword = "";
       this.loginMessage = "";
@@ -51,9 +49,11 @@ var UserStore = Reflux.createStore({
     this.sendData();
   },
   getMessageCountCompleted: function(data) {
-    this.totalPMs = data.total;
-    this.unreadPMs = data.unread;
-    this.sendData();
+    if(!data.error) {
+      this.totalPMs = data.total;
+      this.unreadPMs = data.unread;
+      this.sendData();  
+    }
   },
   getMessageCountFailed: function(error) {
     
@@ -63,18 +63,18 @@ var UserStore = Reflux.createStore({
     this.sendData();
   },
   logout: function() {
-    this.username = "";
+    localStorage.clear();
     this.sendData();
   },
   requestMessageCount: function() { 
-    UserActions.getMessageCount(this.username,this.password);
+    UserActions.getMessageCount(localStorage.get('username'),localStorage.get('password'));
   },
   sendData: function() {
     this.trigger({
      showLogin : this.showLogin,
      loginMessage: this.loginMessage,
-     username: this.username,
-     password: this.password,
+     username: localStorage.get('username'),
+     password: localStorage.get('password'),
      totalPMs: this.totalPMs,
      unreadPMs: this.unreadPMs
     });

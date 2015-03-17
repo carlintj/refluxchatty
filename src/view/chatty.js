@@ -1,4 +1,4 @@
-var React = require("react");
+var React = require("react/addons");
 var Reflux = require("reflux");
 var CommentList = require("./commentlist.js");
 var StatusBar = require("./statusbar.js");

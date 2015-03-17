@@ -1,4 +1,4 @@
-var React = require("react");
+var React = require("react/addons");
 var ChattyActions = require("../store/chattyactions.js");
 var ChattyStore = require("../store/chattystore.js");
 var UserActions = require("../store/useractions.js");

@@ -1,4 +1,4 @@
-var React = require("react");
+var React = require("react/addons");
 var XDate = require("xdate");
 var styles = require("./styles.js");
 var combine = require("../util/styleutil.js");

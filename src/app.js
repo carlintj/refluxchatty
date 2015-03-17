@@ -1,4 +1,4 @@
-var React = require("react");
+var React = require("react/addons");
 var XDate = require("xdate");
 var Chatty = require("./view/chatty.js");
 

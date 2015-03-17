@@ -6,7 +6,8 @@ var styles = {
   },
   commentContainer : {
     marginLeft: 12,
-    border: '1px solid #cdced0'
+    border: '1px solid #cdced0',
+    padding: '2px'
   },
   highlightedComment : {
     background: '#E0F3FF'
@@ -17,7 +18,8 @@ var styles = {
   parentContainer : {
     background: '#FFFFFF',
     border: '2px solid #000000',
-    margin: '8px'
+    margin: '8px',
+    padding: '2px'
   },
   userName : {
     color: '#3F82C5'

@@ -37,7 +37,7 @@ var ParentComment = React.createClass({
       return (
         <div style={combine(styles.parentContainer)} onClick={this.onParentClick}>
           {scroller}
-          <div style={combine(this.props.focused && styles.highlightedParent)}>
+          <div ref="anchor" style={combine(this.props.focused && styles.highlightedParent)}>
             <span style={styles.userName}>
               {this.props.author}
             </span>

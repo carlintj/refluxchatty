@@ -50,10 +50,10 @@ var ChildComment = React.createClass({
         scroller = null;
       }
     return (<div style={styles.commentContainer}>
-            {scroller}
-            <div onClick={this.handleClick} style={styleutil(expanded && styles.highlightedComment)} >
+            <div ref="anchor" onClick={this.handleClick} style={styleutil(expanded && styles.highlightedComment)} >
               <div style={styles.userName}>
                 {this.props.author} @ <span style={styles.date}>{dateStr.toLocaleString()}</span>
+                {scroller}
               </div>
               <div dangerouslySetInnerHTML={{__html: comment}} />
             </div>

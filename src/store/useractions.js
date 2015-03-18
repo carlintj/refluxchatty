@@ -3,7 +3,8 @@ var reqwest = require("reqwest");
 
 var URLs = {
     login: "//winchatty.com/v2/verifyCredentials",
-    getMessageCount: "//winchatty.com/v2/getMessageCount"
+    getMessageCount: "//winchatty.com/v2/getMessageCount",
+    submitComment : "//winchatty.com/v2/postComment"
 };
 
 var Actions = Reflux.createActions({
@@ -11,10 +12,12 @@ var Actions = Reflux.createActions({
     login: {asyncResult: true},
     checkPMs: {asyncResult: true},
     getMessageCount: {asyncResult: true},
+    submitComment: {asyncResult: true},
     //UI events
     requestMessageCount: {asyncResult: false},
     showLoginForm: {asyncResult : false},
-    logout: {asyncResult: false}
+    logout: {asyncResult: false},
+    requestSubmitComment: {asyncResult: false}
 });
 
 Actions.getMessageCount.listen(function(username,password){
@@ -41,6 +44,23 @@ Actions.login.listen(function(username,password) {
   })
   .then(Actions.login.completed)
   .catch(Actions.login.failed);
+});
+
+Actions.submitComment.listen(function(parentCommentId, body, 
+  username, password) {
+    reqwest({
+    url: URLs.submitComment,
+    method: 'post',
+    crossOrigin: true,
+    data: {
+      parentId : parentCommentId, 
+      username: username,
+      password: password,
+      text: body
+    }
+  })
+  .then(Actions.submitComment.completed)
+  .catch(Actions.submitComment.failed); 
 });
 
 module.exports = Actions;

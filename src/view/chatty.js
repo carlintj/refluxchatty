@@ -31,6 +31,9 @@ var RefluxChatty = React.createClass({
         keymaster('x', function() {
             ChattyActions.toggleParentComment();
         });
+        keymaster('r', function() {
+          ChattyActions.openReply();
+        })
     },
     componentDidUpdate: function() {
       
@@ -44,9 +47,11 @@ var RefluxChatty = React.createClass({
           connected={this.state.ChattyStore.connected}
           lastEventId={this.state.ChattyStore.eventId} 
           totalPMs={this.state.UserStore.totalPMs} 
-          unreadPMs={this.state.UserStore.unreadPMs}/>
+          unreadPMs={this.state.UserStore.unreadPMs}
+          />
          
-        <CommentList threads={this.state.ChattyStore.threads}/>
+        <CommentList threads={this.state.ChattyStore.threads} 
+          replyingTo={this.state.ChattyStore.replyingTo} />
       </div>);
     }
 });

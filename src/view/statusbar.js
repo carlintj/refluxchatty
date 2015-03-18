@@ -16,7 +16,6 @@ var statusBar = React.createClass({
     unreadPMs: React.PropTypes.number.isRequired
   },
   showLogin: function() {
-    console.log("showLogin");
     UserActions.showLoginForm();
   },
   fullRefresh: function() {

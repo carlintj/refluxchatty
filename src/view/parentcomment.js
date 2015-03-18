@@ -5,15 +5,21 @@ var combine = require("../util/styleutil.js");
 var renderChildComments = require("./childcomment.js").renderChildComments;
 var ChattyActions = require("../store/chattyactions.js");
 var AutoscrollingMixin = require("./autoscrollingmixin.js");
+var ReplyBox = require("./replybox.js");
 
 var ParentComment = React.createClass({
-    //mixins: [AutoscrollingMixin(this.state.focused, this.getDOMNode())],
+    propTypes: {
+      id: React.PropTypes.number.isRequired,
+      replyingTo: React.PropTypes.number.isRequired
+    },
     render: function() {
       var dateStr = new XDate(this.props.date);
       var replies = null;
       if (this.props.replyCount > 0) {
         if(this.props.expanded) {
-          replies = renderChildComments(this.props.threadId,this.props.children, this.props.expandedChildId);
+          replies = renderChildComments(this.props.threadId,this.props.children, 
+            this.props.expandedChildId,this.props.replyingTo);
+            
           replies = <div>
                       <div><span style={styles.clickable} onClick={this.onCollapseClick}>Collapse</span></div>
                       {replies}
@@ -34,6 +40,12 @@ var ParentComment = React.createClass({
       else {
         scroller = null;
       }
+      
+      var replyBox = null;
+      if(this.props.replyingTo == this.props.id) {
+        replyBox = <ReplyBox parentCommentId={this.props.id}/>
+      }
+      
       return (
         <div style={combine(styles.parentContainer)} onClick={this.onParentClick}>
           {scroller}
@@ -44,6 +56,7 @@ var ParentComment = React.createClass({
             @ <span style={styles.date}>{dateStr.toLocaleString()}</span>
             <div dangerouslySetInnerHTML={{__html: this.props.body}} />
           </div>
+          {replyBox}
           <div>
             {replies}
           </div>

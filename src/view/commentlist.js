@@ -4,6 +4,7 @@ var styles = require("./styles.js");
 
 var CommentList = React.createClass({
   render: function() {
+    var _this = this;
     var comments = this.props.threads.map(function(comment,i) {
       return (<ParentComment key={comment.id}
         id={comment.id}
@@ -16,6 +17,7 @@ var CommentList = React.createClass({
         expandedChildId = {comment.expandedChildId}
         threadId={comment.id}
         focused={comment.focused}
+        replyingTo={_this.props.replyingTo}
         />);
     });
     

@@ -40,6 +40,10 @@ var styles = {
   },
   error: {
     color: '#red !important'
+  },
+  commentBox: {
+    width: 600,
+    height: 150
   }
   
 };

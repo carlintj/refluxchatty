@@ -2,6 +2,10 @@ var Reflux = require('reflux');
 var UserActions = require("./useractions.js");
 var localStorage = require('store');
 
+//actions which require u/p must originate from here to limit the number of
+//places that touch the password store.  This is why some of the flows are
+//a little awkward where it goes ChattyStore -> requestPost -> post
+
 var UserStore = Reflux.createStore({
   listenables: [UserActions],
   init: function() {
@@ -58,6 +62,9 @@ var UserStore = Reflux.createStore({
   getMessageCountFailed: function(error) {
     
   },
+  submitCommentCompleted: function(data) {
+    console.log("post response", data);
+  },
   showLoginForm: function() {
     this.showLogin = true;
     this.sendData();
@@ -74,10 +81,14 @@ var UserStore = Reflux.createStore({
      showLogin : this.showLogin,
      loginMessage: this.loginMessage,
      username: localStorage.get('username'),
-     password: localStorage.get('password'),
+     //password: localStorage.get('password'),
      totalPMs: this.totalPMs,
      unreadPMs: this.unreadPMs
     });
+  },
+  requestSubmitComment: function(parentCommentId, body) {
+    UserActions.submitComment(parentCommentId, body,
+      localStorage.get('username'),localStorage.get('password'));
   }
 });
 

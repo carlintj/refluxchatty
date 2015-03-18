@@ -3,6 +3,7 @@ var _ = require("lodash");
 var ChattyActions = require("./chattyactions.js");
 var processThread = require("../util/apiservice.js").processThread;
 var getPost = require("../util/apiservice.js").getPost;
+var UserActions = require("./useractions.js");
 
 var findChildComment = function(parentThread, childCommentId) {
   if (parentThread.id == childCommentId) return parentThread;
@@ -24,25 +25,41 @@ var getSiblings = function(parentThread, comment) {
   return parentComment.children;
 };
 
-var mergeEvents = function(threads, events) {
-  _.forEach(events, function(event) {
-    if (event.eventType == "newPost") {
-      var newPost = event.eventData.post;
-      if (newPost.parentId != "0") {
-        var thread = _.find(threads, {
-          id: newPost.threadId
-        });
-        var parent = findChildComment(thread, newPost.parentId);
-        parent.children.push(getPost(newPost));
-        thread.replyCount++;
+var mergeEvents = function(threads, events,store) {
+  try {
+    _.forEach(events, function(event) {
+      if (event.eventType == "newPost") {
+        var newPost = event.eventData.post;
+        if (newPost.parentId !== 0) {
+          var thread = _.find(threads, {
+            id: newPost.threadId
+          });
+          if(thread) {
+            var parent = findChildComment(thread, newPost.parentId);
+            if(parent) {
+              parent.children.push(getPost(newPost));
+              thread.replyCount++;    
+            } else {
+              console.warn("unable to find parent comment in thread", newPost);
+            }
+            
+          } else {
+            console.warn("unable to find thread", newPost.threadId,newPost);
+            //store.connected= false;
+          }
+          
+        }
+        else {
+          var newThread = getPost(newPost);
+          newThread.threadId = newPost.threadId;
+          store.threads.unshift(newThread);
+        }
       }
-      else {
-        var newThread = processThread(newPost);
-        console.log("adding new post by ", newThread.author);
-        this.threads.unshift(newThread);
-      }
-    }
-  });
+    });
+  } catch (e){
+    console.error("error merging events",e,events,threads);
+    store.connected = false;
+  }
 };
 
 var ChattyStore = Reflux.createStore({
@@ -53,6 +70,7 @@ var ChattyStore = Reflux.createStore({
     this.eventId = 0;
     this.connected = false;
     this.username = "";
+    this.replyingTo = 0;
   },
   getInitialState: function() {
     return {
@@ -73,7 +91,8 @@ var ChattyStore = Reflux.createStore({
       loading: this.loading,
       eventId: this.eventId,
       connected: this.connected,
-      username: this.username
+      username: this.username,
+      replyingTo: this.replyingTo
     });
   },
   startChatty: function() {
@@ -118,13 +137,15 @@ var ChattyStore = Reflux.createStore({
   waitForEventCompleted: function(data) {
     this.connected = true;
     this.eventId = data.lastEventId;
-    mergeEvents(this.threads, data.events);
+    mergeEvents(this.threads, data.events,this);
     this.sendData();
-    ChattyActions.waitForEvent(this.eventId);
+    if(this.connected) {
+      ChattyActions.waitForEvent(this.eventId);  
+    }
   },
   waitForEventFailed: function(error) {
     this.connected = false;
-    console.log(error);
+    console.error(error);
     this.sendData();
     ChattyActions.waitForEvent(this.eventId);
   },
@@ -143,22 +164,33 @@ var ChattyStore = Reflux.createStore({
   },
   highlightParent: function(parentId) {
     _.each(this.threads, function(thread) {
-      thread.focused = (thread.id == parentId);
+      if(thread.id === parentId) {
+        thread.focused = true;
+        if(thread.expandedChildId !== thread.id) {
+          thread.expandedChildId = thread.id;
+          this.replyingTo = 0;  
+        }
+      } else {
+        thread.focused = false;
+        thread.expandedChildId = 0;
+      }
     });
     this.sendData();
   },
   selectComment: function(parentId, commentId) {
+    this.replyingTo = 0;
     var parent = _.find(this.threads, {
       id: parentId
     });
-    parent.expandedChildId = commentId;
-    this.sendData();
+    if(parent.expandedChildId != commentId) {
+      parent.expandedChildId = commentId;
+      this.sendData();  
+    }
   },
   selectNextParent: function() {
-    var i = 0;
+    this.replyingTo = 0;
     var thread = undefined;
-
-    for (; i < this.threads.length; i++) {
+    for (var i = 0; i < this.threads.length; i++) {
       if (this.threads[i].focused) {
         thread = this.threads[i + 1];
         break;
@@ -170,6 +202,7 @@ var ChattyStore = Reflux.createStore({
     this.highlightParent(thread.id);
   },
   selectPrevParent: function() {
+    this.replyingTo = 0;
     var i = this.threads.length - 1;
     var thread = undefined;
     for (; i >= 0; i--) {
@@ -185,6 +218,7 @@ var ChattyStore = Reflux.createStore({
     this.highlightParent(thread.id);
   },
   selectPrevComment: function() {
+    this.replyingTo = 0;
     var thread = _.find(this.threads, {
       focused: true
     });
@@ -213,6 +247,7 @@ var ChattyStore = Reflux.createStore({
     }
   },
   selectNextComment: function() {
+    this.replyingTo = 0;
     var thread = _.find(this.threads, {
       focused: true
     });
@@ -249,6 +284,23 @@ var ChattyStore = Reflux.createStore({
       }
     }
     this.sendData();
+  },
+  openReply: function() {
+    this.replyingTo = 0;
+    var thread = _.find(this.threads, {focused: true});
+    if(thread) {
+      this.replyingTo = thread.expandedChildId;
+    } else { 
+      console.warn("could not find focused thread on openReply");
+    }
+    
+    this.sendData();
+  },
+  submitComment: function(parentCommentId, body) {
+    this.replyingTo = 0;
+    this.sendData();
+    UserActions.requestSubmitComment(parentCommentId, body);
+    //send request to user store
   }
 });
 

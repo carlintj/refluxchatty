@@ -25,7 +25,7 @@ var getSiblings = function(parentThread, comment) {
   return parentComment.children;
 };
 
-var mergeEvents = function(threads, events,store) {
+var mergeEvents = function(threads, events, store) {
   try {
     _.forEach(events, function(event) {
       if (event.eventType == "newPost") {
@@ -34,30 +34,28 @@ var mergeEvents = function(threads, events,store) {
           var thread = _.find(threads, {
             id: newPost.threadId
           });
-          if(thread) {
+          if (thread) {
             var parent = findChildComment(thread, newPost.parentId);
-            if(parent) {
+            if (parent) {
               parent.children.push(getPost(newPost));
-              thread.replyCount++;    
+              thread.replyCount++;
             } else {
               console.warn("unable to find parent comment in thread", newPost);
             }
-            
           } else {
-            console.warn("unable to find thread", newPost.threadId,newPost);
+            console.warn("unable to find thread", newPost.threadId, newPost);
             //store.connected= false;
           }
-          
-        }
-        else {
+        } else {
           var newThread = getPost(newPost);
           newThread.threadId = newPost.threadId;
           store.threads.unshift(newThread);
         }
       }
     });
-  } catch (e){
-    console.error("error merging events",e,events,threads);
+  }
+  catch (e) {
+    console.error("error merging events", e, events, threads);
     store.connected = false;
   }
 };
@@ -125,7 +123,6 @@ var ChattyStore = Reflux.createStore({
     this.eventId = data.eventId;
     ChattyActions.getChatty();
     ChattyActions.waitForEvent(this.eventId);
-    //process events
     this.sendData();
   },
   getNewestEventIdFailed: function(error) {
@@ -137,10 +134,10 @@ var ChattyStore = Reflux.createStore({
   waitForEventCompleted: function(data) {
     this.connected = true;
     this.eventId = data.lastEventId;
-    mergeEvents(this.threads, data.events,this);
+    mergeEvents(this.threads, data.events, this);
     this.sendData();
-    if(this.connected) {
-      ChattyActions.waitForEvent(this.eventId);  
+    if (this.connected) {
+      ChattyActions.waitForEvent(this.eventId);
     }
   },
   waitForEventFailed: function(error) {
@@ -164,11 +161,11 @@ var ChattyStore = Reflux.createStore({
   },
   highlightParent: function(parentId) {
     _.each(this.threads, function(thread) {
-      if(thread.id === parentId) {
+      if (thread.id === parentId) {
         thread.focused = true;
-        if(thread.expandedChildId !== thread.id) {
+        if (thread.expandedChildId !== thread.id) {
           thread.expandedChildId = thread.id;
-          this.replyingTo = 0;  
+          this.replyingTo = 0;
         }
       } else {
         thread.focused = false;
@@ -182,9 +179,9 @@ var ChattyStore = Reflux.createStore({
     var parent = _.find(this.threads, {
       id: parentId
     });
-    if(parent.expandedChildId != commentId) {
+    if (parent.expandedChildId != commentId) {
       parent.expandedChildId = commentId;
-      this.sendData();  
+      this.sendData();
     }
   },
   selectNextParent: function() {
@@ -222,12 +219,11 @@ var ChattyStore = Reflux.createStore({
     var thread = _.find(this.threads, {
       focused: true
     });
-    if (thread === undefined || thread.children.length == 0) return;
+    if (thread === undefined || thread.children.length === 0) return;
 
     if (thread.expandedChildId === 0) {
       thread.expandedChildId = thread.children[0].id;
-    }
-    else {
+    } else {
       var comment = findChildComment(thread, thread.expandedChildId);
       var siblings = getSiblings(thread, comment);
       var i = 0;
@@ -238,8 +234,7 @@ var ChattyStore = Reflux.createStore({
       }
       if (i == 0) {
         thread.expandedChildId = comment.parentId;
-      }
-      else {
+      } else {
         //find the id of the last grandchild of the sibling
         thread.expandedChildId = siblings[i - 1].id;
       }
@@ -254,16 +249,11 @@ var ChattyStore = Reflux.createStore({
     if (thread === undefined || thread.children.length == 0) return;
     if (thread.expandedChildId === 0) {
       thread.expandedChildId = thread.children[0].id;
-    }
-    else {
-      //if select comment has a child, select the first child
-      //else if the selected comment has a sibling select the next one
-      //else if find the next grand-cousin
+    } else {
       var comment = findChildComment(thread, thread.expandedChildId);
       if (comment.children.length > 0) {
         thread.expandedChildId = comment.children[0].id;
-      }
-      else {
+      } else {
         var found = false;
         var siblings = getSiblings(thread, comment);
         var finder = findChildComment(thread, comment.parentId);
@@ -287,20 +277,20 @@ var ChattyStore = Reflux.createStore({
   },
   openReply: function() {
     this.replyingTo = 0;
-    var thread = _.find(this.threads, {focused: true});
-    if(thread) {
+    var thread = _.find(this.threads, {
+      focused: true
+    });
+    if (thread) {
       this.replyingTo = thread.expandedChildId;
-    } else { 
+    } else {
       console.warn("could not find focused thread on openReply");
     }
-    
     this.sendData();
   },
   submitComment: function(parentCommentId, body) {
     this.replyingTo = 0;
     this.sendData();
     UserActions.requestSubmitComment(parentCommentId, body);
-    //send request to user store
   }
 });
 

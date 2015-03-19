@@ -23,24 +23,24 @@ var UserStore = Reflux.createStore({
       username: localStorage.get('username') || "",
       pms: [],
       showLogin: false,
-      totalPMs : 0,
+      totalPMs: 0,
       unreadPMs: 0
     };
   },
-  login: function(username,password) {
+  login: function(username, password) {
     this.tempusername = username;
     this.temppassword = password;
   },
   loginCompleted: function(data) {
-    if(data.isValid) {
+    if (data.isValid) {
       this.showLogin = false;
-      localStorage.set('username',this.tempusername);
+      localStorage.set('username', this.tempusername);
       localStorage.set('password', this.temppassword);
 
       this.tempusername = "";
       this.temppassword = "";
       this.loginMessage = "";
-      
+
       UserActions.requestMessageCount();
     } else {
       this.loginMessage = "Error logging in.  Check your username and password dummy";
@@ -53,14 +53,14 @@ var UserStore = Reflux.createStore({
     this.sendData();
   },
   getMessageCountCompleted: function(data) {
-    if(!data.error) {
+    if (!data.error) {
       this.totalPMs = data.total;
       this.unreadPMs = data.unread;
-      this.sendData();  
+      this.sendData();
     }
   },
   getMessageCountFailed: function(error) {
-    
+
   },
   submitCommentCompleted: function(data) {
     console.log("post response", data);
@@ -73,22 +73,21 @@ var UserStore = Reflux.createStore({
     localStorage.clear();
     this.sendData();
   },
-  requestMessageCount: function() { 
-    UserActions.getMessageCount(localStorage.get('username'),localStorage.get('password'));
+  requestMessageCount: function() {
+    UserActions.getMessageCount(localStorage.get('username'), localStorage.get('password'));
   },
   sendData: function() {
     this.trigger({
-     showLogin : this.showLogin,
-     loginMessage: this.loginMessage,
-     username: localStorage.get('username'),
-     //password: localStorage.get('password'),
-     totalPMs: this.totalPMs,
-     unreadPMs: this.unreadPMs
+      showLogin: this.showLogin,
+      loginMessage: this.loginMessage,
+      username: localStorage.get('username'),
+      totalPMs: this.totalPMs,
+      unreadPMs: this.unreadPMs
     });
   },
   requestSubmitComment: function(parentCommentId, body) {
     UserActions.submitComment(parentCommentId, body,
-      localStorage.get('username'),localStorage.get('password'));
+      localStorage.get('username'), localStorage.get('password'));
   }
 });
 

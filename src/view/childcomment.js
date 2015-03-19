@@ -6,7 +6,6 @@ var ChattyActions = require("../store/chattyactions.js");
 var AutoscrollingMixin = require("./autoscrollingmixin.js");
 var ReplyBox = require("./replybox.js");
 
-
 var fixComment = function(comment) {
   var div = document.createElement('div');
   div.innerHTML = comment;
@@ -14,31 +13,30 @@ var fixComment = function(comment) {
 };
 
 var renderChildComments = function(threadId,children,expandedChildId,replyingTo) {
-    var replies = children.map(function(comment,i) {
-        return (<ChildComment key={comment.id} 
-        id = {comment.id}
-        author={comment.author} 
-        body={comment.body} 
-        children = {comment.children}
-        date = {comment.date} 
-        expandedChildId = {expandedChildId} 
-        threadId={threadId} 
-        replyingTo={replyingTo} />);
-      });
-    return replies;
-  };
+  var replies = children.map(function(comment,i) {
+    return (<ChildComment key={comment.id} 
+    id = {comment.id}
+    author={comment.author} 
+    body={comment.body} 
+    children = {comment.children}
+    date = {comment.date} 
+    expandedChildId = {expandedChildId} 
+    threadId={threadId} 
+    replyingTo={replyingTo} />);
+  });
+  return replies;
+};
 
 var ChildComment = React.createClass({
-   propTypes: {
-    //date: React.PropTypes.date.isRequired,
+  propTypes: {
+    date: React.PropTypes.object.isRequired, //date isn't a proptype
     threadId: React.PropTypes.number.isRequired,
-    //children: React.PropTypes.array.isRequired,
+    children: React.PropTypes.array.isRequired,
     expandedChildId: React.PropTypes.number.isRequired,
     replyingTo: React.PropTypes.number.isRequired,
     body: React.PropTypes.string.isRequired,
     author: React.PropTypes.string.isRequired,
     id: React.PropTypes.number.isRequired
-    
   },
   render: function() {
     var dateStr = new XDate(this.props.date);
@@ -65,8 +63,7 @@ var ChildComment = React.createClass({
     var scroller = null;
       if(expanded) {
         scroller = <AutoscrollingMixin parent={this} />
-      }
-      else {
+      } else {
         scroller = null;
       }
     return (<div style={styles.commentContainer}>

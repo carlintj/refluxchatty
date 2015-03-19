@@ -25,23 +25,20 @@ var ParentComment = React.createClass({
           replies = <div><span style={styles.clickable} 
             onClick={this.onCollapseClick}>Collapse</span></div>;
 
-        }
-        else {
+        } else {
           var replyStr = this.props.replyCount > 1 ? "replies" : "reply";
           replies = <div><span style={styles.clickable} 
               onClick={this.onRepliesClick}>
               {this.props.replyCount} {replyStr}</span>
             </div>;
         }
-      }
-      else {
+      } else {
         replies = <span>No replies</span>;
       }
       var scroller = null;
       if(this.props.focused) {
         scroller = <AutoscrollingMixin parent={this} />
-      }
-      else {
+      } else {
         scroller = null;
       }
       
@@ -62,7 +59,6 @@ var ParentComment = React.createClass({
               <div dangerouslySetInnerHTML={{__html: this.props.body}} />
               {replies}
             </div>
-          
             {replyBox}
             {replyPosts}
           </div>
@@ -78,7 +74,6 @@ var ParentComment = React.createClass({
     onParentClick: function() {
       ChattyActions.highlightParent(this.props.id);
     }
-    
 });
 
 module.exports = ParentComment;

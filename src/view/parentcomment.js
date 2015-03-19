@@ -14,20 +14,24 @@ var ParentComment = React.createClass({
     },
     render: function() {
       var dateStr = new XDate(this.props.date);
+      
+      var replyPosts = null;
       var replies = null;
       if (this.props.replyCount > 0) {
         if(this.props.expanded) {
-          replies = renderChildComments(this.props.threadId,this.props.children, 
-            this.props.expandedChildId,this.props.replyingTo);
+          replyPosts = renderChildComments(this.props.threadId,this.props.children, 
+              this.props.expandedChildId,this.props.replyingTo);
             
-          replies = <div>
-                      <div><span style={styles.clickable} onClick={this.onCollapseClick}>Collapse</span></div>
-                      {replies}
-                    </div>;
+          replies = <div><span style={styles.clickable} 
+            onClick={this.onCollapseClick}>Collapse</span></div>;
+
         }
         else {
           var replyStr = this.props.replyCount > 1 ? "replies" : "reply";
-          replies = <span style={styles.clickable} onClick={this.onRepliesClick}>{this.props.replyCount} {replyStr}</span>;
+          replies = <div><span style={styles.clickable} 
+              onClick={this.onRepliesClick}>
+              {this.props.replyCount} {replyStr}</span>
+            </div>;
         }
       }
       else {
@@ -48,17 +52,19 @@ var ParentComment = React.createClass({
       
       return (
         <div style={combine(styles.parentContainer)} onClick={this.onParentClick}>
+          <div style={styles.parentComment}>
           {scroller}
-          <div ref="anchor" style={combine(this.props.focused && styles.highlightedParent)}>
-            <span style={styles.userName}>
-              {this.props.author}
-            </span>
-            @ <span style={styles.date}>{dateStr.toLocaleString()}</span>
-            <div dangerouslySetInnerHTML={{__html: this.props.body}} />
-          </div>
-          {replyBox}
-          <div>
-            {replies}
+            <div ref="anchor" style={combine(this.props.focused && styles.highlightedParent)}>
+              <span style={styles.userName}>
+                {this.props.author}
+              </span>
+              @ <span style={styles.date}>{dateStr.toLocaleString()}</span>
+              <div dangerouslySetInnerHTML={{__html: this.props.body}} />
+              {replies}
+            </div>
+          
+            {replyBox}
+            {replyPosts}
           </div>
         </div>
       );

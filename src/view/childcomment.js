@@ -56,7 +56,7 @@ var ChildComment = React.createClass({
       }
     } else {
       //this needs to be safely escaped to make sure there are no hanging tags.
-      comment = this.props.body.substring(0,100);
+      comment = this.props.body.substring(0,200);
       if(comment.length != this.props.body.length){
         comment = fixComment(comment + "...");
       }

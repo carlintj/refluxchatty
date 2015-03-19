@@ -13,13 +13,16 @@ var styles = {
     background: '#E0F3FF'
   },
   highlightedParent : { 
-    background: '#A7CDF0',
+    background: '#E0F3FF', //A7CDF0
   },
   parentContainer : {
     background: '#FFFFFF',
-    border: '2px solid #000000',
     margin: '8px',
-    padding: '2px'
+    //padding: '2px'
+  },
+  parentComment: {
+    border: '2px solid #000000',
+    padding: '2px',
   },
   userName : {
     color: '#3F82C5'
@@ -34,6 +37,8 @@ var styles = {
   statusbar: {
     background: '#FFFFFF',
     border: '2px solid #000000',
+    margin: 0,
+    padding: 0
   },
   success: {
     color: '#3F82C5'

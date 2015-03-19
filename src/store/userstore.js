@@ -41,7 +41,7 @@ var UserStore = Reflux.createStore({
       this.temppassword = "";
       this.loginMessage = "";
       
-      UserActions.getMessageCount(this.username,this.password);
+      UserActions.requestMessageCount();
     } else {
       this.loginMessage = "Error logging in.  Check your username and password dummy";
     }

@@ -22,7 +22,7 @@ var CommentList = React.createClass({
     });
     
     return (
-      <div style={styles.body}>
+      <div style={styles.commentBody}>
         {comments}
       </div>
     );

@@ -7,6 +7,7 @@ var styles = {
   commentContainer: {
     marginLeft: 12,
     border: '1px solid #cdced0',
+    borderRadius: '5px',
     padding: '2px'
   },
   highlightedComment: {
@@ -22,6 +23,7 @@ var styles = {
   },
   parentComment: {
     border: '2px solid #000000',
+    borderRadius: '1px',
     padding: '2px',
   },
   userName: {
@@ -37,8 +39,10 @@ var styles = {
   statusbar: {
     background: '#FFFFFF',
     border: '2px solid #000000',
+    borderRadius: '5px',
     margin: 0,
-    padding: 0
+    padding: 0,
+    position: 'fixed'
   },
   success: {
     color: '#3F82C5'
@@ -49,8 +53,10 @@ var styles = {
   commentBox: {
     width: 600,
     height: 150
+  },
+  commentBody: {
+    paddingTop: 20
   }
-
 };
 
 module.exports = styles;

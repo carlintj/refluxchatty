@@ -12,7 +12,7 @@ var fixComment = function(comment) {
   return div.innerHTML;
 };
 
-var renderChildComments = function(threadId,children,expandedChildId,replyingTo) {
+var renderChildComments = function(threadId,children,expandedChildId,replyingTo,username) {
   var replies = children.map(function(comment,i) {
     return (<ChildComment key={comment.id} 
     id = {comment.id}
@@ -22,40 +22,43 @@ var renderChildComments = function(threadId,children,expandedChildId,replyingTo)
     date = {comment.date} 
     expandedChildId = {expandedChildId} 
     threadId={threadId} 
-    replyingTo={replyingTo} />);
+    replyingTo={replyingTo}
+    username={username}/>);
   });
   return replies;
 };
 
 var ChildComment = React.createClass({
   propTypes: {
-    date: React.PropTypes.object.isRequired, //date isn't a proptype
+    date: React.PropTypes.string.isRequired, //date isn't a proptype
     threadId: React.PropTypes.number.isRequired,
     children: React.PropTypes.array.isRequired,
     expandedChildId: React.PropTypes.number.isRequired,
     replyingTo: React.PropTypes.number.isRequired,
     body: React.PropTypes.string.isRequired,
     author: React.PropTypes.string.isRequired,
-    id: React.PropTypes.number.isRequired
+    id: React.PropTypes.number.isRequired,
+    username: React.PropTypes.string.isRequired
   },
   render: function() {
-    var dateStr = new XDate(this.props.date);
-    var replies = renderChildComments(this.props.threadId,this.props.children, 
-      this.props.expandedChildId, this.props.replyingTo);
-    var expanded = this.props.expandedChildId == this.props.id;
+    var props = this.props;
+    var dateStr = new XDate(props.date);
+    var replies = renderChildComments(props.threadId,props.children, 
+      props.expandedChildId, props.replyingTo,props.username);
+    var expanded = props.expandedChildId == props.id;
     
     var comment = null;
     var replyBox = null;
     
     if(expanded) {
-      comment = this.props.body;
-      if(this.props.replyingTo === this.props.id) {
-        replyBox = <ReplyBox parentCommentId={this.props.id}/>
+      comment = props.body;
+      if(props.replyingTo === props.id) {
+        replyBox = <ReplyBox parentCommentId={props.id}/>
       }
     } else {
       //this needs to be safely escaped to make sure there are no hanging tags.
-      comment = this.props.body.substring(0,200);
-      if(comment.length != this.props.body.length){
+      comment = props.body.substring(0,200);
+      if(comment.length != props.body.length){
         comment = fixComment(comment + "...");
       }
     }
@@ -66,10 +69,14 @@ var ChildComment = React.createClass({
       } else {
         scroller = null;
       }
+    var commentStyle = null;
+     commentStyle=styleutil(expanded && styles.highlightedComment,
+      props.username==props.author && styles.ownerPost);
+    
     return (<div style={styles.commentContainer}>
-            <div ref="anchor" onClick={this.handleClick} style={styleutil(expanded && styles.highlightedComment)} >
-              <div style={styles.userName}>
-                {this.props.author} @ <span style={styles.date}>{dateStr.toLocaleString()}</span>
+            <div ref="anchor" onClick={this.handleClick} style={commentStyle} >
+              <div style={styles.username}>
+                {props.author} @ <span style={styles.date}>{dateStr.toLocaleString()}</span>
                 {scroller}
               </div>
               <div dangerouslySetInnerHTML={{__html: comment}} />

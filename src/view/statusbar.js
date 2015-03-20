@@ -13,7 +13,8 @@ var statusBar = React.createClass({
     connected: React.PropTypes.bool.isRequired,
     lastEventId: React.PropTypes.number.isRequired,
     totalPMs: React.PropTypes.number.isRequired,
-    unreadPMs: React.PropTypes.number.isRequired
+    unreadPMs: React.PropTypes.number.isRequired,
+    unseenReplies: React.PropTypes.array.isRequired
   },
   showLogin: function() {
     UserActions.showLoginForm();
@@ -48,9 +49,14 @@ var statusBar = React.createClass({
     return (<div style={styles.statusbar}>
         {status}|
         <span>Last Event ID: {this.props.lastEventId}</span>|
-        {userinfo}
+        {userinfo}|
+        Replies: <span style={styles.clickable} onClick={this.onShowReplies}>{this.props.unseenReplies.length}</span>
         {loginScreen}
+        
       </div>);
+  },
+  onShowReplies: function() {
+    ChattyActions.showThreads(this.props.unseenReplies);
   }
 });
 

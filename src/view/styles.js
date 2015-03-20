@@ -1,20 +1,24 @@
 var styles = {
   body: {
-    fontFamily: 'Helvetica,Arial,sans-serif',
-    fontSize: 13,
     background: '#5c97bf'
   },
   commentContainer: {
     marginLeft: 12,
     border: '1px solid #cdced0',
     borderRadius: '5px',
-    padding: '2px'
+    padding: '2px',
+    fontSize: 11
   },
   highlightedComment: {
-    background: '#E0F3FF'
+    background: '#E0F3FF',
+    //marginLeft: 10,
+    fontSize: 13
   },
   highlightedParent: {
     background: '#E0F3FF', //A7CDF0
+  },
+  ownerPost: {
+    background: '#C1C1C1 !important'
   },
   parentContainer: {
     background: '#FFFFFF',
@@ -26,7 +30,7 @@ var styles = {
     borderRadius: '1px',
     padding: '2px',
   },
-  userName: {
+  username: {
     color: '#3F82C5'
   },
   date: {
@@ -55,7 +59,9 @@ var styles = {
     height: 150
   },
   commentBody: {
-    paddingTop: 20
+    paddingTop: 20,
+    fontFamily: 'Helvetica,Arial,sans-serif',
+    fontSize: 13,
   }
 };
 

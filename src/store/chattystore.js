@@ -4,6 +4,7 @@ var ChattyActions = require("./chattyactions.js");
 var processThread = require("../util/apiservice.js").processThread;
 var getPost = require("../util/apiservice.js").getPost;
 var UserActions = require("./useractions.js");
+var UserStore = require("./userstore.js");
 
 var findChildComment = function(parentThread, childCommentId) {
   if (parentThread.id == childCommentId) return parentThread;
@@ -39,6 +40,10 @@ var mergeEvents = function(threads, events, store) {
             if (parent) {
               parent.children.push(getPost(newPost));
               thread.replyCount++;
+              if(parent.author==="Horn") {
+                console.log("reply to your post!", newPost);
+                UserActions.newReplyNotification(thread.id, newPost.id);
+              }
             } else {
               console.warn("unable to find parent comment in thread", newPost);
             }
@@ -69,6 +74,7 @@ var ChattyStore = Reflux.createStore({
     this.connected = false;
     this.username = "";
     this.replyingTo = 0;
+    this.visibleThreads = [];
   },
   getInitialState: function() {
     return {
@@ -76,7 +82,8 @@ var ChattyStore = Reflux.createStore({
       loading: false,
       username: "",
       connected: false,
-      eventId: 0
+      eventId: 0,
+      visibleThreads: []
     };
   },
   fullRefresh: function() {
@@ -90,7 +97,8 @@ var ChattyStore = Reflux.createStore({
       eventId: this.eventId,
       connected: this.connected,
       username: this.username,
-      replyingTo: this.replyingTo
+      replyingTo: this.replyingTo,
+      visibleThreads: this.visibleThreads
     });
   },
   startChatty: function() {
@@ -181,6 +189,7 @@ var ChattyStore = Reflux.createStore({
     });
     if (parent.expandedChildId != commentId) {
       parent.expandedChildId = commentId;
+      UserActions.seenReply(parent.threadId, commentId);
       this.sendData();
     }
   },
@@ -291,6 +300,11 @@ var ChattyStore = Reflux.createStore({
     this.replyingTo = 0;
     this.sendData();
     UserActions.requestSubmitComment(parentCommentId, body);
+  },
+  showThreads: function(threads) {
+    console.log("setting visible threads",threads);
+    this.visibleThreads = threads;
+    this.sendData();
   }
 });
 

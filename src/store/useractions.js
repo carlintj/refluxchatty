@@ -33,6 +33,12 @@ var Actions = Reflux.createActions({
   },
   requestSubmitComment: {
     asyncResult: false
+  },
+  newReplyNotification: {
+    asyncResult: false
+  },
+  seenReply: {
+    asyncResult: false
   }
 });
 

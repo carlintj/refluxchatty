@@ -48,10 +48,13 @@ var RefluxChatty = React.createClass({
           lastEventId={this.state.ChattyStore.eventId} 
           totalPMs={this.state.UserStore.totalPMs} 
           unreadPMs={this.state.UserStore.unreadPMs}
+          unseenReplies={this.state.UserStore.unseenReplies}
           />
          
         <CommentList threads={this.state.ChattyStore.threads} 
-          replyingTo={this.state.ChattyStore.replyingTo} />
+          visibleThreads={this.state.ChattyStore.visibleThreads}
+          replyingTo={this.state.ChattyStore.replyingTo} 
+          username={this.state.UserStore.username}/>
       </div>);
     }
 });

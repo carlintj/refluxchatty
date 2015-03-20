@@ -13,6 +13,7 @@ var UserStore = Reflux.createStore({
     this.temppassword = "";
 
     this.pms = [];
+    this.unseenReplies = [];
     this.totalPMs = 0;
     this.unreadPMs = 0;
     this.showLogin = false;
@@ -24,7 +25,8 @@ var UserStore = Reflux.createStore({
       pms: [],
       showLogin: false,
       totalPMs: 0,
-      unreadPMs: 0
+      unreadPMs: 0,
+      unseenReplies: []
     };
   },
   login: function(username, password) {
@@ -82,12 +84,17 @@ var UserStore = Reflux.createStore({
       loginMessage: this.loginMessage,
       username: localStorage.get('username'),
       totalPMs: this.totalPMs,
-      unreadPMs: this.unreadPMs
+      unreadPMs: this.unreadPMs,
+      unseenReplies: this.unseenReplies
     });
   },
   requestSubmitComment: function(parentCommentId, body) {
     UserActions.submitComment(parentCommentId, body,
       localStorage.get('username'), localStorage.get('password'));
+  },
+  newReplyNotification: function(threadId, commentId) {
+    this.unseenReplies.push({threadId: threadId, commentId: commentId});
+    this.sendData();
   }
 });
 

@@ -37,7 +37,7 @@ var Actions = Reflux.createActions({
   newReplyNotification: {
     asyncResult: false
   },
-  seenReply: {
+  clearReplies: {
     asyncResult: false
   }
 });

@@ -5,6 +5,7 @@ var processThread = require("../util/apiservice.js").processThread;
 var getPost = require("../util/apiservice.js").getPost;
 var UserActions = require("./useractions.js");
 var UserStore = require("./userstore.js");
+var localStorage = require('store');
 
 var findChildComment = function(parentThread, childCommentId) {
   if (parentThread.id == childCommentId) return parentThread;
@@ -40,7 +41,7 @@ var mergeEvents = function(threads, events, store) {
             if (parent) {
               parent.children.push(getPost(newPost));
               thread.replyCount++;
-              if(parent.author==="Horn") {
+              if(parent.author===store.username) {
                 console.log("reply to your post!", newPost);
                 UserActions.newReplyNotification(thread.id, newPost.id);
               }
@@ -72,9 +73,12 @@ var ChattyStore = Reflux.createStore({
     this.loading = false;
     this.eventId = 0;
     this.connected = false;
-    this.username = "";
+    //this is dumb should come from store but store doesn't send data until change happens
+    this.username = localStorage.get('username');
     this.replyingTo = 0;
     this.visibleThreads = [];
+    
+    this.listenTo(UserStore, this.userStoreUpdate);
   },
   getInitialState: function() {
     return {
@@ -189,7 +193,6 @@ var ChattyStore = Reflux.createStore({
     });
     if (parent.expandedChildId != commentId) {
       parent.expandedChildId = commentId;
-      UserActions.seenReply(parent.threadId, commentId);
       this.sendData();
     }
   },
@@ -302,9 +305,11 @@ var ChattyStore = Reflux.createStore({
     UserActions.requestSubmitComment(parentCommentId, body);
   },
   showThreads: function(threads) {
-    console.log("setting visible threads",threads);
     this.visibleThreads = threads;
     this.sendData();
+  },
+  userStoreUpdate: function(status) {
+    this.username = status.username;
   }
 });
 

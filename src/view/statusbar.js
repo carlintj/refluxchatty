@@ -57,6 +57,7 @@ var statusBar = React.createClass({
   },
   onShowReplies: function() {
     ChattyActions.showThreads(this.props.unseenReplies);
+    UserActions.clearReplies();
   }
 });
 

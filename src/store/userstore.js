@@ -18,6 +18,8 @@ var UserStore = Reflux.createStore({
     this.unreadPMs = 0;
     this.showLogin = false;
     this.loginMessage = localStorage.get('username') || "";
+    
+    this.sendData();
   },
   getInitialState: function() {
     return {
@@ -94,6 +96,10 @@ var UserStore = Reflux.createStore({
   },
   newReplyNotification: function(threadId, commentId) {
     this.unseenReplies.push({threadId: threadId, commentId: commentId});
+    this.sendData();
+  },
+  clearReplies: function() {
+    this.unseenReplies = [];
     this.sendData();
   }
 });

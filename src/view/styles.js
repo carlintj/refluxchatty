@@ -46,7 +46,9 @@ var styles = {
     borderRadius: '5px',
     margin: 0,
     padding: 0,
-    position: 'fixed'
+    position: 'fixed',
+    fontFamily: 'Helvetica,Arial,sans-serif',
+    fontSize: 13,
   },
   success: {
     color: '#3F82C5'

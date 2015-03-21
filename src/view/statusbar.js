@@ -47,9 +47,9 @@ var statusBar = React.createClass({
     }
     
     return (<div style={styles.statusbar}>
-        {status}|
-        <span>Last Event ID: {this.props.lastEventId}</span>|
-        {userinfo}|
+        {status} |
+        <span>Last Event ID: {this.props.lastEventId}</span> |
+        {userinfo} |
         Replies: <span style={styles.clickable} onClick={this.onShowReplies}>{this.props.unseenReplies.length}</span>
         {loginScreen}
         

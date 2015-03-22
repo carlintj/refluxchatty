@@ -132,9 +132,14 @@ var ChattyStore = Reflux.createStore({
   },
   getNewestEventIdCompleted: function(data) {
     this.loading = false;
-    this.eventId = data.eventId;
-    ChattyActions.getChatty();
-    ChattyActions.waitForEvent(this.eventId);
+    if(data.eventId) {
+      this.eventId = data.eventId;
+      ChattyActions.getChatty();
+      ChattyActions.waitForEvent(this.eventId);  
+    } else {
+      this.connected = false;
+    }
+    
     this.sendData();
   },
   getNewestEventIdFailed: function(error) {

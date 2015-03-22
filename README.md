@@ -1,4 +1,6 @@
-React+Reflux chatty cliend for shacknews
+# RefluxChatty
+
+React+Reflux chatty client for shacknews
 
 Todo list:
 * Animations (ie new thread, comment posted)

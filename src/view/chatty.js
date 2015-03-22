@@ -33,7 +33,13 @@ var RefluxChatty = React.createClass({
         });
         keymaster('r', function() {
           ChattyActions.openReply();
-        })
+        });
+        keymaster('home', function() {
+            ChattyActions.selectFirstParent();
+        });
+        keymaster('end', function() {
+            ChattyActions.selectLastParent();
+        });
     },
     componentDidUpdate: function() {
       

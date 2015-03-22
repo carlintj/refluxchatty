@@ -39,6 +39,12 @@ var Actions = Reflux.createActions({
   selectPrevParent: {
     asyncResult: false
   },
+  selectFirstParent: {
+    asyncResult: false
+  },
+  selectLastParent: {
+    asyncResult: false
+  },
   selectNextComment: {
     asyncResult: false
   },

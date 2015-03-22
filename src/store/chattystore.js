@@ -231,6 +231,14 @@ var ChattyStore = Reflux.createStore({
     }
     this.highlightParent(thread.id);
   },
+  selectFirstParent: function() {
+    this.highlightParent(this.threads[0].id);
+    this.sendData();
+  },
+  selectLastParent: function() {
+    this.highlightParent(this.threads[this.threads.length-1].id);
+    this.sendData();
+  },
   selectPrevComment: function() {
     this.replyingTo = 0;
     var thread = _.find(this.threads, {

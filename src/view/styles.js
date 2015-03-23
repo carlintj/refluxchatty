@@ -44,11 +44,15 @@ var styles = {
     background: '#FFFFFF',
     border: '2px solid #000000',
     borderRadius: '5px',
-    margin: 0,
-    padding: 0,
+    margin: 2,
+    paddingTop: 2,
+    paddingBottom: 2,
+    paddingLeft: 4,
+    paddingRight: 6,
     position: 'fixed',
     fontFamily: 'Helvetica,Arial,sans-serif',
     fontSize: 13,
+    opacity: 0.7
   },
   success: {
     color: '#3F82C5'
@@ -61,7 +65,7 @@ var styles = {
     height: 150
   },
   commentBody: {
-    paddingTop: 20,
+    paddingTop: 30,
     fontFamily: 'Helvetica,Arial,sans-serif',
     fontSize: 13,
   }

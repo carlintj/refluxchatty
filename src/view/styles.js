@@ -18,7 +18,7 @@ var styles = {
     background: '#E0F3FF', //A7CDF0
   },
   ownerPost: {
-    background: '#C1C1C1 !important'
+    background: '#C1C1C1'
   },
   parentContainer: {
     background: '#FFFFFF',
@@ -28,7 +28,7 @@ var styles = {
   parentComment: {
     border: '2px solid #000000',
     borderRadius: '1px',
-    padding: '2px',
+    padding: '5px',
   },
   username: {
     color: '#3F82C5'
@@ -66,9 +66,35 @@ var styles = {
   },
   commentBody: {
     paddingTop: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
     fontFamily: 'Helvetica,Arial,sans-serif',
     fontSize: 13,
-  }
+  },
+  commentAge1: {
+    background: '#FFA675'
+  },
+  commentAge2: {
+    background: '#FFB186'
+  },
+  commentAge3: {
+    background: '#FFBC97'
+  },
+  commentAge4: {
+    background: '#FFC7A8'
+  },
+  commentAge5: {
+    background: '#FFD2BA'
+  },
+  commentAge6: {
+    background: '#FFDDCB'
+  },
+  commentAge7: {
+    background: '#FFE8DC'
+  },
+  commentAge8: {
+    background: '#FFF3ED'
+  },
 };
 
 module.exports = styles;

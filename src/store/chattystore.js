@@ -39,10 +39,11 @@ var mergeEvents = function(threads, events, store) {
           if (thread) {
             var parent = findChildComment(thread, newPost.parentId);
             if (parent) {
-              parent.children.push(getPost(newPost));
+              var fixedPost = getPost(newPost)
+              parent.children.push(fixedPost);
               thread.replyCount++;
+              thread.latestReply=fixedPost.dateStr;
               if(parent.author===store.username) {
-                console.log("reply to your post!", newPost);
                 UserActions.newReplyNotification(thread.id, newPost.id);
               }
             } else {
@@ -323,6 +324,13 @@ var ChattyStore = Reflux.createStore({
   },
   userStoreUpdate: function(status) {
     this.username = status.username;
+  },
+  hideSelectedThread: function() {
+    var thread = _.find(this.threads, {focused: true});
+    if(thread) {
+      thread.hidden = true;
+      ChattyActions.selectNextParent();
+    }
   }
 });
 

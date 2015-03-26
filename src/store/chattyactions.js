@@ -62,6 +62,9 @@ var Actions = Reflux.createActions({
   },
   showThreads: {
     asyncResult: false
+  },
+  hideSelectedThread: { 
+    asyncResult: false
   }
 });
 

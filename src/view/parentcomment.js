@@ -43,7 +43,7 @@ var ParentComment = React.createClass({
           replies = <div><span style={styles.clickable} 
               onClick={this.onRepliesClick}>
               {props.replyCount} {replyStr}</span>
-              &nbsp;<span style={styles.date}>Last reply @ : {props.dateStr}</span>
+              &nbsp;<span style={styles.date}>Last reply @ : {props.latestReply}</span>
             </div>;
         }
       } else {
@@ -61,7 +61,6 @@ var ParentComment = React.createClass({
         replyBox = <ReplyBox parentCommentId={props.id}/>
       }
       
-
       return (
         <div style={styles.parentContainer} onClick={this.onParentClick}>
           <div style={styles.parentComment}>

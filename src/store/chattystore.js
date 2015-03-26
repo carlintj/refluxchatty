@@ -42,7 +42,7 @@ var mergeEvents = function(threads, events, store) {
               var fixedPost = getPost(newPost)
               parent.children.push(fixedPost);
               thread.replyCount++;
-              thread.latestReply=fixedPost.date;
+              thread.latestReply=fixedPost.dateStr;
               if(parent.author===store.username) {
                 UserActions.newReplyNotification(thread.id, newPost.id);
               }

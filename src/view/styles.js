@@ -28,7 +28,7 @@ var styles = {
   parentComment: {
     border: '2px solid #000000',
     borderRadius: '1px',
-    padding: '2px',
+    padding: '5px',
   },
   username: {
     color: '#3F82C5'
@@ -66,6 +66,8 @@ var styles = {
   },
   commentBody: {
     paddingTop: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
     fontFamily: 'Helvetica,Arial,sans-serif',
     fontSize: 13,
   },

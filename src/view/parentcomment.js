@@ -1,5 +1,4 @@
 var React = require("react/addons");
-var XDate = require("xdate");
 var styles = require("./styles.js");
 var combine = require("../util/styleutil.js");
 var renderChildComments = require("./childcomment.js").renderChildComments;
@@ -13,7 +12,8 @@ var ParentComment = React.createClass({
       id: React.PropTypes.number.isRequired,
       replyingTo: React.PropTypes.number.isRequired,
       username: React.PropTypes.string.isRequired,
-      hidden: React.PropTypes.bool.isRequired
+      hidden: React.PropTypes.bool.isRequired,
+      latestReply: React.PropTypes.string.isRequired
     },
     render: function() {
       if(this.props.hidden) return null;
@@ -22,8 +22,6 @@ var ParentComment = React.createClass({
         !_.find(props.visibleThreads, {threadId: props.id})) {
         return null;
       }
-      var dateStr = new XDate(props.date);
-      
       var replyPosts = null;
       var replies = null;
       if (props.replyCount > 0) {
@@ -40,6 +38,7 @@ var ParentComment = React.createClass({
           replies = <div><span style={styles.clickable} 
               onClick={this.onRepliesClick}>
               {props.replyCount} {replyStr}</span>
+              &nbsp;<span style={styles.date}>Latest reply: {props.latestReply.toLocaleTimeString()}</span>
             </div>;
         }
       } else {
@@ -65,7 +64,7 @@ var ParentComment = React.createClass({
               <span style={styles.username}>
                 {props.author}
               </span>
-              @ <span style={styles.date}>{dateStr.toLocaleString()}</span>
+              @ <span style={styles.date}>{props.date.toLocaleString()}</span>
               <div dangerouslySetInnerHTML={{__html: props.body}} />
               {replies}
             </div>

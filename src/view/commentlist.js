@@ -18,6 +18,7 @@ var CommentList = React.createClass({
         threadId={comment.id}
         focused={comment.focused}
         hidden={comment.hidden}
+        latestReply={comment.latestReply}
         replyingTo={_this.props.replyingTo}
         visibleThreads={_this.props.visibleThreads}
         username={_this.props.username}

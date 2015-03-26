@@ -68,7 +68,31 @@ var styles = {
     paddingTop: 30,
     fontFamily: 'Helvetica,Arial,sans-serif',
     fontSize: 13,
-  }
+  },
+  commentAge1: {
+    background: '#FFA675'
+  },
+  commentAge2: {
+    background: '#FFB186'
+  },
+  commentAge3: {
+    background: '#FFBC97'
+  },
+  commentAge4: {
+    background: '#FFC7A8'
+  },
+  commentAge5: {
+    background: '#FFD2BA'
+  },
+  commentAge6: {
+    background: '#FFDDCB'
+  },
+  commentAge7: {
+    background: '#FFE8DC'
+  },
+  commentAge8: {
+    background: '#FFF3ED'
+  },
 };
 
 module.exports = styles;

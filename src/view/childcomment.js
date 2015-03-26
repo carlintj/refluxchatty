@@ -12,6 +12,26 @@ var fixComment = function(comment) {
   return div.innerHTML;
 };
 
+var calculateAgeStyle = function(date) {
+  var now = Date.now();
+  var delta = (now - date)/60000;
+
+  if(delta < 1) {
+    return styles.commentAge1;
+  } else if(delta < 2) {
+    return styles.commentAge3;
+  } else if(delta < 5) {
+    return styles.commentAge5;
+  } else if(delta < 10) {
+    return styles.commentAge6;
+  } else if (delta < 20) {
+    return styles.commentAge7;
+  } else if(delta < 30) {
+    return styles.commentAge8;
+  }
+  return null;
+};
+
 var renderChildComments = function(threadId,children,expandedChildId,replyingTo,username) {
   var replies = children.map(function(comment,i) {
     return (<ChildComment key={comment.id} 
@@ -69,9 +89,12 @@ var ChildComment = React.createClass({
       } else {
         scroller = null;
       }
-    var commentStyle = null;
-     commentStyle=styleutil(expanded && styles.highlightedComment,
-      props.username==props.author && styles.ownerPost);
+    var ageStyle = calculateAgeStyle(props.date);
+    var commentStyle = styleutil(
+      ageStyle,
+      expanded && styles.highlightedComment,
+      props.username==props.author && styles.ownerPost
+    );
     
     return (<div style={styles.commentContainer}>
             <div ref="anchor" onClick={this.handleClick} style={commentStyle} >

@@ -1,11 +1,12 @@
 var _ = require("lodash");
+var XDate = require("xdate");
 
 var getPost = function(post) {
     var fixedpost = {
         id: post.id,
         author: post.author,
         body: post.body,
-        date : post.date,
+        date : new Date(post.date),
         replyCount: 0,
         children: [],
         parentId : post.parentId
@@ -25,17 +26,19 @@ var processThread = function (thread) {
                 fixedpost.children.push(processPost(child));
             });
         }
+        latestReply = Math.max(latestReply,fixedpost.date);
         return fixedpost;
     };
     
+    var latestReply = 0;
     var posts = thread.posts.reverse();
     var replyCount = thread.posts.length-1;
     var post = processPost(_.find(posts, {
         parentId: 0
     }));
     post.replyCount = replyCount;
+    post.latestReply = new XDate(latestReply);
     
-    //these should be moved to the action, domain specific
     post.focused = false;
     post.expandedChildId = 0;
     return post;

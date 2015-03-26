@@ -7,6 +7,7 @@ var AutoscrollingMixin = require("./autoscrollingmixin.js");
 var ReplyBox = require("./replybox.js");
 var _ = require("lodash");
 
+
 var ParentComment = React.createClass({
     propTypes: {
       id: React.PropTypes.number.isRequired,
@@ -22,8 +23,12 @@ var ParentComment = React.createClass({
         !_.find(props.visibleThreads, {threadId: props.id})) {
         return null;
       }
+      
       var replyPosts = null;
       var replies = null;
+      var replyBox = null;
+      var scroller = null;
+      
       if (props.replyCount > 0) {
         if(props.expanded) {
           
@@ -32,32 +37,33 @@ var ParentComment = React.createClass({
             
           replies = <div><span style={styles.clickable} 
             onClick={this.onCollapseClick}>Collapse</span></div>;
-
         } else {
+
           var replyStr = props.replyCount > 1 ? "replies" : "reply";
           replies = <div><span style={styles.clickable} 
               onClick={this.onRepliesClick}>
               {props.replyCount} {replyStr}</span>
-              &nbsp;<span style={styles.date}>Last reply @ : {props.latestReply.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'})}</span>
+              &nbsp;<span style={styles.date}>Last reply @ : {props.dateStr}</span>
             </div>;
         }
       } else {
         replies = <span>No replies</span>;
       }
-      var scroller = null;
+      
+      
       if(props.focused) {
         scroller = <AutoscrollingMixin parent={this} />
       } else {
         scroller = null;
       }
-      
-      var replyBox = null;
+
       if(props.replyingTo == props.id) {
         replyBox = <ReplyBox parentCommentId={props.id}/>
       }
       
+
       return (
-        <div style={combine(styles.parentContainer)} onClick={this.onParentClick}>
+        <div style={styles.parentContainer} onClick={this.onParentClick}>
           <div style={styles.parentComment}>
           {scroller}
             <div ref="anchor" style={combine(props.focused && styles.highlightedParent)}>

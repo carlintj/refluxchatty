@@ -1,15 +1,21 @@
 var _ = require("lodash");
 
+
+var language = navigator.language;
+var tsOptions = {hour: '2-digit', minute:'2-digit'};
+
 var getPost = function(post) {
     var fixedpost = {
         id: post.id,
         author: post.author,
         body: post.body,
         date : new Date(post.date),
+        
         replyCount: 0,
         children: [],
         parentId : post.parentId
     };
+    fixedpost.dateStr = fixedpost.date.toLocaleTimeString(language, tsOptions)
     return fixedpost;
 };
 

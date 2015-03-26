@@ -39,6 +39,7 @@ var renderChildComments = function(threadId,children,expandedChildId,replyingTo,
     body={comment.body} 
     children = {comment.children}
     date = {comment.date} 
+    dateStr = {comment.dateStr}
     expandedChildId = {expandedChildId} 
     threadId={threadId} 
     replyingTo={replyingTo}
@@ -97,7 +98,7 @@ var ChildComment = React.createClass({
     return (<div style={styles.commentContainer}>
             <div ref="anchor" onClick={this.handleClick} style={commentStyle} >
               <div style={styles.username}>
-                {props.author} @ <span style={styles.date}>{props.date.toLocaleString(navigator.language, {hour: '2-digit', minute:'2-digit'})}</span>
+                {props.author} @ <span style={styles.date}>{props.dateStr}</span>
                 {scroller}
               </div>
               <div dangerouslySetInnerHTML={{__html: comment}} />

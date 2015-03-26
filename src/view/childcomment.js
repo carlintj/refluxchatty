@@ -1,5 +1,4 @@
 var React = require("react/addons");
-var XDate = require("xdate");
 var styles = require("./styles.js");
 var styleutil = require("../util/styleutil.js");
 var ChattyActions = require("../store/chattyactions.js");
@@ -62,7 +61,6 @@ var ChildComment = React.createClass({
   },
   render: function() {
     var props = this.props;
-    var dateStr = new XDate(props.date);
     var replies = renderChildComments(props.threadId,props.children, 
       props.expandedChildId, props.replyingTo,props.username);
     var expanded = props.expandedChildId == props.id;
@@ -92,14 +90,14 @@ var ChildComment = React.createClass({
     var ageStyle = calculateAgeStyle(props.date);
     var commentStyle = styleutil(
       ageStyle,
-      expanded && styles.highlightedComment,
-      props.username==props.author && styles.ownerPost
+      props.username==props.author && styles.ownerPost,
+      expanded && styles.highlightedComment
     );
     
     return (<div style={styles.commentContainer}>
             <div ref="anchor" onClick={this.handleClick} style={commentStyle} >
               <div style={styles.username}>
-                {props.author} @ <span style={styles.date}>{dateStr.toLocaleString()}</span>
+                {props.author} @ <span style={styles.date}>{props.date.toLocaleString(navigator.language, {hour: '2-digit', minute:'2-digit'})}</span>
                 {scroller}
               </div>
               <div dangerouslySetInnerHTML={{__html: comment}} />

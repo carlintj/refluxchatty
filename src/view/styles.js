@@ -18,7 +18,7 @@ var styles = {
     background: '#E0F3FF', //A7CDF0
   },
   ownerPost: {
-    background: '#C1C1C1 !important'
+    background: '#C1C1C1'
   },
   parentContainer: {
     background: '#FFFFFF',

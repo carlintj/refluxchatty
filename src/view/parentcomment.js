@@ -38,7 +38,7 @@ var ParentComment = React.createClass({
           replies = <div><span style={styles.clickable} 
               onClick={this.onRepliesClick}>
               {props.replyCount} {replyStr}</span>
-              &nbsp;<span style={styles.date}>Latest reply: {props.latestReply.toLocaleTimeString()}</span>
+              &nbsp;<span style={styles.date}>Latest reply: {props.latestReply.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'})}</span>
             </div>;
         }
       } else {

@@ -39,10 +39,11 @@ var mergeEvents = function(threads, events, store) {
           if (thread) {
             var parent = findChildComment(thread, newPost.parentId);
             if (parent) {
-              parent.children.push(getPost(newPost));
+              var fixedPost = getPost(newPost)
+              parent.children.push(fixedPost);
               thread.replyCount++;
+              thread.latestReply=fixedPost.date;
               if(parent.author===store.username) {
-                console.log("reply to your post!", newPost);
                 UserActions.newReplyNotification(thread.id, newPost.id);
               }
             } else {

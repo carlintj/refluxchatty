@@ -1,5 +1,4 @@
 var _ = require("lodash");
-var XDate = require("xdate");
 
 var getPost = function(post) {
     var fixedpost = {
@@ -37,7 +36,7 @@ var processThread = function (thread) {
         parentId: 0
     }));
     post.replyCount = replyCount;
-    post.latestReply = new XDate(latestReply);
+    post.latestReply = new Date(latestReply);
     
     post.focused = false;
     post.expandedChildId = 0;

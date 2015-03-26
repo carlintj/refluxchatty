@@ -323,6 +323,13 @@ var ChattyStore = Reflux.createStore({
   },
   userStoreUpdate: function(status) {
     this.username = status.username;
+  },
+  hideSelectedThread: function() {
+    var thread = _.find(this.threads, {focused: true});
+    if(thread) {
+      thread.hidden = true;
+      ChattyActions.selectNextParent();
+    }
   }
 });
 

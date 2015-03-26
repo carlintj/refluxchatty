@@ -40,6 +40,9 @@ var RefluxChatty = React.createClass({
         keymaster('end', function() {
             ChattyActions.selectLastParent();
         });
+        keymaster('h', function() {
+            ChattyActions.hideSelectedThread();
+        });
     },
     componentDidUpdate: function() {
       

@@ -12,9 +12,11 @@ var ParentComment = React.createClass({
     propTypes: {
       id: React.PropTypes.number.isRequired,
       replyingTo: React.PropTypes.number.isRequired,
-      username: React.PropTypes.string.isRequired
+      username: React.PropTypes.string.isRequired,
+      hidden: React.PropTypes.bool.isRequired
     },
     render: function() {
+      if(this.props.hidden) return null;
       var props = this.props;
       if(props.visibleThreads.length > 0 &&
         !_.find(props.visibleThreads, {threadId: props.id})) {

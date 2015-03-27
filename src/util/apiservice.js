@@ -1,11 +1,27 @@
 var _ = require("lodash");
 
 var getTimeString = function(date) {
-  var m = date.getMinutes();
-  var h = date.getHours();
-  var ampm = (h >= 12) ? "PM" : "AM";
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var ap = "AM";
+  if (hour > 11) {
+    ap = "PM";
+  }
+  if (hour > 12) {
+    hour = hour - 12;
+  }
+  if (hour == 0) {
+    hour = 12;
+  }
+  if (hour < 10) {
+    hour = "0" + hour;
+  }
+  if (minute < 10) {
+    minute = "0" + minute;
+  }
 
-  return (h + ':' + m + ' ' + ampm);
+  var timeString = hour + ':' + minute + ' '  + ap;
+  return timeString;
 }
 
 var getPost = function(post) {
@@ -44,8 +60,12 @@ var processThread = function(thread) {
   var post = processPost(_.find(posts, {
     parentId: 0
   }));
+  if(latestReply == 0) {
+    latestReply = post.date;
+  }
   post.replyCount = replyCount;
-  post.latestReply = getTimeString(new Date(latestReply));
+  post.latestReply = new Date(latestReply);
+  post.latestReplyStr = getTimeString(post.latestReply);
 
   post.focused = false;
   post.expandedChildId = 0;

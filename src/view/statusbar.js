@@ -47,10 +47,15 @@ var statusBar = React.createClass({
     }
     
     return (<div style={styles.statusbar}>
-        {status} |&nbsp;
-        <span>Last Event ID: {this.props.lastEventId}</span> |&nbsp;
-        {userinfo} |&nbsp;
+        {status} 
+        &nbsp;|&nbsp;
+        <span>Last Event ID: {this.props.lastEventId}</span> 
+        &nbsp;|&nbsp;
+        {userinfo} 
+        &nbsp;|&nbsp;
         Replies: <span style={styles.clickable} onClick={this.onShowReplies}>{this.props.unseenReplies.length}</span>
+        &nbsp;|&nbsp;
+        <span style={styles.clickable} onClick={this.onReorderClick}>Reorder</span>
         {loginScreen}
         
       </div>);
@@ -58,6 +63,9 @@ var statusBar = React.createClass({
   onShowReplies: function() {
     ChattyActions.showThreads(this.props.unseenReplies);
     UserActions.clearReplies();
+  },
+  onReorderClick: function() {
+    ChattyActions.reorderThreads();
   }
 });
 

@@ -39,10 +39,11 @@ var mergeEvents = function(threads, events, store) {
           if (thread) {
             var parent = findChildComment(thread, newPost.parentId);
             if (parent) {
-              var fixedPost = getPost(newPost)
+              var fixedPost = getPost(newPost);
               parent.children.push(fixedPost);
               thread.replyCount++;
-              thread.latestReply=fixedPost.dateStr;
+              thread.latestReply=fixedPost.date;
+              thread.latestReplyStr=fixedPost.dateStr;
               if(parent.author===store.username) {
                 UserActions.newReplyNotification(thread.id, newPost.id);
               }
@@ -54,7 +55,7 @@ var mergeEvents = function(threads, events, store) {
             //store.connected= false;
           }
         } else {
-          var newThread = getPost(newPost);
+          var newThread = processThread(newPost);
           newThread.threadId = newPost.threadId;
           store.threads.unshift(newThread);
         }
@@ -331,6 +332,10 @@ var ChattyStore = Reflux.createStore({
       thread.hidden = true;
       ChattyActions.selectNextParent();
     }
+  },
+  reorderThreads: function() {
+    this.threads = _.sortByOrder(this.threads, 'latestReply',false);
+    this.sendData();
   }
 });
 

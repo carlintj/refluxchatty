@@ -55,7 +55,9 @@ var mergeEvents = function(threads, events, store) {
             //store.connected= false;
           }
         } else {
-          var newThread = processThread(newPost);
+          var newThread = getPost(newPost);
+          newThread.latestReply = newThread.date;
+          newThread.latestReplyStr = newThread.dateStr;
           newThread.threadId = newPost.threadId;
           store.threads.unshift(newThread);
         }
@@ -335,7 +337,7 @@ var ChattyStore = Reflux.createStore({
   },
   reorderThreads: function() {
     this.threads = _.sortByOrder(this.threads, 'latestReply',false);
-    this.sendData();
+    ChattyActions.selectFirstParent();
   }
 });
 

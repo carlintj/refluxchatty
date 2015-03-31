@@ -6,7 +6,7 @@ var localStorage = require('store');
 //places that touch the password store.  This is why some of the flows are
 //a little awkward where it goes ChattyStore -> requestPost -> post
 
-var UserStore = Reflux.createStore({
+module.exports = Reflux.createStore({
   listenables: [UserActions],
   init: function() {
     this.tempusername = "";
@@ -103,5 +103,3 @@ var UserStore = Reflux.createStore({
     this.sendData();
   }
 });
-
-module.exports = UserStore;

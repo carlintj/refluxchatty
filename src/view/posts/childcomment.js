@@ -2,7 +2,6 @@ var React = require("react/addons");
 var styles = require("../misc/styles.js");
 var styleutil = require("../../util/styleutil.js");
 var ChattyActions = require("../../store/chattyactions.js");
-var ReplyBox = require("./replybox.js");
 var ChildCommentCollapsed = require("./childcommentcollapsed.js");
 var ChildCommentExpanded = require("./childcommentexpanded.js");
 
@@ -79,6 +78,7 @@ var ChildComment = React.createClass({
     } else {
       return (
         <ChildCommentExpanded body={props.body} author={props.author} dateStr={props.dateStr}
+          id={props.id}
           replyingTo={props.replyingTo}>
           {replies}
         </ChildCommentExpanded>

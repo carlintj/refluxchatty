@@ -42,19 +42,22 @@ var mergeEvents = function(threads, events, store) {
               var fixedPost = getPost(newPost);
               parent.children.push(fixedPost);
               thread.replyCount++;
-              thread.latestReply=fixedPost.date;
-              thread.latestReplyStr=fixedPost.dateStr;
-              if(parent.author===store.username) {
+              thread.latestReply = fixedPost.date;
+              thread.latestReplyStr = fixedPost.dateStr;
+              if (parent.author === store.username) {
                 UserActions.newReplyNotification(thread.id, newPost.id);
               }
-            } else {
+            }
+            else {
               console.warn("unable to find parent comment in thread", newPost);
             }
-          } else {
+          }
+          else {
             console.warn("unable to find thread", newPost.threadId, newPost);
             //store.connected= false;
           }
-        } else {
+        }
+        else {
           var newThread = getPost(newPost);
           newThread.latestReply = newThread.date;
           newThread.latestReplyStr = newThread.dateStr;
@@ -81,7 +84,7 @@ var ChattyStore = Reflux.createStore({
     this.username = localStorage.get('username');
     this.replyingTo = 0;
     this.visibleThreads = [];
-    
+
     this.listenTo(UserStore, this.userStoreUpdate);
   },
   getInitialState: function() {
@@ -136,14 +139,15 @@ var ChattyStore = Reflux.createStore({
   },
   getNewestEventIdCompleted: function(data) {
     this.loading = false;
-    if(data.eventId) {
+    if (data.eventId) {
       this.eventId = data.eventId;
       ChattyActions.getChatty();
-      ChattyActions.waitForEvent(this.eventId);  
-    } else {
+      ChattyActions.waitForEvent(this.eventId);
+    }
+    else {
       this.connected = false;
     }
-    
+
     this.sendData();
   },
   getNewestEventIdFailed: function(error) {
@@ -188,7 +192,8 @@ var ChattyStore = Reflux.createStore({
           thread.expandedChildId = thread.id;
           this.replyingTo = 0;
         }
-      } else {
+      }
+      else {
         thread.focused = false;
         thread.expandedChildId = 0;
       }
@@ -240,7 +245,7 @@ var ChattyStore = Reflux.createStore({
     this.sendData();
   },
   selectLastParent: function() {
-    this.highlightParent(this.threads[this.threads.length-1].id);
+    this.highlightParent(this.threads[this.threads.length - 1].id);
     this.sendData();
   },
   selectPrevComment: function() {
@@ -252,7 +257,8 @@ var ChattyStore = Reflux.createStore({
 
     if (thread.expandedChildId === 0) {
       thread.expandedChildId = thread.children[0].id;
-    } else {
+    }
+    else {
       var comment = findChildComment(thread, thread.expandedChildId);
       var siblings = getSiblings(thread, comment);
       var i = 0;
@@ -263,7 +269,8 @@ var ChattyStore = Reflux.createStore({
       }
       if (i == 0) {
         thread.expandedChildId = comment.parentId;
-      } else {
+      }
+      else {
         //find the id of the last grandchild of the sibling
         thread.expandedChildId = siblings[i - 1].id;
       }
@@ -278,28 +285,39 @@ var ChattyStore = Reflux.createStore({
     if (thread === undefined || thread.children.length == 0) return;
     if (thread.expandedChildId === 0) {
       thread.expandedChildId = thread.children[0].id;
-    } else {
+    }
+    else {
       var comment = findChildComment(thread, thread.expandedChildId);
-      if (comment.children.length > 0) {
+      if (!comment) {
         thread.expandedChildId = comment.children[0].id;
-      } else {
-        var found = false;
-        var siblings = getSiblings(thread, comment);
-        var finder = findChildComment(thread, comment.parentId);
-        do {
-          for (var i = 0; i < siblings.length - 1; i++) {
-            if (siblings[i].id === thread.expandedChildId) {
-              thread.expandedChildId = siblings[i + 1].id;
-              found = true;
-              break;
+      }
+      else {
+        if (comment.children.length > 0) {
+          thread.expandedChildId = comment.children[0].id;
+        }
+        else {
+          var found = false;
+          var siblings = getSiblings(thread, comment);
+          var finder = findChildComment(thread, comment.parentId);
+          do {
+            for (var i = 0; i < siblings.length - 1; i++) {
+              if (siblings[i].id === thread.expandedChildId) {
+                thread.expandedChildId = siblings[i + 1].id;
+                found = true;
+                break;
+              }
             }
-          }
-          if (!found) {
-            thread.expandedChildId = finder.id;
-            siblings = getSiblings(thread, finder);
-            finder = findChildComment(thread, finder.parentId);
-          }
-        } while (!found)
+            if (!found) {
+              thread.expandedChildId = finder.id;
+              if(finder.parentId !== 0) {
+                siblings = getSiblings(thread, finder);
+                finder = findChildComment(thread, finder.parentId);  
+              } else {
+                found = true;
+              }
+            }
+          } while (!found && finder)
+        }
       }
     }
     this.sendData();
@@ -311,7 +329,8 @@ var ChattyStore = Reflux.createStore({
     });
     if (thread) {
       this.replyingTo = thread.expandedChildId;
-    } else {
+    }
+    else {
       console.warn("could not find focused thread on openReply");
     }
     this.sendData();
@@ -329,14 +348,16 @@ var ChattyStore = Reflux.createStore({
     this.username = status.username;
   },
   hideSelectedThread: function() {
-    var thread = _.find(this.threads, {focused: true});
-    if(thread) {
+    var thread = _.find(this.threads, {
+      focused: true
+    });
+    if (thread) {
       thread.hidden = true;
       ChattyActions.selectNextParent();
     }
   },
   reorderThreads: function() {
-    this.threads = _.sortByOrder(this.threads, 'latestReply',false);
+    this.threads = _.sortByOrder(this.threads, 'latestReply', false);
     ChattyActions.selectFirstParent();
   }
 });

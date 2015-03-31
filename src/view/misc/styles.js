@@ -4,15 +4,20 @@ var styles = {
   },
   commentContainer: {
     marginLeft: 12,
-    border: '1px solid #cdced0',
-    borderRadius: '5px',
+    marginTop: 2,
+    borderLeft: '1px solid #cdced0',
+    borderTop: '1px solid #cdced0',
+    //borderRadius: '5px',
     padding: '2px',
-    fontSize: 11
+    fontSize: 11,
+    whiteSpace: 'nowrap'
   },
   highlightedComment: {
     background: '#E0F3FF',
     //marginLeft: 10,
-    fontSize: 13
+    fontSize: 13,
+    padding: 2,
+    whiteSpace: 'normal'
   },
   highlightedParent: {
     background: '#E0F3FF', //A7CDF0

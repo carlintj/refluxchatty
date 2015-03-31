@@ -2,8 +2,9 @@ var React = require("react/addons");
 var styles = require("../misc/styles.js");
 var styleutil = require("../../util/styleutil.js");
 var ChattyActions = require("../../store/chattyactions.js");
-var AutoscrollingMixin = require("../misc/autoscrollingmixin.js");
 var ReplyBox = require("./replybox.js");
+var ChildCommentCollapsed = require("./childcommentcollapsed.js");
+var ChildCommentExpanded = require("./childcommentexpanded.js");
 
 var fixComment = function(comment) {
   var div = document.createElement('div');
@@ -66,48 +67,23 @@ var ChildComment = React.createClass({
       props.expandedChildId, props.replyingTo,props.username);
     var expanded = props.expandedChildId == props.id;
     
-    var comment = null;
-    var replyBox = null;
-    
-    if(expanded) {
-      comment = props.body;
-      if(props.replyingTo === props.id) {
-        replyBox = <ReplyBox parentCommentId={props.id}/>
-      }
+    if(!expanded) {
+      return (
+        <ChildCommentCollapsed body={props.body} author={props.author} 
+        date={props.date}
+        onClickEvent={this.handleClick}
+        username={props.username}>
+          {replies}
+        </ChildCommentCollapsed>
+      );
     } else {
-      //this needs to be safely escaped to make sure there are no hanging tags.
-      comment = props.body.substring(0,200);
-      if(comment.length != props.body.length){
-        comment = fixComment(comment + "...");
-      }
+      return (
+        <ChildCommentExpanded body={props.body} author={props.author} dateStr={props.dateStr}
+          replyingTo={props.replyingTo}>
+          {replies}
+        </ChildCommentExpanded>
+      );
     }
-    
-    var scroller = null;
-      if(expanded) {
-        scroller = <AutoscrollingMixin parent={this} />
-      } else {
-        scroller = null;
-      }
-    var ageStyle = calculateAgeStyle(props.date);
-    var commentStyle = styleutil(
-      ageStyle,
-      props.username==props.author && styles.ownerPost,
-      expanded && styles.highlightedComment
-    );
-    
-    return (<div style={styles.commentContainer}>
-            <div ref="anchor" onClick={this.handleClick} style={commentStyle} >
-              <div style={styles.username}>
-                {props.author} @ <span style={styles.date}>{props.dateStr}</span>
-                {scroller}
-              </div>
-              <div dangerouslySetInnerHTML={{__html: comment}} />
-            </div>
-            {replyBox}
-              <div>
-                {replies}
-              </div>
-            </div>);
   },
   handleClick : function(e) {
     e.stopPropagation();

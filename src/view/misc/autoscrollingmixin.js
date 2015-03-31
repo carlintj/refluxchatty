@@ -26,7 +26,7 @@ var autoscrolling = React.createClass({
       });
     },
     render: function() {
-      return <span/>;
+      return null;
     }
 });
 

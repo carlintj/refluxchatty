@@ -48,7 +48,7 @@ var ParentComment = React.createClass({
           replies = <div ref="replies" className={highlightClass}><span style={styles.clickable} 
               onClick={this.onRepliesClick}>
               {props.replyCount} {replyStr}</span>
-              &nbsp;<span style={styles.date}>Last reply @ : {props.latestReply}</span>
+              &nbsp;<span style={styles.date}>Last reply @ {props.latestReply}</span>
             </div>;
           }
       } else {
@@ -73,7 +73,7 @@ var ParentComment = React.createClass({
               <span style={styles.username}>
                 {props.author}
               </span>
-              @ <span style={styles.date}>{props.date.toLocaleString()}</span>
+              @ <span style={styles.date}>{props.dateStr}</span>
               <div dangerouslySetInnerHTML={{__html: props.body}} />
               {replies}
             </div>

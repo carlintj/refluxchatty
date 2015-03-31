@@ -1,6 +1,8 @@
 var _ = require("lodash");
 
 var getTimeString = function(date) {
+  var now = new Date(Date.now());
+  
   var hour = date.getHours();
   var minute = date.getMinutes();
   var ap = "AM";
@@ -21,6 +23,11 @@ var getTimeString = function(date) {
   }
 
   var timeString = hour + ':' + minute + ' '  + ap;
+
+  if(now.getDate() !== date.getDate()) {
+    timeString = date.getMonth()+1 + '/' + date.getDate() + ' ' + timeString;
+  }
+  
   return timeString;
 }
 

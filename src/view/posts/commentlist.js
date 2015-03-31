@@ -1,6 +1,6 @@
 var React = require("react/addons");
 var ParentComment = require("./parentcomment.js");
-var styles = require("./styles.js");
+var styles = require("../misc/styles.js");
 
 var CommentList = React.createClass({
   render: function() {

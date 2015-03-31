@@ -1,9 +1,9 @@
 var React = require("react/addons");
-var styles = require("./styles.js");
-var combine = require("../util/styleutil.js");
+var styles = require("../misc/styles.js");
+var combine = require("../../util/styleutil.js");
 var renderChildComments = require("./childcomment.js").renderChildComments;
-var ChattyActions = require("../store/chattyactions.js");
-var AutoscrollingMixin = require("./autoscrollingmixin.js");
+var ChattyActions = require("../../store/chattyactions.js");
+var AutoscrollingMixin = require("../misc/autoscrollingmixin.js");
 var ReplyBox = require("./replybox.js");
 var _ = require("lodash");
 

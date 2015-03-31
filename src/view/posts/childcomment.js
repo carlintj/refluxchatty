@@ -1,8 +1,8 @@
 var React = require("react/addons");
-var styles = require("./styles.js");
-var styleutil = require("../util/styleutil.js");
-var ChattyActions = require("../store/chattyactions.js");
-var AutoscrollingMixin = require("./autoscrollingmixin.js");
+var styles = require("../misc/styles.js");
+var styleutil = require("../../util/styleutil.js");
+var ChattyActions = require("../../store/chattyactions.js");
+var AutoscrollingMixin = require("../misc/autoscrollingmixin.js");
 var ReplyBox = require("./replybox.js");
 
 var fixComment = function(comment) {

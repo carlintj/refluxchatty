@@ -2,7 +2,7 @@ var _ = require("lodash");
 
 var getTimeString = function(date) {
   var now = new Date(Date.now());
-  
+
   var hour = date.getHours();
   var minute = date.getMinutes();
   var ap = "AM";
@@ -22,12 +22,12 @@ var getTimeString = function(date) {
     minute = "0" + minute;
   }
 
-  var timeString = hour + ':' + minute + ' '  + ap;
+  var timeString = hour + ':' + minute + ' ' + ap;
 
-  if(now.getDate() !== date.getDate()) {
-    timeString = date.getMonth()+1 + '/' + date.getDate() + ' ' + timeString;
+  if (now.getDate() !== date.getDate()) {
+    timeString = date.getMonth() + 1 + '/' + date.getDate() + ' ' + timeString;
   }
-  
+
   return timeString;
 }
 
@@ -39,7 +39,8 @@ var getPost = function(post) {
     date: new Date(post.date),
     replyCount: 0,
     children: [],
-    parentId: post.parentId
+    parentId: post.parentId,
+    category: post.category
   };
   fixedpost.dateStr = getTimeString(fixedpost.date);
   return fixedpost;
@@ -67,7 +68,7 @@ var processThread = function(thread) {
   var post = processPost(_.find(posts, {
     parentId: 0
   }));
-  if(latestReply == 0) {
+  if (latestReply == 0) {
     latestReply = post.date;
   }
   post.replyCount = replyCount;
@@ -76,6 +77,7 @@ var processThread = function(thread) {
 
   post.focused = false;
   post.expandedChildId = 0;
+  console.log(post.category);
   return post;
 };
 

@@ -13,8 +13,15 @@ module.exports = React.createClass({
       replyBox = <ReplyBox parentCommentId={props.id}/>;
     }
     
+    var commentStyle = styles.highlightedComment;
+    if(props.category === "informative") {
+      commentStyle = styleutil(commentStyle,styles.commentExpandedInformative);
+    } else if(props.category === "nws") {
+      commentStyle = styleutil(commentStyle,styles.commentExpandedNWS);
+    }
+    
     return (<div style={styles.commentContainer}>
-            <div ref="anchor" onClick={this.handleClick} style={styles.highlightedComment}>
+            <div ref="anchor" onClick={this.handleClick} style={commentStyle}>
               <div style={styles.username}>
                 {props.author} @ <span style={styles.date}>{props.dateStr}</span>
               </div>

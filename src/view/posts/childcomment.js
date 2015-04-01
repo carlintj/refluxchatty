@@ -43,6 +43,7 @@ var renderChildComments = function(threadId,children,expandedChildId,replyingTo,
     expandedChildId = {expandedChildId} 
     threadId={threadId} 
     replyingTo={replyingTo}
+    category={comment.category}
     username={username}/>);
   });
   return replies;
@@ -58,7 +59,8 @@ var ChildComment = React.createClass({
     body: React.PropTypes.string.isRequired,
     author: React.PropTypes.string.isRequired,
     id: React.PropTypes.number.isRequired,
-    username: React.PropTypes.string.isRequired
+    username: React.PropTypes.string.isRequired,
+    catch: React.PropTypes.string.isRequired
   },
   render: function() {
     var props = this.props;
@@ -71,7 +73,8 @@ var ChildComment = React.createClass({
         <ChildCommentCollapsed body={props.body} author={props.author} 
         date={props.date}
         onClickEvent={this.handleClick}
-        username={props.username}>
+        username={props.username}
+        category={props.category}>
           {replies}
         </ChildCommentCollapsed>
       );
@@ -79,7 +82,8 @@ var ChildComment = React.createClass({
       return (
         <ChildCommentExpanded body={props.body} author={props.author} dateStr={props.dateStr}
           id={props.id}
-          replyingTo={props.replyingTo}>
+          replyingTo={props.replyingTo}
+          category={props.category}>
           {replies}
         </ChildCommentExpanded>
       );

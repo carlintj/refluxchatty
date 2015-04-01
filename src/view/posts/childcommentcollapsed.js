@@ -56,6 +56,11 @@ module.exports = React.createClass({
       props.username == props.author && styles.ownerPost,
       styles.commentContainer
     );
+    if(props.category === "informative") {
+      commentStyle = styleutil(commentStyle,styles.commentInformative);
+    } else if(props.category === "nws") {
+      commentStyle = styleutil(commentStyle,styles.commentNWS);
+    }
 
     return (<div style={commentStyle} onClick={this.handleClick}>
         <span style={styles.username}>{props.author}</span>

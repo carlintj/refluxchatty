@@ -6,11 +6,23 @@ var styles = {
     marginLeft: 12,
     marginTop: 2,
     borderLeft: '1px solid #cdced0',
-    borderTop: '1px solid #cdced0',
+    //borderTop: '1px solid #cdced0',
     //borderRadius: '5px',
     padding: '2px',
     fontSize: 11,
     whiteSpace: 'nowrap'
+  },
+  commentInformative: {
+    borderLeft: '2px solid #0003FD',
+  },
+  commentNWS: { 
+    borderLeft: '2px solid #FF0000',
+  },
+  commentExpandedInformative: {
+    border: '2px solid #0003FD',
+  },
+  commentExpandedNWS: {
+    border: '2px solid #FF0000',
   },
   highlightedComment: {
     background: '#E0F3FF',
@@ -21,6 +33,14 @@ var styles = {
   },
   highlightedParent: {
     background: '#E0F3FF', //A7CDF0
+  },
+  parentInformative: {
+    fontWeight: 'bold',
+    color: '#0000FF'
+  },
+  parentNWS: { 
+    fontWeight: 'bold',
+    color: '#FF0000'
   },
   ownerPost: {
     background: '#C1C1C1'

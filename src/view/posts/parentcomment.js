@@ -14,7 +14,8 @@ var ParentComment = React.createClass({
       replyingTo: React.PropTypes.number.isRequired,
       username: React.PropTypes.string.isRequired,
       hidden: React.PropTypes.bool.isRequired,
-      latestReply: React.PropTypes.string.isRequired
+      latestReply: React.PropTypes.string.isRequired,
+      category: React.PropTypes.string.isRequired
     },
     getInitialState: function() {
       return ({'highlightReplies': false});
@@ -65,6 +66,13 @@ var ParentComment = React.createClass({
         replyBox = <ReplyBox parentCommentId={props.id}/>
       }
       
+      var categoryStyle=null;
+      if(props.category === "nws") {
+        categoryStyle = styles.parentNWS;
+      } else if(props.category === "informative") {
+        categoryStyle = styles.parentInformative;
+      }
+      
       return (
         <div style={styles.parentContainer} onClick={this.onParentClick}>
           <div style={styles.parentComment}>
@@ -74,6 +82,7 @@ var ParentComment = React.createClass({
                 {props.author}
               </span>
               @ <span style={styles.date}>{props.dateStr}</span>
+              &nbsp;<span style={categoryStyle}>{props.category}</span>
               <div dangerouslySetInnerHTML={{__html: props.body}} />
               {replies}
             </div>

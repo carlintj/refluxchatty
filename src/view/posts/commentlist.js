@@ -23,6 +23,7 @@ var CommentList = React.createClass({
         replyingTo={_this.props.replyingTo}
         visibleThreads={_this.props.visibleThreads}
         username={_this.props.username}
+        category={comment.category}
         />);
     });
     

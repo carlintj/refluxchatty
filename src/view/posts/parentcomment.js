@@ -20,6 +20,15 @@ var ParentComment = React.createClass({
     getInitialState: function() {
       return ({'highlightReplies': false});
     },
+    shouldComponentUpdate: function(nextProps, nextState) {
+      if(this.props.replyingTo != nextProps.replyingTo) return true;
+      if(this.props.hidden != nextProps.hidden) return true;
+      if(this.props.replyCount != nextProps.replyCount) return true;
+      if(this.props.expandedChildId != nextProps.expandedChildId) return true;
+      if(this.props.focused != nextProps.focused) return true;
+      if(this.props.expanded != nextProps.expanded) return true;
+      return false;
+    },
     render: function() {
       if(this.props.hidden) return null;
       var props = this.props;

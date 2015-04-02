@@ -27,6 +27,7 @@ var ParentComment = React.createClass({
       if(this.props.expandedChildId != nextProps.expandedChildId) return true;
       if(this.props.focused != nextProps.focused) return true;
       if(this.props.expanded != nextProps.expanded) return true;
+      if(this.props.visibleThreads.length != nextProps.visibleThreads.length) return true;
       return false;
     },
     render: function() {

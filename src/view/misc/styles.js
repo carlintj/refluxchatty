@@ -43,7 +43,7 @@ var styles = {
     color: '#FF0000'
   },
   ownerPost: {
-    background: '#C1C1C1'
+    background: '#EFFC94'
   },
   parentContainer: {
     background: '#FFFFFF',

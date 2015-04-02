@@ -1,7 +1,7 @@
 var React = require("react/addons");
-var ChattyActions = require("../store/chattyactions.js");
-var ChattyStore = require("../store/chattystore.js");
-var styles = require("./styles.js");
+var ChattyActions = require("../../store/chattyactions.js");
+var ChattyStore = require("../../store/chattystore.js");
+var styles = require("../misc/styles.js");
 
 var replyBox = React.createClass({
   mixins: [React.addons.LinkedStateMixin],

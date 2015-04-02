@@ -1,6 +1,6 @@
 var React = require("react/addons");
 var ParentComment = require("./parentcomment.js");
-var styles = require("./styles.js");
+var styles = require("../misc/styles.js");
 
 var CommentList = React.createClass({
   render: function() {
@@ -23,6 +23,7 @@ var CommentList = React.createClass({
         replyingTo={_this.props.replyingTo}
         visibleThreads={_this.props.visibleThreads}
         username={_this.props.username}
+        category={comment.category}
         />);
     });
     

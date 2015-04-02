@@ -1,10 +1,10 @@
 var React = require("react/addons");
-var ChattyActions = require("../store/chattyactions.js");
-var ChattyStore = require("../store/chattystore.js");
-var UserActions = require("../store/useractions.js");
-var UserStore = require("../store/userstore.js");
-var styles = require("./styles.js");
-var combine = require("../util/styleutil.js");
+var ChattyActions = require("../../store/chattyactions.js");
+var ChattyStore = require("../../store/chattystore.js");
+var UserActions = require("../../store/useractions.js");
+var UserStore = require("../../store/userstore.js");
+var styles = require("../misc/styles.js");
+var combine = require("../../util/styleutil.js");
 var LoginScreen = require("./login.js");
 
 var statusBar = React.createClass({

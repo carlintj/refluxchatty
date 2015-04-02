@@ -1,5 +1,5 @@
-var isElementInViewport = require("../util/elementscrolling.js").isElementInViewport;
-var scrollIntoView = require("../util/elementscrolling.js").scrollIntoView;
+var isElementInViewport = require("../../util/elementscrolling.js").isElementInViewport;
+var scrollIntoView = require("../../util/elementscrolling.js").scrollIntoView;
 var React = require("react/addons");
 
 var autoscrolling = React.createClass({
@@ -26,7 +26,7 @@ var autoscrolling = React.createClass({
       });
     },
     render: function() {
-      return <span/>;
+      return null;
     }
 });
 

@@ -1,9 +1,9 @@
 var React = require("react/addons");
-var styles = require("./styles.js");
-var styleutil = require("../util/styleutil.js");
-var ChattyActions = require("../store/chattyactions.js");
-var AutoscrollingMixin = require("./autoscrollingmixin.js");
-var ReplyBox = require("./replybox.js");
+var styles = require("../misc/styles.js");
+var styleutil = require("../../util/styleutil.js");
+var ChattyActions = require("../../store/chattyactions.js");
+var ChildCommentCollapsed = require("./childcommentcollapsed.js");
+var ChildCommentExpanded = require("./childcommentexpanded.js");
 
 var fixComment = function(comment) {
   var div = document.createElement('div');
@@ -43,6 +43,7 @@ var renderChildComments = function(threadId,children,expandedChildId,replyingTo,
     expandedChildId = {expandedChildId} 
     threadId={threadId} 
     replyingTo={replyingTo}
+    category={comment.category}
     username={username}/>);
   });
   return replies;
@@ -58,7 +59,8 @@ var ChildComment = React.createClass({
     body: React.PropTypes.string.isRequired,
     author: React.PropTypes.string.isRequired,
     id: React.PropTypes.number.isRequired,
-    username: React.PropTypes.string.isRequired
+    username: React.PropTypes.string.isRequired,
+    catch: React.PropTypes.string.isRequired
   },
   render: function() {
     var props = this.props;
@@ -66,48 +68,26 @@ var ChildComment = React.createClass({
       props.expandedChildId, props.replyingTo,props.username);
     var expanded = props.expandedChildId == props.id;
     
-    var comment = null;
-    var replyBox = null;
-    
-    if(expanded) {
-      comment = props.body;
-      if(props.replyingTo === props.id) {
-        replyBox = <ReplyBox parentCommentId={props.id}/>
-      }
+    if(!expanded) {
+      return (
+        <ChildCommentCollapsed body={props.body} author={props.author} 
+        date={props.date}
+        onClickEvent={this.handleClick}
+        username={props.username}
+        category={props.category}>
+          {replies}
+        </ChildCommentCollapsed>
+      );
     } else {
-      //this needs to be safely escaped to make sure there are no hanging tags.
-      comment = props.body.substring(0,200);
-      if(comment.length != props.body.length){
-        comment = fixComment(comment + "...");
-      }
+      return (
+        <ChildCommentExpanded body={props.body} author={props.author} dateStr={props.dateStr}
+          id={props.id}
+          replyingTo={props.replyingTo}
+          category={props.category}>
+          {replies}
+        </ChildCommentExpanded>
+      );
     }
-    
-    var scroller = null;
-      if(expanded) {
-        scroller = <AutoscrollingMixin parent={this} />
-      } else {
-        scroller = null;
-      }
-    var ageStyle = calculateAgeStyle(props.date);
-    var commentStyle = styleutil(
-      ageStyle,
-      props.username==props.author && styles.ownerPost,
-      expanded && styles.highlightedComment
-    );
-    
-    return (<div style={styles.commentContainer}>
-            <div ref="anchor" onClick={this.handleClick} style={commentStyle} >
-              <div style={styles.username}>
-                {props.author} @ <span style={styles.date}>{props.dateStr}</span>
-                {scroller}
-              </div>
-              <div dangerouslySetInnerHTML={{__html: comment}} />
-            </div>
-            {replyBox}
-              <div>
-                {replies}
-              </div>
-            </div>);
   },
   handleClick : function(e) {
     e.stopPropagation();

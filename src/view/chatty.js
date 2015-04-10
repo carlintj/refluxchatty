@@ -8,7 +8,7 @@ var UserStore = require("../store/userstore.js");
 var keymaster = require("keymaster");
 
 //TODO add unmount for deregistering keymaster
-var RefluxChatty = React.createClass({
+module.exports = React.createClass({
     mixins: [Reflux.connect(UserStore,"UserStore"),Reflux.connect(ChattyStore,"ChattyStore")
       ],
     getInitialState: function() {
@@ -67,5 +67,3 @@ var RefluxChatty = React.createClass({
       </div>);
     }
 });
-
-module.exports = RefluxChatty;

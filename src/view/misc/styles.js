@@ -1,4 +1,4 @@
-var styles = {
+module.exports = {
   body: {
     background: '#5c97bf'
   },
@@ -124,5 +124,3 @@ var styles = {
     background: '#FFF3ED'
   },
 };
-
-module.exports = styles;

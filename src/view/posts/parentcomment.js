@@ -8,7 +8,7 @@ var ReplyBox = require("./replybox.js");
 var _ = require("lodash");
 
 
-var ParentComment = React.createClass({
+module.exports = React.createClass({
     propTypes: {
       id: React.PropTypes.number.isRequired,
       replyingTo: React.PropTypes.number.isRequired,
@@ -130,5 +130,3 @@ var ParentComment = React.createClass({
       ChattyActions.highlightParent(this.props.id);
     }
 });
-
-module.exports = ParentComment;

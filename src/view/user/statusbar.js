@@ -1,13 +1,11 @@
 var React = require("react/addons");
 var ChattyActions = require("../../store/chattyactions.js");
-var ChattyStore = require("../../store/chattystore.js");
 var UserActions = require("../../store/useractions.js");
-var UserStore = require("../../store/userstore.js");
 var styles = require("../misc/styles.js");
 var combine = require("../../util/styleutil.js");
 var LoginScreen = require("./login.js");
 
-var statusBar = React.createClass({
+module.exports = React.createClass({
   propTypes: {
     username: React.PropTypes.string.isRequired,
     connected: React.PropTypes.bool.isRequired,
@@ -74,5 +72,3 @@ var statusBar = React.createClass({
     ChattyActions.reorderThreads();
   }
 });
-
-module.exports = statusBar;

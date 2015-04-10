@@ -73,7 +73,7 @@ var mergeEvents = function(threads, events, store) {
   }
 };
 
-var ChattyStore = Reflux.createStore({
+module.exports = Reflux.createStore({
   listenables: [ChattyActions],
   init: function() {
     this.threads = [];
@@ -369,5 +369,3 @@ var ChattyStore = Reflux.createStore({
     ChattyActions.selectFirstParent();
   }
 });
-
-module.exports = ChattyStore;

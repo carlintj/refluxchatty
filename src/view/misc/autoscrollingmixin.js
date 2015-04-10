@@ -2,7 +2,7 @@ var isElementInViewport = require("../../util/elementscrolling.js").isElementInV
 var scrollIntoView = require("../../util/elementscrolling.js").scrollIntoView;
 var React = require("react/addons");
 
-var autoscrolling = React.createClass({
+module.exports = React.createClass({
     componentDidMount: function() {
       if(!this.state.hasAnchored) {
         var anchor = this.props.parent.refs.anchor;
@@ -29,5 +29,3 @@ var autoscrolling = React.createClass({
       return null;
     }
 });
-
-module.exports = autoscrolling;

@@ -22,6 +22,13 @@ var statusBar = React.createClass({
   fullRefresh: function() {
     ChattyActions.fullRefresh();
   },
+  checkPMs: function() {
+    UserActions.requestMessageCount();
+  },
+  componentDidMount: function() {
+    this.checkPMs();
+    this.messageTimer = setInterval(this.checkPMs,5 * 60 * 1000);
+  },
   render: function() {
     var status = null;
     if(this.props.connected) {
@@ -43,7 +50,7 @@ var statusBar = React.createClass({
     
     var loginScreen = null;
     if(this.props.showLogin) {
-      loginScreen = <LoginScreen loginMessage={this.props.loginMessage}/>
+      loginScreen = <LoginScreen loginMessage={this.props.loginMessage}/>;
     }
     
     return (<div style={styles.statusbar}>
@@ -57,7 +64,6 @@ var statusBar = React.createClass({
         &nbsp;|&nbsp;
         <span style={styles.clickable} onClick={this.onReorderClick}>Reorder</span>
         {loginScreen}
-        
       </div>);
   },
   onShowReplies: function() {

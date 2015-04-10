@@ -78,7 +78,9 @@ module.exports = Reflux.createStore({
     this.sendData();
   },
   requestMessageCount: function() {
-    UserActions.getMessageCount(localStorage.get('username'), localStorage.get('password'));
+    if(localStorage.get('username') && (localStorage.get('password'))) {
+      UserActions.getMessageCount(localStorage.get('username'), localStorage.get('password'));  
+    }
   },
   sendData: function() {
     this.trigger({

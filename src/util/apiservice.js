@@ -77,7 +77,6 @@ var processThread = function(thread) {
 
   post.focused = false;
   post.expandedChildId = 0;
-  console.log(post.category);
   return post;
 };
 

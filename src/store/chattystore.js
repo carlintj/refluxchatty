@@ -118,6 +118,7 @@ module.exports = Reflux.createStore({
   getChatty: function() {
     this.loading = true;
     this.sendData();
+    ChattyActions.waitForEvent(this.eventId);
   },
   getChattyCompleted: function(data) {
     this.threads = [];
@@ -142,7 +143,6 @@ module.exports = Reflux.createStore({
     if (data.eventId) {
       this.eventId = data.eventId;
       ChattyActions.getChatty();
-      ChattyActions.waitForEvent(this.eventId);
     }
     else {
       this.connected = false;

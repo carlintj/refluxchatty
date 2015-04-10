@@ -54,6 +54,7 @@ var mergeEvents = function(threads, events, store) {
           }
           else {
             console.warn("unable to find thread", newPost.threadId, newPost);
+            ChattyActions.getThread(newPost.threadId);
             //store.connected= false;
           }
         }
@@ -118,7 +119,6 @@ module.exports = Reflux.createStore({
   getChatty: function() {
     this.loading = true;
     this.sendData();
-    ChattyActions.waitForEvent(this.eventId);
   },
   getChattyCompleted: function(data) {
     this.threads = [];
@@ -127,6 +127,7 @@ module.exports = Reflux.createStore({
       this.threads.push(processThread(thread));
     }.bind(this));
     this.sendData();
+    ChattyActions.waitForEvent(this.eventId);
   },
   getChattyFailed: function(error) {
     console.error(error);
@@ -154,6 +155,13 @@ module.exports = Reflux.createStore({
     this.connected = false;
     console.error(error);
     this.loading = false;
+    this.sendData();
+  },
+  getThreadCompleted: function(data) {
+    console.log("getThreadCompleted", data);
+    _.each(data.threads, function(thread) {
+      this.threads.unshift(processThread(thread));
+    }.bind(this));
     this.sendData();
   },
   waitForEventCompleted: function(data) {

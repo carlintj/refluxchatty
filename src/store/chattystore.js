@@ -202,9 +202,17 @@ var ChattyStore = Reflux.createStore({
   },
   selectComment: function(parentId, commentId) {
     this.replyingTo = 0;
-    var parent = _.find(this.threads, {
-      id: parentId
+    var parent = null;
+    _.each(this.threads, function(thread) {
+      if (thread.id === parentId) {
+        parent = thread;
+        thread.focused = true;
+      }
+      else {
+        thread.focused = false;
+      }
     });
+
     if (parent.expandedChildId != commentId) {
       parent.expandedChildId = commentId;
       this.sendData();

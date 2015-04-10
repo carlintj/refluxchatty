@@ -18,6 +18,9 @@ var styles = {
   commentNWS: { 
     borderLeft: '2px solid #FF0000',
   },
+  hoveredComment: {
+    background: '#E0F3FF',
+  },
   commentExpandedInformative: {
     border: '2px solid #0003FD',
   },

@@ -20,6 +20,7 @@ module.exports = {
   },
   hoveredComment: {
     background: '#E0F3FF',
+    cursor: 'pointer',
   },
   commentExpandedInformative: {
     border: '2px solid #0003FD',

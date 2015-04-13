@@ -90,7 +90,7 @@ module.exports = {
     color: '#red !important'
   },
   commentBox: {
-    width: 600,
+    width: 500,
     height: 150
   },
   commentBody: {

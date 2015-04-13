@@ -67,7 +67,6 @@ module.exports = React.createClass({
       }
 
       if(props.focused && (props.id === props.expandedChildId || !props.expanded )) {
-        console.log(props.expandedChildId);
         scroller = <AutoscrollingMixin parent={this} />
       } else {
         scroller = null;

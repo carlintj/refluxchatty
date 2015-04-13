@@ -1,7 +1,8 @@
 var React = require("react/addons");
 var styles = require("../misc/styles.js");
 var styleutil = require("../../util/styleutil.js");
-var ChattyActions = require("../../store/chattyactions.js");
+//var ChattyActions = require("../../store/chattyactions.js");
+var HoverMixin = require("..//misc/hovermixin.js");
 
 var fixComment = function(comment) {
   var div = document.createElement('div');
@@ -14,7 +15,6 @@ var getVisibleLength = function(comment) {
   div.innerHTML = comment;
   return div.textContent.length;
 };
-
 
 var calculateAgeStyle = function(date) {
   var now = Date.now();
@@ -42,6 +42,7 @@ var calculateAgeStyle = function(date) {
 };
 
 module.exports = React.createClass({
+  mixins: [HoverMixin],
   render: function() {
     var props = this.props;
     var comment = props.body.replace(/<br \/>/g, " ");
@@ -53,21 +54,25 @@ module.exports = React.createClass({
     var ageStyle = calculateAgeStyle(props.date);
     var commentStyle = styleutil(
       ageStyle,
-      props.username == props.author && styles.ownerPost,
-      styles.commentContainer
+      props.username == props.author && styles.ownerPost
     );
-    if(props.category === "informative") {
+    if(this.state.hovered) {
+      commentStyle = styles.hoveredComment;
+    }
+    else if(props.category === "informative") {
       commentStyle = styleutil(commentStyle,styles.commentInformative);
     } else if(props.category === "nws") {
       commentStyle = styleutil(commentStyle,styles.commentNWS);
     }
 
-    return (<div style={commentStyle} onClick={this.handleClick}>
-        <span style={styles.username}>{props.author}</span>
-        &nbsp; - &nbsp;
-        <span dangerouslySetInnerHTML={{__html: comment}} ></span>
-        {props.children}
+    return (<div style={styles.commentContainer} onClick={this.handleClick}>
+    <div style={commentStyle} ref="hover">
+      <span style={styles.username}>{props.author}</span>
+      &nbsp; - &nbsp;
+      <span dangerouslySetInnerHTML={{__html: comment}} ></span>
       </div>
+      {props.children}
+    </div>
     );
   },
   handleClick: function(e) {

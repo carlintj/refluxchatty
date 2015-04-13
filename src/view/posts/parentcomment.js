@@ -8,7 +8,7 @@ var ReplyBox = require("./replybox.js");
 var _ = require("lodash");
 
 
-var ParentComment = React.createClass({
+module.exports = React.createClass({
     propTypes: {
       id: React.PropTypes.number.isRequired,
       replyingTo: React.PropTypes.number.isRequired,
@@ -66,7 +66,7 @@ var ParentComment = React.createClass({
         replies = <span>No replies</span>;
       }
 
-      if(props.focused) {
+      if(props.focused && (props.id === props.expandedChildId || !props.expanded )) {
         scroller = <AutoscrollingMixin parent={this} />
       } else {
         scroller = null;
@@ -130,5 +130,3 @@ var ParentComment = React.createClass({
       ChattyActions.highlightParent(this.props.id);
     }
 });
-
-module.exports = ParentComment;

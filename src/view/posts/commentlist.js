@@ -2,7 +2,7 @@ var React = require("react/addons");
 var ParentComment = require("./parentcomment.js");
 var styles = require("../misc/styles.js");
 
-var CommentList = React.createClass({
+module.exports = React.createClass({
   render: function() {
     var _this = this;
     var comments = this.props.threads.map(function(comment,i) {
@@ -34,5 +34,3 @@ var CommentList = React.createClass({
     );
   }
 });
-
-module.exports = CommentList;

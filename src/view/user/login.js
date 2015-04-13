@@ -1,11 +1,7 @@
 var React = require("react/addons");
-var Reflux = require("reflux");
-var ChattyActions = require("../../store/chattyactions.js");
-var ChattyStore = require("../../store/chattystore.js");
 var UserActions = require("../../store/useractions.js");
-var USerStore = require("../../store/userstore.js");
 
-var loginScreen = React.createClass({
+module.exports = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
   getInitialState: function() {
     return {
@@ -26,5 +22,3 @@ var loginScreen = React.createClass({
     UserActions.login(this.state.username,this.state.password);
   }
 });
-
-module.exports = loginScreen;

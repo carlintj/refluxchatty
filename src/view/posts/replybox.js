@@ -1,9 +1,8 @@
 var React = require("react/addons");
 var ChattyActions = require("../../store/chattyactions.js");
-var ChattyStore = require("../../store/chattystore.js");
 var styles = require("../misc/styles.js");
 
-var replyBox = React.createClass({
+module.exports = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
   propTypes: { 
     parentCommentId: React.PropTypes.number.isRequired
@@ -33,5 +32,3 @@ var replyBox = React.createClass({
     event.stopPropagation();
   }
 });
-
-module.exports = replyBox;

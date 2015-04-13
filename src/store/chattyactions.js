@@ -6,7 +6,8 @@ var URLs = {
   getChatty: "//winchatty.com/v2/getChatty",
   getNewestEventId: "//winchatty.com/v2/getNewestEventId",
   waitForEvent: "//winchatty.com/v2/waitForEvent?lastEventId=",
-  verifyCredentials: "//winchatty.com/v2/verifyCredentials"
+  verifyCredentials: "//winchatty.com/v2/verifyCredentials",
+  getThread: "//winchatty.com/v2/getThread?id="
 };
 
 var Actions = Reflux.createActions({
@@ -18,6 +19,9 @@ var Actions = Reflux.createActions({
     asyncResult: true
   },
   waitForEvent: {
+    asyncResult: true
+  },
+  getThread: {
     asyncResult: true
   },
   //UI events
@@ -99,6 +103,15 @@ Actions.waitForEvent.listen(function(eventId) {
     })
     .then(Actions.waitForEvent.completed)
     .catch(Actions.waitForEvent.failed);
+});
+
+Actions.getThread.listen(function(threadId) {
+  reqwest({
+    url: URLs.getThread + threadId,
+    crossOrigin: true,
+  })
+  .then(Actions.getThread.completed)
+  .catch(Actions.getThread.failed);
 });
 
 module.exports = Actions;

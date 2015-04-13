@@ -54,6 +54,7 @@ var mergeEvents = function(threads, events, store) {
           }
           else {
             console.warn("unable to find thread", newPost.threadId, newPost);
+            ChattyActions.getThread(newPost.threadId);
             //store.connected= false;
           }
         }
@@ -73,7 +74,7 @@ var mergeEvents = function(threads, events, store) {
   }
 };
 
-var ChattyStore = Reflux.createStore({
+module.exports = Reflux.createStore({
   listenables: [ChattyActions],
   init: function() {
     this.threads = [];
@@ -126,6 +127,7 @@ var ChattyStore = Reflux.createStore({
       this.threads.push(processThread(thread));
     }.bind(this));
     this.sendData();
+    ChattyActions.waitForEvent(this.eventId);
   },
   getChattyFailed: function(error) {
     console.error(error);
@@ -142,7 +144,6 @@ var ChattyStore = Reflux.createStore({
     if (data.eventId) {
       this.eventId = data.eventId;
       ChattyActions.getChatty();
-      ChattyActions.waitForEvent(this.eventId);
     }
     else {
       this.connected = false;
@@ -154,6 +155,13 @@ var ChattyStore = Reflux.createStore({
     this.connected = false;
     console.error(error);
     this.loading = false;
+    this.sendData();
+  },
+  getThreadCompleted: function(data) {
+    console.log("getThreadCompleted", data);
+    _.each(data.threads, function(thread) {
+      this.threads.unshift(processThread(thread));
+    }.bind(this));
     this.sendData();
   },
   waitForEventCompleted: function(data) {
@@ -202,9 +210,17 @@ var ChattyStore = Reflux.createStore({
   },
   selectComment: function(parentId, commentId) {
     this.replyingTo = 0;
-    var parent = _.find(this.threads, {
-      id: parentId
+    var parent = null;
+    _.each(this.threads, function(thread) {
+      if (thread.id === parentId) {
+        parent = thread;
+        thread.focused = true;
+      }
+      else {
+        thread.focused = false;
+      }
     });
+
     if (parent.expandedChildId != commentId) {
       parent.expandedChildId = commentId;
       this.sendData();
@@ -361,5 +377,3 @@ var ChattyStore = Reflux.createStore({
     ChattyActions.selectFirstParent();
   }
 });
-
-module.exports = ChattyStore;

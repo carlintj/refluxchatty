@@ -1,13 +1,11 @@
 var React = require("react/addons");
 var ChattyActions = require("../../store/chattyactions.js");
-var ChattyStore = require("../../store/chattystore.js");
 var UserActions = require("../../store/useractions.js");
-var UserStore = require("../../store/userstore.js");
 var styles = require("../misc/styles.js");
 var combine = require("../../util/styleutil.js");
 var LoginScreen = require("./login.js");
 
-var statusBar = React.createClass({
+module.exports = React.createClass({
   propTypes: {
     username: React.PropTypes.string.isRequired,
     connected: React.PropTypes.bool.isRequired,
@@ -21,6 +19,13 @@ var statusBar = React.createClass({
   },
   fullRefresh: function() {
     ChattyActions.fullRefresh();
+  },
+  checkPMs: function() {
+    UserActions.requestMessageCount();
+  },
+  componentDidMount: function() {
+    this.checkPMs();
+    this.messageTimer = setInterval(this.checkPMs,5 * 60 * 1000);
   },
   render: function() {
     var status = null;
@@ -43,7 +48,7 @@ var statusBar = React.createClass({
     
     var loginScreen = null;
     if(this.props.showLogin) {
-      loginScreen = <LoginScreen loginMessage={this.props.loginMessage}/>
+      loginScreen = <LoginScreen loginMessage={this.props.loginMessage}/>;
     }
     
     return (<div style={styles.statusbar}>
@@ -57,7 +62,6 @@ var statusBar = React.createClass({
         &nbsp;|&nbsp;
         <span style={styles.clickable} onClick={this.onReorderClick}>Reorder</span>
         {loginScreen}
-        
       </div>);
   },
   onShowReplies: function() {
@@ -68,5 +72,3 @@ var statusBar = React.createClass({
     ChattyActions.reorderThreads();
   }
 });
-
-module.exports = statusBar;

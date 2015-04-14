@@ -91,7 +91,7 @@ module.exports = {
   },
   commentBox: {
     width: 500,
-    height: 150
+    height: 130
   },
   commentBody: {
     paddingTop: 30,

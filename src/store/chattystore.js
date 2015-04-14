@@ -29,7 +29,7 @@ var getSiblings = function(parentThread, comment) {
 
 var mergeEvents = function(threads, events, store) {
   try {
-    _.forEach(events, function(event) {
+    _.each(events, (event) => {
       if (event.eventType == "newPost") {
         var newPost = event.eventData.post;
         if (newPost.parentId !== 0) {
@@ -123,9 +123,9 @@ module.exports = Reflux.createStore({
   getChattyCompleted: function(data) {
     this.threads = [];
     this.loading = false;
-    _.each(data.threads, function(thread) {
+    _.each(data.threads, (thread) => {
       this.threads.push(processThread(thread));
-    }.bind(this));
+    });
     this.sendData();
     ChattyActions.waitForEvent(this.eventId);
   },
@@ -158,10 +158,9 @@ module.exports = Reflux.createStore({
     this.sendData();
   },
   getThreadCompleted: function(data) {
-    console.log("getThreadCompleted", data);
-    _.each(data.threads, function(thread) {
+    _.each(data.threads, (thread) => {
       this.threads.unshift(processThread(thread));
-    }.bind(this));
+    });
     this.sendData();
   },
   waitForEventCompleted: function(data) {
@@ -193,7 +192,7 @@ module.exports = Reflux.createStore({
     this.sendData();
   },
   highlightParent: function(parentId) {
-    _.each(this.threads, function(thread) {
+    _.each(this.threads, (thread) => {
       if (thread.id === parentId) {
         thread.focused = true;
         if (thread.expandedChildId !== thread.id) {
@@ -211,7 +210,7 @@ module.exports = Reflux.createStore({
   selectComment: function(parentId, commentId) {
     this.replyingTo = 0;
     var parent = null;
-    _.each(this.threads, function(thread) {
+    _.each(this.threads, (thread) => {
       if (thread.id === parentId) {
         parent = thread;
         thread.focused = true;

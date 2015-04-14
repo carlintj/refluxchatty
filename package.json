@@ -16,7 +16,9 @@
     "uglifyify": "^3.0.1",
     "watchify": "^2.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babelify": "^6.0.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

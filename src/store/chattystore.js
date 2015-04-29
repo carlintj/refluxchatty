@@ -74,6 +74,10 @@ var mergeEvents = function(threads, events, store) {
   }
 };
 
+var matchUsername = function(post, username) {
+  return (post.author === username);
+};
+
 module.exports = Reflux.createStore({
   listenables: [ChattyActions],
   init: function() {
@@ -374,5 +378,12 @@ module.exports = Reflux.createStore({
   reorderThreads: function() {
     this.threads = _.sortByOrder(this.threads, 'latestReply', false);
     ChattyActions.selectFirstParent();
+  },
+  runSearch: function(searchStr) { 
+    var matcher = matchUsername;
+    _.each(this.threads, (thread) => {
+      thread.searchMatch =  matcher(thread,searchStr);
+    });
+    this.sendData();
   }
 });

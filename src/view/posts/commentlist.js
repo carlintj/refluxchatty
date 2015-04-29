@@ -24,6 +24,7 @@ module.exports = React.createClass({
         visibleThreads={_this.props.visibleThreads}
         username={_this.props.username}
         category={comment.category}
+        searchMatch={comment.searchMatch}
         />);
     });
     

@@ -72,6 +72,9 @@ var Actions = Reflux.createActions({
   },
   reorderThreads: {
     asyncResult: false
+  },
+  runSearch: {
+    asyncResult: false
   }
 });
 

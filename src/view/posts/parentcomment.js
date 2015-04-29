@@ -15,7 +15,8 @@ module.exports = React.createClass({
       username: React.PropTypes.string.isRequired,
       hidden: React.PropTypes.bool.isRequired,
       latestReply: React.PropTypes.string.isRequired,
-      category: React.PropTypes.string.isRequired
+      category: React.PropTypes.string.isRequired,
+      searchMatch: React.PropTypes.bool.isRequired
     },
     getInitialState: function() {
       return ({'highlightReplies': false});
@@ -28,6 +29,7 @@ module.exports = React.createClass({
       if(this.props.focused != nextProps.focused) return true;
       if(this.props.expanded != nextProps.expanded) return true;
       if(this.props.visibleThreads.length != nextProps.visibleThreads.length) return true;
+      if(this.props.searchMatch != nextProps.searchMatch) return true;
       return false;
     },
     render: function() {
@@ -85,7 +87,7 @@ module.exports = React.createClass({
       
       return (
         <div style={styles.parentContainer} onClick={this.onParentClick}>
-          <div style={styles.parentComment}>
+          <div style={combine(styles.parentComment, props.searchMatch && styles.searchMatch) }>
           {scroller}
             <div ref="anchor" style={combine(props.focused && styles.highlightedParent)}>
               <span style={styles.username}>

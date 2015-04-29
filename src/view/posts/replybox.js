@@ -52,6 +52,8 @@ module.exports = React.createClass({
           <p><span className="jt_green">green</span>&nbsp;<span>{green}</span></p>
           <p><span className="jt_blue">blue</span>&nbsp;<span>{blue}</span></p>
           <p><span className="jt_yellow">yellow</span>&nbsp;<span>{yellow}</span></p>
+        </div>
+        <div style={subdiv}>
           <p><span className="jt_olive">olive</span>&nbsp;<span>{olive}</span></p>
           <p><span className="jt_lime">lime</span>&nbsp;<span>{lime}</span></p>
           <p><span className="jt_orange">orange</span>&nbsp;<span>{orange}</span></p>
@@ -61,7 +63,8 @@ module.exports = React.createClass({
           <p><span className="jt_italics">italics</span>&nbsp;<span>{italics}</span></p>
           <p><span className="jt_bold">bold</span>&nbsp;<span>{bold}</span></p>
           <p><span className="jt_quote">quote</span>&nbsp;<span>{quote}</span></p>
-          <p><span className="jt_sample">sample</span>&nbsp;<span>{sample}</span></p>
+          <p><span className="jt_sample">sample</span>&nbsp;<span>{sample}</span></p></div>
+        <div style={subdiv}>
           <p><span className="jt_underline">underline</span>&nbsp;<span>{underline}</span></p>
           <p><span className="jt_strike">strike</span>&nbsp;<span>{strike}</span></p>
           <p><span>spoiler</span>&nbsp;<span>{spoiler}</span></p>

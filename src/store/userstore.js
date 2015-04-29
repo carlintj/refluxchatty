@@ -1,6 +1,6 @@
-var Reflux = require('reflux');
-var UserActions = require("./useractions.js");
-var localStorage = require('store');
+var Reflux = require("reflux");
+var UserActions = require ("./useractions.js");
+var localStorage = require ('store');
 
 //actions which require u/p must originate from here to limit the number of
 //places that touch the password store.  This is why some of the flows are

@@ -1,1 +1,1 @@
-watchify -v -t [ reactify ] src/app.js -o build/app.js -d
+watchify -v -t [ babelify reactify ] src/app.js -o build/app.js -d

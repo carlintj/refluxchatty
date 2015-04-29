@@ -59,6 +59,9 @@ module.exports = {
     borderRadius: '1px',
     padding: '5px',
   },
+  searchMatch: {
+    background: '#FF00FF'
+  },
   username: {
     color: '#3F82C5'
   },
@@ -91,7 +94,7 @@ module.exports = {
   },
   commentBox: {
     width: 500,
-    height: 150
+    height: 130
   },
   commentBody: {
     paddingTop: 30,

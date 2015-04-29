@@ -6,6 +6,7 @@ var ChattyActions = require("../store/chattyactions.js");
 var ChattyStore = require("../store/chattystore.js");
 var UserStore = require("../store/userstore.js");
 var keymaster = require("keymaster");
+var SearchBox = require("./posts/searchbox.js");
 
 //TODO add unmount for deregistering keymaster
 module.exports = React.createClass({
@@ -43,11 +44,18 @@ module.exports = React.createClass({
         keymaster('h', function() {
             ChattyActions.hideSelectedThread();
         });
+        keymaster('f', () => {
+          this.setState({showSearch: !this.state.showSearch});
+        });
     },
     componentDidUpdate: function() {
       
     },
     render: function() {
+      var searchBox = null;
+      if(this.state.showSearch) {
+        searchBox = <SearchBox />;
+      }
       return (<div>
         <StatusBar username={this.state.UserStore.username} 
           pms={this.state.UserStore.pms}
@@ -59,7 +67,7 @@ module.exports = React.createClass({
           unreadPMs={this.state.UserStore.unreadPMs}
           unseenReplies={this.state.UserStore.unseenReplies}
           />
-         
+        {searchBox}
         <CommentList threads={this.state.ChattyStore.threads} 
           visibleThreads={this.state.ChattyStore.visibleThreads}
           replyingTo={this.state.ChattyStore.replyingTo} 

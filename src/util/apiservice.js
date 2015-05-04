@@ -77,6 +77,9 @@ var processThread = function(thread) {
 
   post.focused = false;
   post.expandedChildId = 0;
+  if(post.author ==="Shacknews") {
+    post.body = post.body.replace("href=\"", "href=\"http://www.shacknews.com");
+  }
   return post;
 };
 

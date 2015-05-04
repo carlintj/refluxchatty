@@ -57,12 +57,16 @@ var mergeEvents = function(threads, events, store) {
             ChattyActions.getThread(newPost.threadId);
             //store.connected= false;
           }
-        }
-        else {
+        } else {
           var newThread = getPost(newPost);
+          console.log(newPost,newThread);
           newThread.latestReply = newThread.date;
           newThread.latestReplyStr = newThread.dateStr;
           newThread.threadId = newPost.threadId;
+          if (newThread.author === "Shacknews") {
+            newThread.body = newThread.body.replace("href=\"", "href=\"http://www.shacknews.com");
+          } 
+
           store.threads.unshift(newThread);
         }
       }
@@ -169,8 +173,13 @@ module.exports = Reflux.createStore({
   },
   waitForEventCompleted: function(data) {
     this.connected = true;
-    this.eventId = data.lastEventId;
-    mergeEvents(this.threads, data.events, this);
+    if(data.lastEventId) {
+      this.eventId = data.lastEventId;
+      mergeEvents(this.threads, data.events, this);  
+    } else { 
+      this.connected = false; 
+    }
+    
     this.sendData();
     if (this.connected) {
       ChattyActions.waitForEvent(this.eventId);

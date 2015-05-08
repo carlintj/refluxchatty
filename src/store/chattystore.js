@@ -79,7 +79,7 @@ var mergeEvents = function(threads, events, store) {
 };
 
 var matchUsername = function(post, username) {
-  return (post.author === username);
+  return (post.author.toUpperCase().indexOf(username.toUpperCase()) > 0);
 };
 
 module.exports = Reflux.createStore({

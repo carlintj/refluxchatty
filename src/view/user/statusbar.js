@@ -4,15 +4,18 @@ var UserActions = require("../../store/useractions.js");
 var styles = require("../misc/styles.js");
 var combine = require("../../util/styleutil.js");
 var LoginScreen = require("./login.js");
+var SearchBox = require("../posts/searchbox.js");
 
 module.exports = React.createClass({
+  displayName: 'StatusBar',
   propTypes: {
     username: React.PropTypes.string.isRequired,
     connected: React.PropTypes.bool.isRequired,
     lastEventId: React.PropTypes.number.isRequired,
     totalPMs: React.PropTypes.number.isRequired,
     unreadPMs: React.PropTypes.number.isRequired,
-    unseenReplies: React.PropTypes.array.isRequired
+    unseenReplies: React.PropTypes.array.isRequired,
+    showSearch: React.PropTypes.bool.isRequired,
   },
   showLogin: function() {
     UserActions.showLoginForm();
@@ -51,6 +54,11 @@ module.exports = React.createClass({
       loginScreen = <LoginScreen loginMessage={this.props.loginMessage}/>;
     }
     
+    var searchBox = null;
+      if(this.props.showSearch) {
+        searchBox = <SearchBox />;
+      }
+    
     return (<div style={styles.statusbar}>
         {status} 
         &nbsp;|&nbsp;
@@ -62,6 +70,7 @@ module.exports = React.createClass({
         &nbsp;|&nbsp;
         <span style={styles.clickable} onClick={this.onReorderClick}>Reorder</span>
         {loginScreen}
+        {searchBox}
       </div>);
   },
   onShowReplies: function() {

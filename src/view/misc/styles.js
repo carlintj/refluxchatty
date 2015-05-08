@@ -12,10 +12,25 @@ module.exports = {
     fontSize: 11,
     whiteSpace: 'nowrap'
   },
+  statusbar: {
+    background: '#FFFFFF',
+    borderBottom: '2px solid #000000',
+    //marginLeft: 8,
+    padding: 2,
+    //paddingTop: 2,
+    //paddingBottom: 2,
+    //paddingLeft: 2,
+    //paddingRight: 20,
+    position: 'fixed',
+    fontFamily: 'Helvetica,Arial,sans-serif',
+    fontSize: 13,
+    width: '100%',
+    //opacity: 0.7
+  },
   commentInformative: {
     borderLeft: '2px solid #0003FD',
   },
-  commentNWS: { 
+  commentNWS: {
     borderLeft: '2px solid #FF0000',
   },
   hoveredComment: {
@@ -42,7 +57,7 @@ module.exports = {
     fontWeight: 'bold',
     color: '#0000FF'
   },
-  parentNWS: { 
+  parentNWS: {
     fontWeight: 'bold',
     color: '#FF0000'
   },
@@ -71,20 +86,6 @@ module.exports = {
   clickable: {
     cursor: 'pointer',
     color: '#004FFF'
-  },
-  statusbar: {
-    background: '#FFFFFF',
-    border: '2px solid #000000',
-    borderRadius: '5px',
-    margin: 2,
-    paddingTop: 2,
-    paddingBottom: 2,
-    paddingLeft: 4,
-    paddingRight: 6,
-    position: 'fixed',
-    fontFamily: 'Helvetica,Arial,sans-serif',
-    fontSize: 13,
-    opacity: 0.7
   },
   success: {
     color: '#3F82C5'

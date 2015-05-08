@@ -2,6 +2,7 @@ var React = require("react/addons");
 var ChattyActions = require("../../store/chattyactions.js");
 
 module.exports =  React.createClass({
+  displayName: 'SearchBox',
   mixins: [React.addons.LinkedStateMixin],
   getInitialState: function() {
     return {searchStr: ''};

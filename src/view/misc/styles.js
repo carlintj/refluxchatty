@@ -4,11 +4,11 @@ module.exports = {
   },
   commentContainer: {
     marginLeft: 12,
-    marginTop: 2,
+    //marginTop: 2,
     borderLeft: '1px solid #cdced0',
     //borderTop: '1px solid #cdced0',
     //borderRadius: '5px',
-    padding: '2px',
+    //padding: '2px',
     fontSize: 11,
     whiteSpace: 'nowrap'
   },
@@ -66,13 +66,13 @@ module.exports = {
   },
   parentContainer: {
     background: '#FFFFFF',
-    margin: '8px',
+    //margin: '8px',
     //padding: '2px'
   },
   parentComment: {
     border: '2px solid #000000',
     borderRadius: '1px',
-    //padding: '5px',
+    padding: '5px',
   },
   searchMatch: {
     background: '#FF00FF'

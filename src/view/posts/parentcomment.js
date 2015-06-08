@@ -1,12 +1,48 @@
 var React = require("react/addons");
-var styles = require("../misc/styles.js");
 var combine = require("../../util/styleutil.js");
 var renderChildComments = require("./childcomment.js").renderChildComments;
 var ChattyActions = require("../../store/chattyactions.js");
 var AutoscrollingMixin = require("../misc/autoscrollingmixin.js");
 var ReplyBox = require("./replybox.js");
+var ReplyButton = require("./replybutton.js");
 var _ = require("lodash");
 
+var styles = {
+  clickable: {
+    cursor: 'pointer',
+    color: '#004FFF'
+  },
+  username: {
+    color: '#3F82C5'
+  },
+  date: {
+    fontSize: 10
+  },
+  highlightedParent: {
+    background: '#E0F3FF', //A7CDF0
+  },
+  parentInformative: {
+    fontWeight: 'bold',
+    color: '#0000FF'
+  },
+  parentNWS: {
+    fontWeight: 'bold',
+    color: '#FF0000'
+  },
+  parentContainer: {
+    background: '#FFFFFF',
+    margin: '5px',
+    boxShadow: '0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24)',
+  },
+  parentComment: {
+    //border: '2px solid #000000',
+    //borderRadius: '1px',
+    padding: '5px',
+  },
+  searchMatch: {
+    background: '#FF00FF'
+  },
+};
 
 module.exports = React.createClass({
     propTypes: {
@@ -74,7 +110,7 @@ module.exports = React.createClass({
         scroller = null;
       }
 
-      if(props.replyingTo == props.id) {
+      if(props.replyingTo === props.id) {
         replyBox = <ReplyBox parentCommentId={props.id}/>
       }
       
@@ -95,6 +131,7 @@ module.exports = React.createClass({
               </span>
               @ <span style={styles.date}>{props.dateStr}</span>
               &nbsp;<span style={categoryStyle}>{props.category}</span>
+              <ReplyButton threadId = {props.threadId} commentId = {props.id} />
               <div dangerouslySetInnerHTML={{__html: props.body}} />
               {replies}
             </div>

@@ -1,8 +1,62 @@
 var React = require("react/addons");
-var styles = require("../misc/styles.js");
 var styleutil = require("../../util/styleutil.js");
-//var ChattyActions = require("../../store/chattyactions.js");
 var HoverMixin = require("..//misc/hovermixin.js");
+
+var styles = {
+  commentAge1: {
+    background: '#FFA675'
+  },
+  commentAge2: {
+    background: '#FFB186'
+  },
+  commentAge3: {
+    background: '#FFBC97'
+  },
+  commentAge4: {
+    background: '#FFC7A8'
+  },
+  commentAge5: {
+    background: '#FFD2BA'
+  },
+  commentAge6: {
+    background: '#FFDDCB'
+  },
+  commentAge7: {
+    background: '#FFE8DC'
+  },
+  commentAge8: {
+    background: '#FFF3ED'
+  },
+  username: {
+    color: '#3F82C5'
+  },
+  date: {
+    fontSize: 10
+  },
+  ownerPost: {
+    background: '#EFFC94'
+  },
+  commentContainer: {
+    marginLeft: 12,
+    //marginTop: 2,
+    borderLeft: '1px solid #cdced0',
+    //borderTop: '1px solid #cdced0',
+    //borderRadius: '5px',
+    //padding: '2px',
+    fontSize: 11,
+    whiteSpace: 'nowrap'
+  },
+  commentInformative: {
+    borderLeft: '2px solid #0003FD',
+  },
+  commentNWS: {
+    borderLeft: '2px solid #FF0000',
+  },
+  hoveredComment: {
+    background: '#E0F3FF',
+    cursor: 'pointer',
+  },
+};
 
 var fixComment = function(comment) {
   var div = document.createElement('div');

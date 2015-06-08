@@ -59,7 +59,6 @@ var mergeEvents = function(threads, events, store) {
           }
         } else {
           var newThread = getPost(newPost);
-          console.log(newPost,newThread);
           newThread.latestReply = newThread.date;
           newThread.latestReplyStr = newThread.dateStr;
           newThread.threadId = newPost.threadId;
@@ -350,17 +349,31 @@ module.exports = Reflux.createStore({
     }
     this.sendData();
   },
-  openReply: function() {
-    this.replyingTo = 0;
-    var thread = _.find(this.threads, {
-      focused: true
-    });
-    if (thread) {
-      this.replyingTo = thread.expandedChildId;
+  openReply: function(threadId,commentId) {
+    if(!!threadId && !!commentId) {
+      var thread = _.find(this.threads, {
+        id: threadId
+      });
+      if(!!thread) {
+        this.replyingTo = commentId;
+        thread.expandedChildId = commentId;
+        thread.focused = true;
+      } else {
+        console.warn("could not find thread to reply");
+      }
+    } else {
+      this.replyingTo = 0;
+      var thread = _.find(this.threads, {
+        focused: true
+      });
+      if (thread) {
+        this.replyingTo = thread.expandedChildId;
+      }
+      else {
+        console.warn("could not find focused thread on openReply");
+      }
     }
-    else {
-      console.warn("could not find focused thread on openReply");
-    }
+    
     this.sendData();
   },
   submitComment: function(parentCommentId, body) {

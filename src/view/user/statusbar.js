@@ -1,10 +1,44 @@
 var React = require("react/addons");
 var ChattyActions = require("../../store/chattyactions.js");
 var UserActions = require("../../store/useractions.js");
-var styles = require("../misc/styles.js");
 var combine = require("../../util/styleutil.js");
 var LoginScreen = require("./login.js");
 var SearchBox = require("../posts/searchbox.js");
+//var mui = require('material-ui');
+
+var styles = {
+  success: {
+    color: '#3F82C5'
+  },
+  error: {
+    color: '#red !important'
+  },
+  clickable: {
+    cursor: 'pointer',
+    color: '#004FFF'
+  },
+  username: {
+    color: '#3F82C5'
+  },
+  date: {
+    fontSize: 10
+  },
+  statusbar: {
+    background: '#FFFFFF',
+    borderBottom: '2px solid #000000',
+    //marginLeft: 8,
+    padding: 2,
+    //paddingTop: 2,
+    //paddingBottom: 2,
+    //paddingLeft: 2,
+    //paddingRight: 20,
+    position: 'fixed',
+    fontFamily: 'Helvetica,Arial,sans-serif',
+    fontSize: 13,
+    width: '100%',
+    //opacity: 0.7
+  },
+};
 
 module.exports = React.createClass({
   displayName: 'StatusBar',

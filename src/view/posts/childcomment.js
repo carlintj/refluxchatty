@@ -1,5 +1,4 @@
 var React = require("react/addons");
-var styles = require("../misc/styles.js");
 var styleutil = require("../../util/styleutil.js");
 var ChattyActions = require("../../store/chattyactions.js");
 var ChildCommentCollapsed = require("./childcommentcollapsed.js");
@@ -10,27 +9,6 @@ var fixComment = function(comment) {
   div.innerHTML = comment;
   return div.innerHTML;
 };
-
-var calculateAgeStyle = function(date) {
-  var now = Date.now();
-  var delta = (now - date)/60000;
-
-  if(delta < 1) {
-    return styles.commentAge1;
-  } else if(delta < 2) {
-    return styles.commentAge3;
-  } else if(delta < 5) {
-    return styles.commentAge5;
-  } else if(delta < 10) {
-    return styles.commentAge6;
-  } else if (delta < 20) {
-    return styles.commentAge7;
-  } else if(delta < 30) {
-    return styles.commentAge8;
-  }
-  return null;
-};
-
 var renderChildComments = function(threadId,children,expandedChildId,replyingTo,username) {
   var replies = children.map(function(comment,i) {
     return (<ChildComment key={comment.id} 
@@ -82,6 +60,7 @@ var ChildComment = React.createClass({
       return (
         <ChildCommentExpanded body={props.body} author={props.author} dateStr={props.dateStr}
           id={props.id}
+          threadId={props.threadId}
           replyingTo={props.replyingTo}
           category={props.category}>
           {replies}

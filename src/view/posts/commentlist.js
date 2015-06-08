@@ -1,6 +1,16 @@
 var React = require("react/addons");
 var ParentComment = require("./parentcomment.js");
-var styles = require("../misc/styles.js");
+
+var styles = {
+  commentBody : {
+    paddingTop: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
+    fontFamily: 'Helvetica,Arial,sans-serif',
+    fontSize: 13,
+
+  },
+}
 
 module.exports = React.createClass({
   render: function() {

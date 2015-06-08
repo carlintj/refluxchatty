@@ -47,7 +47,7 @@ module.exports = {
     background: '#E0F3FF',
     //marginLeft: 10,
     fontSize: 13,
-    padding: 2,
+    //padding: 2,
     whiteSpace: 'normal'
   },
   highlightedParent: {
@@ -72,7 +72,7 @@ module.exports = {
   parentComment: {
     border: '2px solid #000000',
     borderRadius: '1px',
-    padding: '5px',
+    //padding: '5px',
   },
   searchMatch: {
     background: '#FF00FF'

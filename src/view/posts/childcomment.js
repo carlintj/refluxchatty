@@ -60,6 +60,7 @@ var ChildComment = React.createClass({
       return (
         <ChildCommentExpanded body={props.body} author={props.author} dateStr={props.dateStr}
           id={props.id}
+          threadId={props.threadId}
           replyingTo={props.replyingTo}
           category={props.category}>
           {replies}

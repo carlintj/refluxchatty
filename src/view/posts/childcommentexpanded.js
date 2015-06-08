@@ -2,13 +2,12 @@ var React = require("react/addons");
 var styleutil = require("../../util/styleutil.js");
 var AutoscrollingMixin = require("../misc/autoscrollingmixin.js");
 var ReplyBox = require("./replybox.js");
+var ReplyButton = require("./replybutton.js");
 
 var styles = {
   highlightedComment: {
     background: '#E0F3FF',
-    //marginLeft: 10,
     fontSize: 13,
-    //padding: 2,
     whiteSpace: 'normal'
   },
   commentExpandedInformative: {
@@ -19,11 +18,7 @@ var styles = {
   },
   commentContainer: {
     marginLeft: 12,
-    //marginTop: 2,
     borderLeft: '1px solid #cdced0',
-    //borderTop: '1px solid #cdced0',
-    //borderRadius: '5px',
-    //padding: '2px',
     fontSize: 11,
     whiteSpace: 'nowrap'
   },
@@ -55,6 +50,7 @@ module.exports = React.createClass({
             <div ref="anchor" onClick={this.handleClick} style={commentStyle}>
               <div style={styles.username}>
                 {props.author} @ <span style={styles.date}>{props.dateStr}</span>
+                <ReplyButton threadId = {props.threadId} commentId = {props.id} />
               </div>
               <div dangerouslySetInnerHTML={{__html: props.body}} />
             </div>

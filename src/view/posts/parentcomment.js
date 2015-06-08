@@ -4,6 +4,7 @@ var renderChildComments = require("./childcomment.js").renderChildComments;
 var ChattyActions = require("../../store/chattyactions.js");
 var AutoscrollingMixin = require("../misc/autoscrollingmixin.js");
 var ReplyBox = require("./replybox.js");
+var ReplyButton = require("./replybutton.js");
 var _ = require("lodash");
 
 var styles = {
@@ -109,7 +110,7 @@ module.exports = React.createClass({
         scroller = null;
       }
 
-      if(props.replyingTo == props.id) {
+      if(props.replyingTo === props.id) {
         replyBox = <ReplyBox parentCommentId={props.id}/>
       }
       
@@ -130,6 +131,7 @@ module.exports = React.createClass({
               </span>
               @ <span style={styles.date}>{props.dateStr}</span>
               &nbsp;<span style={categoryStyle}>{props.category}</span>
+              <ReplyButton threadId = {props.threadId} commentId = {props.id} />
               <div dangerouslySetInnerHTML={{__html: props.body}} />
               {replies}
             </div>

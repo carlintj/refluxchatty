@@ -350,7 +350,6 @@ module.exports = Reflux.createStore({
     this.sendData();
   },
   openReply: function(threadId,commentId) {
-    console.log("openReply",threadId,commentId);
     if(!!threadId && !!commentId) {
       var thread = _.find(this.threads, {
         id: threadId

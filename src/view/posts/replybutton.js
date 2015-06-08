@@ -9,6 +9,7 @@ var styles = {
     color: '#004FFF'
   },
   button: {
+    padding: '5px',
     borderRadius: '2px',
     boxShadow: '0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24)',
     boxSizing: 'border-box',
@@ -31,7 +32,6 @@ module.exports = React.createClass({
         return (<div ref="hover" style={style} onClick={this.onClickHandler}>
             Reply
         </div>);
-        
     },
     onClickHandler : function() {
       ChattyActions.openReply(this.props.threadId,this.props.commentId);

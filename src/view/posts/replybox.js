@@ -1,6 +1,12 @@
 var React = require("react/addons");
 var ChattyActions = require("../../store/chattyactions.js");
-var styles = require("../misc/styles.js");
+
+var styles = {
+  commentBox: {
+    width: 500,
+    height: 130
+  },
+};
 
 module.exports = React.createClass({
   mixins: [React.addons.LinkedStateMixin],

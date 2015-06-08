@@ -4,6 +4,7 @@ var UserActions = require("../../store/useractions.js");
 var combine = require("../../util/styleutil.js");
 var LoginScreen = require("./login.js");
 var SearchBox = require("../posts/searchbox.js");
+//var mui = require('material-ui');
 
 var styles = {
   success: {

@@ -30,18 +30,18 @@ var styles = {
   },
   parentContainer: {
     background: '#FFFFFF',
-    //margin: '8px',
-    //padding: '2px'
+    margin: '5px',
+    boxShadow: '0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24)',
   },
   parentComment: {
-    border: '2px solid #000000',
-    borderRadius: '1px',
+    //border: '2px solid #000000',
+    //borderRadius: '1px',
     padding: '5px',
   },
   searchMatch: {
     background: '#FF00FF'
   },
-}
+};
 
 module.exports = React.createClass({
     propTypes: {

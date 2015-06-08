@@ -129,6 +129,6 @@ module.exports = React.createClass({
       ChattyActions.toggleParentComment(this.props.id);
     },
     onParentClick: function() {
-      ChattyActions.highlightParent(this.props.id);
+      if(this.expandedChildId !== 0) ChattyActions.highlightParent(this.props.id);
     }
 });

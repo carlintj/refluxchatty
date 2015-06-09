@@ -62,6 +62,8 @@ var mergeEvents = function(threads, events, store) {
           newThread.latestReply = newThread.date;
           newThread.latestReplyStr = newThread.dateStr;
           newThread.threadId = newPost.threadId;
+          newThread.hidden = false;
+          newThread.searchMatch = false;
           if (newThread.author === "Shacknews") {
             newThread.body = newThread.body.replace("href=\"", "href=\"http://www.shacknews.com");
           } 

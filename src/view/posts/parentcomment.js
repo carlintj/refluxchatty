@@ -6,6 +6,7 @@ var AutoscrollingMixin = require("../misc/autoscrollingmixin.js");
 var ReplyBox = require("./replybox.js");
 var ReplyButton = require("./replybutton.js");
 var _ = require("lodash");
+var PostBody = require("./postbody.js");
 
 var styles = {
   clickable: {
@@ -132,7 +133,7 @@ module.exports = React.createClass({
               @ <span style={styles.date}>{props.dateStr}</span>
               &nbsp;<span style={categoryStyle}>{props.category}</span>
               <ReplyButton threadId = {props.threadId} commentId = {props.id} />
-              <div dangerouslySetInnerHTML={{__html: props.body}} />
+              <PostBody body={props.body} />
               {replies}
             </div>
             {replyBox}

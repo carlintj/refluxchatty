@@ -74,6 +74,8 @@ var processThread = function(thread) {
   post.replyCount = replyCount;
   post.latestReply = new Date(latestReply);
   post.latestReplyStr = getTimeString(post.latestReply);
+  post.hidden = false;
+  post.searchMatch = false;
 
   post.focused = false;
   post.expandedChildId = 0;

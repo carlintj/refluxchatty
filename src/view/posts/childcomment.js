@@ -29,7 +29,7 @@ var renderChildComments = function(threadId,children,expandedChildId,replyingTo,
 
 var ChildComment = React.createClass({
   propTypes: {
-    date: React.PropTypes.string.isRequired, //date isn't a proptype
+    date: React.PropTypes.object.isRequired, //date isn't a proptype
     threadId: React.PropTypes.number.isRequired,
     children: React.PropTypes.array.isRequired,
     expandedChildId: React.PropTypes.number.isRequired,
@@ -38,7 +38,6 @@ var ChildComment = React.createClass({
     author: React.PropTypes.string.isRequired,
     id: React.PropTypes.number.isRequired,
     username: React.PropTypes.string.isRequired,
-    catch: React.PropTypes.string.isRequired
   },
   render: function() {
     var props = this.props;
@@ -58,7 +57,8 @@ var ChildComment = React.createClass({
       );
     } else {
       return (
-        <ChildCommentExpanded body={props.body} author={props.author} dateStr={props.dateStr}
+        <ChildCommentExpanded 
+          body={props.body} author={props.author} dateStr={props.dateStr}
           id={props.id}
           threadId={props.threadId}
           replyingTo={props.replyingTo}

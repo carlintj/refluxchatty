@@ -9,8 +9,8 @@ module.exports = {
     var hover = this.refs.hover;
     if(hover) {
       var dom = React.findDOMNode(hover);
-      dom.addEventListener("mouseover", this.onOver.bind(this));
-      dom.addEventListener("mouseout", this.onOut.bind(this));  
+      dom.addEventListener("mouseover", this.onOver);//.bind(this));
+      dom.addEventListener("mouseout", this.onOut);//.bind(this));  
     } else {
       console.warn("unable to find hover ref");
     }

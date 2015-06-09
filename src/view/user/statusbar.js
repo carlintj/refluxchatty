@@ -4,7 +4,6 @@ var UserActions = require("../../store/useractions.js");
 var combine = require("../../util/styleutil.js");
 var LoginScreen = require("./login.js");
 var SearchBox = require("../posts/searchbox.js");
-//var mui = require('material-ui');
 
 var styles = {
   success: {
@@ -26,17 +25,11 @@ var styles = {
   statusbar: {
     background: '#FFFFFF',
     borderBottom: '2px solid #000000',
-    //marginLeft: 8,
     padding: 2,
-    //paddingTop: 2,
-    //paddingBottom: 2,
-    //paddingLeft: 2,
-    //paddingRight: 20,
     position: 'fixed',
     fontFamily: 'Helvetica,Arial,sans-serif',
     fontSize: 13,
     width: '100%',
-    //opacity: 0.7
   },
 };
 
@@ -50,6 +43,9 @@ module.exports = React.createClass({
     unreadPMs: React.PropTypes.number.isRequired,
     unseenReplies: React.PropTypes.array.isRequired,
     showSearch: React.PropTypes.bool.isRequired,
+  },
+  getInitialState: function() {
+    return {showingReplies : false};
   },
   showLogin: function() {
     UserActions.showLoginForm();
@@ -69,9 +65,9 @@ module.exports = React.createClass({
     if(this.props.connected) {
       status = <span style={styles.success}>Connected</span>;
     } else {
-      status = <span style={combine(styles.error, styles.clickable)}
+      status = <a style={combine(styles.error)}
           onClick={this.fullRefresh}>Not connected
-        </span>;
+        </a>;
     }
     var userinfo = null;
     if(this.props.username && this.props.username != "") {
@@ -80,7 +76,7 @@ module.exports = React.createClass({
         <span style={styles.date}>({this.props.unreadPMs} / {this.props.totalPMs})</span>
         </span>;
     } else {
-      userinfo = <span style={styles.clickable} onClick={this.showLogin}>Login</span>;
+      userinfo = <a style={styles.clickable} onClick={this.showLogin}>Login</a>;
     }
     
     var loginScreen = null;
@@ -89,9 +85,16 @@ module.exports = React.createClass({
     }
     
     var searchBox = null;
-      if(this.props.showSearch) {
-        searchBox = <SearchBox />;
-      }
+    if(this.props.showSearch) {
+      searchBox = <SearchBox />;
+    }
+    
+    var replies = null;
+    if(this.state.showingReplies && this.props.unseenReplies.length == 0) {
+      replies = <a style={styles.clickable} onClick={this.onShowReplies}>Show all</a>;
+    } else {
+       replies = <a style={styles.clickable} onClick={this.onShowReplies}>{this.props.unseenReplies.length}</a>;
+    }
     
     return (<div style={styles.statusbar}>
         {status} 
@@ -100,14 +103,20 @@ module.exports = React.createClass({
         &nbsp;|&nbsp;
         {userinfo} 
         &nbsp;|&nbsp;
-        Replies: <span style={styles.clickable} onClick={this.onShowReplies}>{this.props.unseenReplies.length}</span>
+        Replies: {replies}
         &nbsp;|&nbsp;
-        <span style={styles.clickable} onClick={this.onReorderClick}>Reorder</span>
+        <a style={styles.clickable} onClick={this.onReorderClick}>Reorder</a>
         {loginScreen}
         {searchBox}
       </div>);
   },
   onShowReplies: function() {
+    if(this.props.unseenReplies.length == 0) {
+      this.state.showingReplies = false;
+    } else {
+      this.state.showingReplies = true;
+    }
+    
     ChattyActions.showThreads(this.props.unseenReplies);
     UserActions.clearReplies();
   },

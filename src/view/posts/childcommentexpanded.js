@@ -3,6 +3,8 @@ var styleutil = require("../../util/styleutil.js");
 var AutoscrollingMixin = require("../misc/autoscrollingmixin.js");
 var ReplyBox = require("./replybox.js");
 var ReplyButton = require("./replybutton.js");
+var PostBody = require("./postbody.js");
+var _ = require("lodash");
 
 var styles = {
   highlightedComment: {
@@ -30,11 +32,12 @@ var styles = {
   },
 };
 
+
 module.exports = React.createClass({
   render: function() {
     var props = this.props;
-    var replyBox = null;
     
+    var replyBox = null;
     if(props.replyingTo == props.id) {
       replyBox = <ReplyBox parentCommentId={props.id}/>;
     }
@@ -45,14 +48,16 @@ module.exports = React.createClass({
     } else if(props.category === "nws") {
       commentStyle = styleutil(commentStyle,styles.commentExpandedNWS);
     }
-    
+
     return (<div style={styles.commentContainer}>
             <div ref="anchor" onClick={this.handleClick} style={commentStyle}>
               <div style={styles.username}>
                 {props.author} @ <span style={styles.date}>{props.dateStr}</span>
                 <ReplyButton threadId = {props.threadId} commentId = {props.id} />
               </div>
-              <div dangerouslySetInnerHTML={{__html: props.body}} />
+              <div>
+                <PostBody body={props.body} />
+              </div>
             </div>
             {replyBox}
             <div>

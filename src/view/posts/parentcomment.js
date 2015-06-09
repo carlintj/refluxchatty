@@ -86,17 +86,17 @@ module.exports = React.createClass({
           replyPosts = renderChildComments(props.threadId,props.children, 
               props.expandedChildId,props.replyingTo,props.username);
             
-          replies = <div><span style={styles.clickable} 
-            onClick={this.onCollapseClick}>Collapse</span></div>;
+          replies = <div><a style={styles.clickable} 
+            onClick={this.onCollapseClick}>Collapse</a></div>;
         } else {
           var highlightClass = '';
           if(this.state.highlightReplies) {
             highlightClass = 'highlight';
           }
           var replyStr = props.replyCount > 1 ? "replies" : "reply";
-          replies = <div ref="replies" className={highlightClass}><span style={styles.clickable} 
+          replies = <div ref="replies" className={highlightClass}><a style={styles.clickable} 
               onClick={this.onRepliesClick}>
-              {props.replyCount} {replyStr}</span>
+              {props.replyCount} {replyStr}</a>
               &nbsp;<span style={styles.date}>Last reply @ {props.latestReply}</span>
             </div>;
           }

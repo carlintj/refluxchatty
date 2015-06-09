@@ -29,8 +29,9 @@ module.exports = React.createClass({
         styles.clickable);
         if(this.state.hovered) style=combine(style,styles.buttonHover);
         
-        return (<div ref="hover" style={style} onClick={this.onClickHandler}>
-            Reply
+        return (<div ref="hover" style={style}>
+          <a onClick={this.onClickHandler}>
+            Reply</a>
         </div>);
     },
     onClickHandler : function() {

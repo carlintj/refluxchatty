@@ -21,6 +21,7 @@ var styles = {
   },
   highlightedParent: {
     background: '#E0F3FF', //A7CDF0
+    border: '1px solid #cddaf3',
   },
   parentInformative: {
     fontWeight: 'bold',

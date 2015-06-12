@@ -94,6 +94,8 @@ module.exports = Reflux.createStore({
     this.username = localStorage.get('username');
     this.replyingTo = 0;
     this.visibleThreads = [];
+    this.paused = false;
+    this.waitingForEvent = false;
 
     this.listenTo(UserStore, this.userStoreUpdate);
   },
@@ -104,7 +106,8 @@ module.exports = Reflux.createStore({
       username: "",
       connected: false,
       eventId: 0,
-      visibleThreads: []
+      visibleThreads: [],
+      findThreadByPostId: this.findThreadByPostId
     };
   },
   fullRefresh: function() {
@@ -119,19 +122,34 @@ module.exports = Reflux.createStore({
       connected: this.connected,
       username: this.username,
       replyingTo: this.replyingTo,
-      visibleThreads: this.visibleThreads
+      visibleThreads: this.visibleThreads,
+      findThreadByPostId: this.findThreadByPostId
     });
   },
   startChatty: function() {
-    ChattyActions.getNewestEventId();
+    if(this.threads.length > 0 ) {
+      console.log("paused, resuming");
+      //resuming after being paused, just kick off event
+      this.paused = false;
+      this.sendData();
+      if(!this.waitingForEvent) {
+        ChattyActions.waitForEvent(this.eventId);  
+      }
+    } else {
+      //no data, full refresh
+      console.log("full refresh");
+      ChattyActions.getNewestEventId();  
+    }
+    
+  },
+  pauseChatty: function() {
+    this.paused = true;
   },
   getChatty: function() {
-    this.loading = true;
     this.sendData();
   },
   getChattyCompleted: function(data) {
     this.threads = [];
-    this.loading = false;
     _.each(data.threads, (thread) => {
       this.threads.push(processThread(thread));
     });
@@ -140,16 +158,13 @@ module.exports = Reflux.createStore({
   },
   getChattyFailed: function(error) {
     console.error(error);
-    this.loading = false;
     this.sendData();
   },
   getNewestEventId: function() {
     this.connected = true;
-    this.loading = true;
     this.sendData();
   },
   getNewestEventIdCompleted: function(data) {
-    this.loading = false;
     if (data.eventId) {
       this.eventId = data.eventId;
       ChattyActions.getChatty();
@@ -163,7 +178,6 @@ module.exports = Reflux.createStore({
   getNewestEventIdFailed: function(error) {
     this.connected = false;
     console.error(error);
-    this.loading = false;
     this.sendData();
   },
   getThreadCompleted: function(data) {
@@ -182,8 +196,12 @@ module.exports = Reflux.createStore({
     }
     
     this.sendData();
-    if (this.connected) {
+    if (this.connected && !this.paused) {
       ChattyActions.waitForEvent(this.eventId);
+      this.waitingForEvent = true;
+    }
+    else {
+      this.waitingForEvent = false;
     }
   },
   waitForEventFailed: function(error) {
@@ -222,6 +240,7 @@ module.exports = Reflux.createStore({
     this.sendData();
   },
   selectComment: function(parentId, commentId) {
+    console.log("selecting comment");
     this.replyingTo = 0;
     var parent = null;
     _.each(this.threads, (thread) => {
@@ -409,5 +428,21 @@ module.exports = Reflux.createStore({
       thread.searchMatch =  matcher(thread,searchStr);
     });
     this.sendData();
+  },
+  findThreadByPostId: function(postId) {
+    var thread = null;
+    _.each(this.threads, (t) => {
+      var post = findChildComment(t, postId);
+      if(!!post) {
+        thread = t;
+      }
+    });
+    return thread;
+  },
+  loadPostIfNotFound: function(threadId) {
+    var thread = this.findThreadByPostId(threadId);
+    if(thread == null) {
+      ChattyActions.getThread(threadId);
+    }
   }
 });

@@ -4,6 +4,8 @@ var UserActions = require("../../store/useractions.js");
 var combine = require("../../util/styleutil.js");
 var LoginScreen = require("./login.js");
 var SearchBox = require("../posts/searchbox.js");
+var Router = require('react-router');
+var { Route, DefaultRoute, RouteHandler, Link } = Router;
 
 var styles = {
   success: {
@@ -43,6 +45,7 @@ module.exports = React.createClass({
     unreadPMs: React.PropTypes.number.isRequired,
     unseenReplies: React.PropTypes.array.isRequired,
     showSearch: React.PropTypes.bool.isRequired,
+    showHomeLink: React.PropTypes.bool.isRequired,
   },
   getInitialState: function() {
     return {showingReplies : false};
@@ -61,12 +64,16 @@ module.exports = React.createClass({
     this.messageTimer = setInterval(this.checkPMs,5 * 60 * 1000);
   },
   render: function() {
+    var homeLink = null;
+    if(this.props.showHomeLink) {
+      homeLink = <Link to="ChattyHome">Back to Chatty</Link>;
+    }
+    
     var status = null;
     if(this.props.connected) {
       status = <span style={styles.success}>Connected</span>;
     } else {
-      status = <a style={combine(styles.error)}
-          onClick={this.fullRefresh}>Not connected
+      status = <a onClick={this.fullRefresh}>Not connected - click to connect
         </a>;
     }
     var userinfo = null;
@@ -97,7 +104,7 @@ module.exports = React.createClass({
     }
     
     return (<div style={styles.statusbar}>
-        {status} 
+        {homeLink} {status} 
         &nbsp;|&nbsp;
         <span>Last Event ID: {this.props.lastEventId}</span> 
         &nbsp;|&nbsp;

@@ -37,6 +37,9 @@ var Actions = Reflux.createActions({
   startChatty: {
     asyncResult: false
   },
+  pauseChatty: { 
+    asyncResult: false
+  },
   selectNextParent: {
     asyncResult: false
   },
@@ -74,6 +77,9 @@ var Actions = Reflux.createActions({
     asyncResult: false
   },
   runSearch: {
+    asyncResult: false
+  },
+  loadPostIfNotFound: {
     asyncResult: false
   }
 });

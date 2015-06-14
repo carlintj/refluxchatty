@@ -27,7 +27,7 @@ var findTags = function(body, tags) {
 var urlregex = new RegExp(/<a\s+[^>]*href="([^"]*)"[^>]*>(.*)<\/a>/i);
 
 
-module.exports = React.createClass({
+var PostBody = React.createClass({
   render: function() {
     var props = this.props;
     
@@ -61,3 +61,4 @@ module.exports = React.createClass({
     return <div>{comment}</div>;
   }
 });
+module.exports = PostBody;

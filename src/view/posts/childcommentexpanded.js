@@ -10,7 +10,8 @@ var styles = {
   highlightedComment: {
     background: '#E0F3FF',
     fontSize: 13,
-    whiteSpace: 'normal'
+    whiteSpace: 'normal',
+    border: '1px solid #cddaf3',
   },
   commentExpandedInformative: {
     border: '2px solid #0003FD',

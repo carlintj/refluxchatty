@@ -21,6 +21,7 @@ var styles = {
   },
   highlightedParent: {
     background: '#E0F3FF', //A7CDF0
+    border: '1px solid #cddaf3',
   },
   parentInformative: {
     fontWeight: 'bold',
@@ -45,7 +46,7 @@ var styles = {
   },
 };
 
-module.exports = React.createClass({
+var ParentComment = React.createClass({
     propTypes: {
       id: React.PropTypes.number.isRequired,
       replyingTo: React.PropTypes.number.isRequired,
@@ -170,3 +171,5 @@ module.exports = React.createClass({
       if(this.expandedChildId !== 0) ChattyActions.highlightParent(this.props.id);
     }
 });
+
+module.exports = ParentComment;

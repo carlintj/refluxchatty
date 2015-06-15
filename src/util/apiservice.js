@@ -59,6 +59,7 @@ var processThread = function(thread) {
       });
     }
     latestReply = Math.max(latestReply, fixedpost.date);
+    fixedpost.children = _.sortByOrder(fixedpost.children,'id', true);
     return fixedpost;
   };
 

@@ -68,7 +68,7 @@ var mergeEvents = function(threads, events, store) {
             newThread.body = newThread.body.replace("href=\"", "href=\"http://www.shacknews.com");
           } 
 
-          store.threads.unshift(newThread);
+          store.threads.push(newThread);
         }
       }
     });
@@ -182,7 +182,7 @@ module.exports = Reflux.createStore({
   },
   getThreadCompleted: function(data) {
     _.each(data.threads, (thread) => {
-      this.threads.unshift(processThread(thread));
+      this.threads.push(processThread(thread));
     });
     this.sendData();
   },

@@ -56,6 +56,9 @@ var styles = {
     background: '#E0F3FF',
     cursor: 'pointer',
   },
+  commentBody: {
+    overflow: 'hidden'
+  }
 };
 
 var fixComment = function(comment) {
@@ -107,11 +110,12 @@ module.exports = React.createClass({
 
     var ageStyle = calculateAgeStyle(props.date);
     var commentStyle = styleutil(
+      styles.commentBody,
       ageStyle,
       props.username == props.author && styles.ownerPost
     );
     if(this.state.hovered) {
-      commentStyle = styles.hoveredComment;
+      commentStyle = styleutil(styles.hoveredComment,styles.commentBody);
     }
     else if(props.category === "informative") {
       commentStyle = styleutil(commentStyle,styles.commentInformative);

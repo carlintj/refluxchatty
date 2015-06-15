@@ -43,6 +43,7 @@ module.exports = React.createClass({
       keymaster.unbind('a');
       keymaster.unbind('z');
       keymaster.unbind('j');
+      keymaster.unbind('k');
       keymaster.unbind('x');
       keymaster.unbind('r');
       keymaster.unbind('home');

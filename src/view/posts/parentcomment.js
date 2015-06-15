@@ -20,7 +20,7 @@ var styles = {
     fontSize: 10
   },
   highlightedParent: {
-    background: '#E0F3FF', //A7CDF0
+    background: '#E0F3FF',
     border: '1px solid #cddaf3',
   },
   parentInformative: {

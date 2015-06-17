@@ -128,7 +128,6 @@ module.exports = Reflux.createStore({
   },
   startChatty: function() {
     if(this.threads.length > 0 ) {
-      console.log("paused, resuming");
       //resuming after being paused, just kick off event
       this.paused = false;
       this.sendData();
@@ -137,7 +136,6 @@ module.exports = Reflux.createStore({
       }
     } else {
       //no data, full refresh
-      console.log("full refresh");
       ChattyActions.getNewestEventId();  
     }
     
@@ -240,7 +238,6 @@ module.exports = Reflux.createStore({
     this.sendData();
   },
   selectComment: function(parentId, commentId) {
-    console.log("selecting comment");
     this.replyingTo = 0;
     var parent = null;
     _.each(this.threads, (thread) => {

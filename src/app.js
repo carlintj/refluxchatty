@@ -15,7 +15,6 @@ var App = React.createClass({
     Reflux.connect(ChattyStore,"ChattyStore"),
   ],
   render: function () {
-    console.log(this.state);
     var showHomeLink = true;
     return (<div>
       <StatusBar 

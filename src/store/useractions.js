@@ -78,9 +78,7 @@ Actions.login.listen(function(username, password) {
 
 Actions.submitComment.listen(function(parentCommentId, body,
   username, password) {
-    console.log(parentCommentId,body);
-    return;
-  /*reqwest({
+  reqwest({
       url: URLs.submitComment,
       method: 'post',
       crossOrigin: true,
@@ -93,7 +91,6 @@ Actions.submitComment.listen(function(parentCommentId, body,
     })
     .then(Actions.submitComment.completed)
     .catch(Actions.submitComment.failed);
-    */
 });
 
 module.exports = Actions;

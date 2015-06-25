@@ -4,11 +4,8 @@ var _ = require("lodash");
 var Router = require('react-router');
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
 
-//http://www.shacknews.com/chatty?id=33586767
-//http://www.shacknews.com/chatty?id=33588017#item_33588017
-//shacknews.com\/chatty\?id=(\d+)(#item_)?(\d+)?
-
 var chattyRegex = new RegExp(/shacknews.com\/chatty\?id=(\d+)(#item_)?(\d+)?/);
+var imageHostRegex = new RegExp(/(imgur\.com)/);
 
 var ChattyLink = React.createClass({
   propTypes: {
@@ -22,6 +19,25 @@ var ChattyLink = React.createClass({
   }
 });
 
+var ImageLink = React.createClass({
+  propTypes: {
+    url: React.PropTypes.string.isRequired
+  },
+  getInitialState: function() {
+    return {isExpanded: false};
+  },
+  onImageClick: function() {
+    this.setState({isExpanded: !this.state.isExpanded});
+    return false;
+  },
+  render: function() {
+    if(!this.state.isExpanded) {
+      return <a href={this.props.url} onClick={this.onImageClick}>{this.props.url}</a>;
+    }
+    return <div><img src={this.props.url} onClick={this.onImageClick} /></div>;
+  }
+});
+
 module.exports = React.createClass({
     propTypes: {
       url: React.PropTypes.string.isRequired,
@@ -30,10 +46,12 @@ module.exports = React.createClass({
     render: function() {
       var m = chattyRegex.exec(this.props.url);
       if(!!m) {
-        console.log(this.props.url,"is chatty link");
         return  <ChattyLink url={this.props.url} />;
+      }
+      m = imageHostRegex.exec(this.props.url);
+      if(!!m) {
+        return <ImageLink url={this.props.url} />;
       }
       return <a href={this.props.url} target="_blank">{this.props.text}</a>;
     }
-    
 });

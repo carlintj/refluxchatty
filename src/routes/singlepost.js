@@ -27,7 +27,6 @@ var SinglePost =  React.createClass({
     };
   },
   componentWillReceiveProps: function(nextProps) {
-    console.log("componentWillReceiveProps");
     var { router } = this.context;
     var threadId = router.getCurrentQuery().threadId;
     var postId = router.getCurrentQuery().postId;
@@ -39,10 +38,8 @@ var SinglePost =  React.createClass({
       });
       ChattyActions.loadPostIfNotFound(threadId);
     } else if(!this.state.focused) {
-        console.log("trying to focus comment",threadId);
         var t = this.props.ChattyStore.findThreadByPostId(threadId);
         if (t) {
-          console.log("found comment, focusing");
           ChattyActions.selectComment(t.id,this.state.postId);
           this.setState({focused: true});
         }

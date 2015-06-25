@@ -68,7 +68,7 @@ module.exports = Reflux.createStore({
 
   },
   submitCommentCompleted: function(data) {
-    console.log("post response", data);
+    
   },
   showLoginForm: function() {
     this.showLogin = true;
@@ -108,7 +108,6 @@ module.exports = Reflux.createStore({
   },
   openMenu: function() {
     this.isMenuOpened = true;
-    console.log("isMenuOpened",this.isMenuOpened);
     this.sendData();
   },
   closeMenu: function() {

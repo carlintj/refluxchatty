@@ -18,7 +18,7 @@ module.exports = Reflux.createStore({
     this.unreadPMs = 0;
     this.showLogin = false;
     this.loginMessage = localStorage.get('username') || "";
-    
+    this.isMenuOpened = false;
     this.sendData();
   },
   getInitialState: function() {
@@ -28,7 +28,8 @@ module.exports = Reflux.createStore({
       showLogin: false,
       totalPMs: 0,
       unreadPMs: 0,
-      unseenReplies: []
+      unseenReplies: [],
+      isMenuOpened: false,
     };
   },
   login: function(username, password) {
@@ -89,7 +90,8 @@ module.exports = Reflux.createStore({
       username: localStorage.get('username'),
       totalPMs: this.totalPMs,
       unreadPMs: this.unreadPMs,
-      unseenReplies: this.unseenReplies
+      unseenReplies: this.unseenReplies,
+      isMenuOpened: this.isMenuOpened,
     });
   },
   requestSubmitComment: function(parentCommentId, body) {
@@ -103,5 +105,18 @@ module.exports = Reflux.createStore({
   clearReplies: function() {
     this.unseenReplies = [];
     this.sendData();
-  }
+  },
+  openMenu: function() {
+    this.isMenuOpened = true;
+    console.log("isMenuOpened",this.isMenuOpened);
+    this.sendData();
+  },
+  closeMenu: function() {
+    this.isMenuOpened = false;
+    this.sendData();
+  },
+  toggleMenu: function() {
+    this.isMenuOpened = !this.isMenuOpened;
+    this.sendData();
+  },
 });

@@ -93,6 +93,7 @@ module.exports = Reflux.createStore({
     //this is dumb should come from store but store doesn't send data until change happens
     this.username = localStorage.get('username');
     this.replyingTo = 0;
+    this.showNewThreadBox = false;
     this.visibleThreads = [];
     this.paused = false;
     this.waitingForEvent = false;
@@ -107,7 +108,9 @@ module.exports = Reflux.createStore({
       connected: false,
       eventId: 0,
       visibleThreads: [],
-      findThreadByPostId: this.findThreadByPostId
+      replyingTo: 0,
+      showNewThreadBox: false,
+      findThreadByPostId: this.findThreadByPostId,
     };
   },
   fullRefresh: function() {
@@ -123,7 +126,8 @@ module.exports = Reflux.createStore({
       username: this.username,
       replyingTo: this.replyingTo,
       visibleThreads: this.visibleThreads,
-      findThreadByPostId: this.findThreadByPostId
+      findThreadByPostId: this.findThreadByPostId,
+      showNewThreadBox: this.showNewThreadBox,
     });
   },
   startChatty: function() {
@@ -396,6 +400,7 @@ module.exports = Reflux.createStore({
   },
   submitComment: function(parentCommentId, body) {
     this.replyingTo = 0;
+    this.showNewThreadBox = false;
     this.sendData();
     UserActions.requestSubmitComment(parentCommentId, body);
   },
@@ -441,5 +446,10 @@ module.exports = Reflux.createStore({
     if(thread == null) {
       ChattyActions.getThread(threadId);
     }
+  },
+  showNewThread: function() {
+    this.replyingTo = 0;
+    this.showNewThreadBox = true;
+    this.sendData();
   }
 });

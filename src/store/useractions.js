@@ -39,7 +39,13 @@ var Actions = Reflux.createActions({
   },
   clearReplies: {
     asyncResult: false
-  }
+  },
+  openMenu: {
+    asyncResult: false
+  },
+  toggleMenu: {
+    asyncResult: false
+  },
 });
 
 Actions.getMessageCount.listen(function(username, password) {
@@ -72,7 +78,9 @@ Actions.login.listen(function(username, password) {
 
 Actions.submitComment.listen(function(parentCommentId, body,
   username, password) {
-  reqwest({
+    console.log(parentCommentId,body);
+    return;
+  /*reqwest({
       url: URLs.submitComment,
       method: 'post',
       crossOrigin: true,
@@ -85,6 +93,7 @@ Actions.submitComment.listen(function(parentCommentId, body,
     })
     .then(Actions.submitComment.completed)
     .catch(Actions.submitComment.failed);
+    */
 });
 
 module.exports = Actions;

@@ -81,6 +81,9 @@ var Actions = Reflux.createActions({
   },
   loadPostIfNotFound: {
     asyncResult: false
+  },
+  showNewThread: {
+    asyncResult: false
   }
 });
 

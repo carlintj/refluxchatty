@@ -2,12 +2,15 @@ var React = require("react/addons");
 var ChattyActions = require("../../store/chattyactions.js");
 var UserActions = require("../../store/useractions.js");
 var combine = require("../../util/styleutil.js");
-var LoginScreen = require("./login.js");
-var SearchBox = require("../posts/searchbox.js");
 var Router = require('react-router');
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
+var ReplyBox = require("../posts/replybox.js");
+
 
 var styles = {
+  parent: {
+    overflow: 'auto',
+  },
   success: {
     color: '#3F82C5'
   },
@@ -32,6 +35,18 @@ var styles = {
     fontFamily: 'Helvetica,Arial,sans-serif',
     fontSize: 13,
     width: '100%',
+    height: '20px',
+  },
+  menubuttons: {
+    float: 'right',
+    //position: 'fixed',
+    paddingRight: '5px',
+  },
+  menubutton: {
+    height: '20px'
+  },
+  replyBoxContainer: {
+    marginTop: '30px',
   },
 };
 
@@ -46,15 +61,13 @@ module.exports = React.createClass({
     unseenReplies: React.PropTypes.array.isRequired,
     showSearch: React.PropTypes.bool.isRequired,
     showHomeLink: React.PropTypes.bool.isRequired,
-  },
-  getInitialState: function() {
-    return {showingReplies : false};
-  },
-  showLogin: function() {
-    UserActions.showLoginForm();
+    showNewThreadBox: React.PropTypes.bool.isRequired,
   },
   fullRefresh: function() {
     ChattyActions.fullRefresh();
+  },
+  onReorderClick: function() {
+    ChattyActions.reorderThreads();
   },
   checkPMs: function() {
     UserActions.requestMessageCount();
@@ -63,58 +76,51 @@ module.exports = React.createClass({
     this.checkPMs();
     this.messageTimer = setInterval(this.checkPMs,5 * 60 * 1000);
   },
+  onMenuClick: function() {
+    UserActions.toggleMenu();
+  },
+  onNewThreadClick: function() {
+    ChattyActions.showNewThread();
+  },
   render: function() {
     var homeLink = null;
+    var props = this.props;
     if(this.props.showHomeLink) {
       homeLink = <Link to="ChattyHome">Back to Chatty</Link>;
     }
     
     var status = null;
-    if(this.props.connected) {
+    if(props.connected) {
       status = <span style={styles.success}>Connected</span>;
     } else {
       status = <a onClick={this.fullRefresh}>Not connected - click to connect
         </a>;
     }
     var userinfo = null;
-    if(this.props.username && this.props.username != "") {
+    if(props.username && props.username != "") {
       userinfo = <span>
-        <span style={styles.username}>{this.props.username}</span>&nbsp;
-        <span style={styles.date}>({this.props.unreadPMs} / {this.props.totalPMs})</span>
+          <span style={styles.date}>({props.unreadPMs} / {props.totalPMs})</span>
         </span>;
-    } else {
-      userinfo = <a style={styles.clickable} onClick={this.showLogin}>Login</a>;
+    } 
+    var replyBox = null;
+    if(props.showNewThreadBox == true) {
+      replyBox = <div style={styles.replyBoxContainer}>
+        <h4>New Thread</h4>
+        <ReplyBox parentCommentId={0}/>
+      </div>;
     }
     
-    var loginScreen = null;
-    if(this.props.showLogin) {
-      loginScreen = <LoginScreen loginMessage={this.props.loginMessage}/>;
-    }
-    
-    var searchBox = null;
-    if(this.props.showSearch) {
-      searchBox = <SearchBox />;
-    }
-    
-    var replies = null;
-    if(this.state.showingReplies && this.props.unseenReplies.length == 0) {
-      replies = <a style={styles.clickable} onClick={this.onShowReplies}>Show all</a>;
-    } else {
-       replies = <a style={styles.clickable} onClick={this.onShowReplies}>{this.props.unseenReplies.length}</a>;
-    }
-    
-    return (<div style={styles.statusbar}>
-        {homeLink} {status} 
-        &nbsp;|&nbsp;
-        <span>Last Event ID: {this.props.lastEventId}</span> 
-        &nbsp;|&nbsp;
-        {userinfo} 
-        &nbsp;|&nbsp;
-        Replies: {replies}
-        &nbsp;|&nbsp;
-        <a style={styles.clickable} onClick={this.onReorderClick}>Reorder</a>
-        {loginScreen}
-        {searchBox}
+    return (
+      <div style={styles.parent}>
+        <div style={styles.statusbar}>
+          {homeLink} {status} 
+          <div style={styles.menubuttons}>
+            <img src="/build/icons/sort-amount-desc.svg" style={styles.menubutton} onClick={this.onReorderClick} />
+            <img src="/build/icons/pencil.svg" style={styles.menubutton} onClick={this.onNewThreadClick} />
+            <img src="/build/icons/menu.svg" style={styles.menubutton} onClick={this.onMenuClick} />
+          </div>
+        </div>
+        {replyBox}
       </div>);
   },
   onShowReplies: function() {
@@ -127,7 +133,4 @@ module.exports = React.createClass({
     ChattyActions.showThreads(this.props.unseenReplies);
     UserActions.clearReplies();
   },
-  onReorderClick: function() {
-    ChattyActions.reorderThreads();
-  }
 });

@@ -451,5 +451,9 @@ module.exports = Reflux.createStore({
     this.replyingTo = 0;
     this.showNewThreadBox = true;
     this.sendData();
-  }
+  },
+  cancelNewThread: function() {
+    this.showNewThreadBox = false;
+    this.sendData();
+  },
 });

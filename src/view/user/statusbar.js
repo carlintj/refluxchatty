@@ -43,11 +43,17 @@ var styles = {
     paddingRight: '5px',
   },
   menubutton: {
-    height: '20px'
+    height: '20px',
+    paddingLeft: '10px',
+    paddingRight: '10px',
   },
   replyBoxContainer: {
+    margin: '15px',
     marginTop: '30px',
   },
+  closeButton: {
+    float: 'right',
+  }
 };
 
 module.exports = React.createClass({
@@ -82,6 +88,9 @@ module.exports = React.createClass({
   onNewThreadClick: function() {
     ChattyActions.showNewThread();
   },
+  onCancelNewThreadClick: function() {
+    ChattyActions.cancelNewThread();
+  },
   render: function() {
     var homeLink = null;
     var props = this.props;
@@ -105,8 +114,10 @@ module.exports = React.createClass({
     var replyBox = null;
     if(props.showNewThreadBox == true) {
       replyBox = <div style={styles.replyBoxContainer}>
-        <h4>New Thread</h4>
-        <ReplyBox parentCommentId={0}/>
+        <div><strong>New Thread</strong>
+          <span style={combine(styles.clickable,styles.closeButton)} onClick={this.onCancelNewThreadClick}>Close</span>
+        </div>
+          <ReplyBox parentCommentId={0}/>
       </div>;
     }
     

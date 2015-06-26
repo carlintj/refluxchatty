@@ -84,7 +84,10 @@ var Actions = Reflux.createActions({
   },
   showNewThread: {
     asyncResult: false
-  }
+  },
+  cancelNewThread: {
+    asyncResult: false
+  },
 });
 
 Actions.getChatty.listen(function() {

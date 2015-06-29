@@ -5,7 +5,20 @@ var Router = require('react-router');
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
 
 var chattyRegex = new RegExp(/shacknews.com\/chatty\?id=(\d+)(#item_)?(\d+)?/);
-var imageHostRegex = new RegExp(/(imgur\.com)/);
+var imageHostRegex = new RegExp(/((imgur\.com)|(chattypics\.com))/);
+
+var imgurEmbed = new RegExp(/(http|https):\/\/(www\.)?(imgur\.com\/)(\w+)/);
+var imageEmbeds = {
+  "chattypics.com": function(rawUrl) {
+    return rawUrl;
+  },
+  "imgur.com": function(rawUrl) {
+    var m = imgurEmbed.exec(rawUrl);
+    var url = "//i.imgur.com/"+m[4]+".jpg";
+    return url;
+  },
+};
+
 
 var ChattyLink = React.createClass({
   propTypes: {
@@ -34,7 +47,9 @@ var ImageLink = React.createClass({
     if(!this.state.isExpanded) {
       return <a href={this.props.url} onClick={this.onImageClick}>{this.props.url}</a>;
     }
-    return <div><img src={this.props.url} onClick={this.onImageClick} /></div>;
+    var domain = imageHostRegex.exec(this.props.url)[1];
+    
+    return <div><img src={imageEmbeds[domain](this.props.url)} onClick={this.onImageClick} /></div>;
   }
 });
 

@@ -39,7 +39,13 @@ var Actions = Reflux.createActions({
   },
   clearReplies: {
     asyncResult: false
-  }
+  },
+  openMenu: {
+    asyncResult: false
+  },
+  toggleMenu: {
+    asyncResult: false
+  },
 });
 
 Actions.getMessageCount.listen(function(username, password) {

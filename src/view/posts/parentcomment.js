@@ -37,8 +37,6 @@ var styles = {
     boxShadow: '0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24)',
   },
   parentComment: {
-    //border: '2px solid #000000',
-    //borderRadius: '1px',
     padding: '5px',
   },
   searchMatch: {

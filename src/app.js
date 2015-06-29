@@ -2,6 +2,7 @@ var React = require("react/addons");
 var Reflux = require("reflux");
 var Chatty = require("./view/chatty.js");
 var StatusBar = require("./view/user/statusbar.js");
+var StatusMenu = require("./view/user/statusmenu.js");
 var ChattyStore = require("./store/chattystore.js");
 var UserStore = require("./store/userstore.js");
 var Router = require('react-router');
@@ -15,25 +16,27 @@ var App = React.createClass({
     Reflux.connect(ChattyStore,"ChattyStore"),
   ],
   render: function () {
-    console.log(this.state);
     var showHomeLink = true;
     return (<div>
       <StatusBar 
         showHomeLink={showHomeLink}
         username={this.state.UserStore.username} 
-        pms={this.state.UserStore.pms}
+        connected={this.state.ChattyStore.connected}
+        showNewThreadBox={this.state.ChattyStore.showNewThreadBox}
+        />
+      <StatusMenu isMenuOpened={this.state.UserStore.isMenuOpened}
+        lastEventId={this.state.ChattyStore.eventId} 
+        username={this.state.UserStore.username} 
         showLogin={this.state.UserStore.showLogin}
         loginMessage={this.state.UserStore.loginMessage}
-        connected={this.state.ChattyStore.connected}
-        lastEventId={this.state.ChattyStore.eventId} 
-        totalPMs={this.state.UserStore.totalPMs} 
+        showSearch={this.state.showSearch}
+        pms={this.state.UserStore.pms}
         unreadPMs={this.state.UserStore.unreadPMs}
         unseenReplies={this.state.UserStore.unseenReplies}
-        showSearch={this.state.showSearch}
+        totalPMs={this.state.UserStore.totalPMs}
         />
       <RouteHandler UserStore={this.state.UserStore} 
-        ChattyStore={this.state.ChattyStore}
-      />
+        ChattyStore={this.state.ChattyStore} />
     </div>);
   }
 });

@@ -4,11 +4,21 @@ var _ = require("lodash");
 var Router = require('react-router');
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
 
-//http://www.shacknews.com/chatty?id=33586767
-//http://www.shacknews.com/chatty?id=33588017#item_33588017
-//shacknews.com\/chatty\?id=(\d+)(#item_)?(\d+)?
-
 var chattyRegex = new RegExp(/shacknews.com\/chatty\?id=(\d+)(#item_)?(\d+)?/);
+var imageHostRegex = new RegExp(/((imgur\.com)|(chattypics\.com))/);
+
+var imgurEmbed = new RegExp(/(http|https):\/\/(www\.)?(imgur\.com\/)(\w+)/);
+var imageEmbeds = {
+  "chattypics.com": function(rawUrl) {
+    return rawUrl;
+  },
+  "imgur.com": function(rawUrl) {
+    var m = imgurEmbed.exec(rawUrl);
+    var url = "//i.imgur.com/"+m[4]+".jpg";
+    return url;
+  },
+};
+
 
 var ChattyLink = React.createClass({
   propTypes: {
@@ -22,6 +32,27 @@ var ChattyLink = React.createClass({
   }
 });
 
+var ImageLink = React.createClass({
+  propTypes: {
+    url: React.PropTypes.string.isRequired
+  },
+  getInitialState: function() {
+    return {isExpanded: false};
+  },
+  onImageClick: function() {
+    this.setState({isExpanded: !this.state.isExpanded});
+    return false;
+  },
+  render: function() {
+    if(!this.state.isExpanded) {
+      return <a href={this.props.url} onClick={this.onImageClick}>{this.props.url}</a>;
+    }
+    var domain = imageHostRegex.exec(this.props.url)[1];
+    
+    return <div><img src={imageEmbeds[domain](this.props.url)} onClick={this.onImageClick} /></div>;
+  }
+});
+
 module.exports = React.createClass({
     propTypes: {
       url: React.PropTypes.string.isRequired,
@@ -30,10 +61,12 @@ module.exports = React.createClass({
     render: function() {
       var m = chattyRegex.exec(this.props.url);
       if(!!m) {
-        console.log(this.props.url,"is chatty link");
         return  <ChattyLink url={this.props.url} />;
+      }
+      m = imageHostRegex.exec(this.props.url);
+      if(!!m) {
+        return <ImageLink url={this.props.url} />;
       }
       return <a href={this.props.url} target="_blank">{this.props.text}</a>;
     }
-    
 });

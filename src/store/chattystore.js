@@ -93,6 +93,7 @@ module.exports = Reflux.createStore({
     //this is dumb should come from store but store doesn't send data until change happens
     this.username = localStorage.get('username');
     this.replyingTo = 0;
+    this.showNewThreadBox = false;
     this.visibleThreads = [];
     this.paused = false;
     this.waitingForEvent = false;
@@ -107,7 +108,9 @@ module.exports = Reflux.createStore({
       connected: false,
       eventId: 0,
       visibleThreads: [],
-      findThreadByPostId: this.findThreadByPostId
+      replyingTo: 0,
+      showNewThreadBox: false,
+      findThreadByPostId: this.findThreadByPostId,
     };
   },
   fullRefresh: function() {
@@ -123,12 +126,12 @@ module.exports = Reflux.createStore({
       username: this.username,
       replyingTo: this.replyingTo,
       visibleThreads: this.visibleThreads,
-      findThreadByPostId: this.findThreadByPostId
+      findThreadByPostId: this.findThreadByPostId,
+      showNewThreadBox: this.showNewThreadBox,
     });
   },
   startChatty: function() {
     if(this.threads.length > 0 ) {
-      console.log("paused, resuming");
       //resuming after being paused, just kick off event
       this.paused = false;
       this.sendData();
@@ -137,7 +140,6 @@ module.exports = Reflux.createStore({
       }
     } else {
       //no data, full refresh
-      console.log("full refresh");
       ChattyActions.getNewestEventId();  
     }
     
@@ -240,7 +242,6 @@ module.exports = Reflux.createStore({
     this.sendData();
   },
   selectComment: function(parentId, commentId) {
-    console.log("selecting comment");
     this.replyingTo = 0;
     var parent = null;
     _.each(this.threads, (thread) => {
@@ -399,6 +400,7 @@ module.exports = Reflux.createStore({
   },
   submitComment: function(parentCommentId, body) {
     this.replyingTo = 0;
+    this.showNewThreadBox = false;
     this.sendData();
     UserActions.requestSubmitComment(parentCommentId, body);
   },
@@ -444,5 +446,14 @@ module.exports = Reflux.createStore({
     if(thread == null) {
       ChattyActions.getThread(threadId);
     }
-  }
+  },
+  showNewThread: function() {
+    this.replyingTo = 0;
+    this.showNewThreadBox = true;
+    this.sendData();
+  },
+  cancelNewThread: function() {
+    this.showNewThreadBox = false;
+    this.sendData();
+  },
 });

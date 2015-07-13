@@ -85,7 +85,6 @@ var ParentComment = React.createClass({
         if(props.expanded) {
           replyPosts = renderChildComments(props.threadId,props.children, 
               props.expandedChildId,props.replyingTo,props.username);
-            
           replies = <div><a style={styles.clickable} 
             onClick={this.onCollapseClick}>Collapse</a></div>;
         } else {
@@ -122,10 +121,13 @@ var ParentComment = React.createClass({
       }
       
       return (
-        <div style={styles.parentContainer} onClick={this.onParentClick}>
+        <div style={styles.parentContainer}>
           <div style={combine(styles.parentComment, props.searchMatch && styles.searchMatch) }>
           {scroller}
-            <div ref="anchor" style={combine(props.focused && styles.highlightedParent)}>
+            <div ref="anchor" 
+              style={combine(props.focused && styles.highlightedParent)}
+              onClick={this.onParentClick}
+            >
               <span style={styles.username}>
                 {props.author}
               </span>

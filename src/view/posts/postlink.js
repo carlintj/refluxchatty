@@ -4,6 +4,12 @@ var _ = require("lodash");
 var Router = require('react-router');
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
 
+var styles = {
+  img: {
+    maxWidth:'600px'
+  },
+};
+
 var chattyRegex = new RegExp(/shacknews.com\/chatty\?id=(\d+)(#item_)?(\d+)?/);
 var imageHostRegex = new RegExp(/((imgur\.com)|(chattypics\.com))/);
 
@@ -14,7 +20,10 @@ var imageEmbeds = {
   },
   "imgur.com": function(rawUrl) {
     var m = imgurEmbed.exec(rawUrl);
-    var url = "//i.imgur.com/"+m[4]+".jpg";
+    var url = rawUrl;
+    if(!!m && !!m[4]) {
+      url = "//i.imgur.com/"+m[4]+".jpg";
+    }
     return url;
   },
 };
@@ -39,17 +48,23 @@ var ImageLink = React.createClass({
   getInitialState: function() {
     return {isExpanded: false};
   },
-  onImageClick: function() {
-    this.setState({isExpanded: !this.state.isExpanded});
-    return false;
+  onImageClick: function(e) {
+    //handle if ctrlKey is not pressed and not using middle mouse button
+    //so the browser can do the default event otherwise
+    if(!e.ctrlKey && e.button !== 1) {
+      e.preventDefault();
+      this.setState({isExpanded: !this.state.isExpanded});
+    }
   },
   render: function() {
     if(!this.state.isExpanded) {
       return <a href={this.props.url} onClick={this.onImageClick}>{this.props.url}</a>;
     }
     var domain = imageHostRegex.exec(this.props.url)[1];
-    
-    return <div><img src={imageEmbeds[domain](this.props.url)} onClick={this.onImageClick} /></div>;
+    if(!!imageEmbeds[domain]) {
+      return <div><img style={styles.img} src={imageEmbeds[domain](this.props.url)} onClick={this.onImageClick} /></div>;  
+    }
+    return <a href={this.props.url} onClick={this.onImageClick}>{this.props.url}</a>;
   }
 });
 

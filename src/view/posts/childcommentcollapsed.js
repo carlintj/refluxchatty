@@ -123,8 +123,8 @@ module.exports = React.createClass({
       commentStyle = styleutil(commentStyle,styles.commentNWS);
     }
 
-    return (<div style={styles.commentContainer} onClick={this.handleClick}>
-    <div style={commentStyle} ref="hover">
+    return (<div style={styles.commentContainer}>
+    <div style={commentStyle} ref="hover" onClick={this.handleClick}>
       <span style={styles.username}>{props.author}</span>
       &nbsp; - &nbsp;
       <span dangerouslySetInnerHTML={{__html: comment}} ></span>

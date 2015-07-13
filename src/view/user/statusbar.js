@@ -6,7 +6,6 @@ var Router = require('react-router');
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
 var ReplyBox = require("../posts/replybox.js");
 
-
 var styles = {
   parent: {
     overflow: 'auto',
@@ -35,17 +34,18 @@ var styles = {
     fontFamily: 'Helvetica,Arial,sans-serif',
     fontSize: 13,
     width: '100%',
-    height: '20px',
+    height: '5%',
   },
   menubuttons: {
     float: 'right',
-    //position: 'fixed',
-    paddingRight: '5px',
+    //paddingRight: '5px',
+    cursor: 'pointer',
+    height:'100%',
   },
   menubutton: {
-    height: '20px',
     paddingLeft: '10px',
     paddingRight: '10px',
+    height:'100%',
   },
   replyBoxContainer: {
     margin: '15px',
@@ -124,24 +124,26 @@ module.exports = React.createClass({
     return (
       <div style={styles.parent}>
         <div style={styles.statusbar}>
-          {homeLink} {status} 
+          {homeLink} {status} {userinfo}
           <div style={styles.menubuttons}>
-            <img src="/build/icons/sort-amount-desc.svg" style={styles.menubutton} onClick={this.onReorderClick} />
-            <img src="/build/icons/pencil.svg" style={styles.menubutton} onClick={this.onNewThreadClick} />
-            <img src="/build/icons/menu.svg" style={styles.menubutton} onClick={this.onMenuClick} />
+            <img 
+              src="/build/icons/sort-amount-desc.svg" 
+              style={styles.menubutton} 
+              onClick={this.onReorderClick} 
+            />
+            <img 
+              src="/build/icons/pencil.svg" 
+              style={styles.menubutton} 
+              onClick={this.onNewThreadClick} 
+            />
+            <img 
+              src="/build/icons/menu.svg" 
+              style={styles.menubutton} 
+              onClick={this.onMenuClick} 
+            />
           </div>
         </div>
         {replyBox}
       </div>);
-  },
-  onShowReplies: function() {
-    if(this.props.unseenReplies.length == 0) {
-      this.state.showingReplies = false;
-    } else {
-      this.state.showingReplies = true;
-    }
-    
-    ChattyActions.showThreads(this.props.unseenReplies);
-    UserActions.clearReplies();
   },
 });

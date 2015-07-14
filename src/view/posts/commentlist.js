@@ -6,11 +6,8 @@ var styles = {
     paddingTop: 30,
     paddingLeft: 20,
     paddingRight: 20,
-    fontFamily: 'Helvetica,Arial,sans-serif',
-    fontSize: 13,
-
   },
-}
+};
 
 module.exports = React.createClass({
   render: function() {

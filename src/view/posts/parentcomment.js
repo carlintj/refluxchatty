@@ -38,6 +38,8 @@ var styles = {
   },
   parentComment: {
     padding: '5px',
+    fontFamily: 'Helvetica,Arial,sans-serif',
+    fontSize: '0.8em',
   },
   searchMatch: {
     background: '#FF00FF'

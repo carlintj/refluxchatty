@@ -16,7 +16,7 @@ var styles = {
     width: '200px',
     borderLeft: 'solid 2px #6F6F70',
     fontFamily: 'Helvetica,Arial,sans-serif',
-    fontSize: 13,
+    fontSize: '1em',
   },
   clickable: {
     cursor: 'pointer',

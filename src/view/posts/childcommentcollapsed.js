@@ -43,7 +43,6 @@ var styles = {
     //borderTop: '1px solid #cdced0',
     //borderRadius: '5px',
     //padding: '2px',
-    fontSize: 11,
     whiteSpace: 'nowrap'
   },
   commentInformative: {
@@ -57,7 +56,8 @@ var styles = {
     cursor: 'pointer',
   },
   commentBody: {
-    overflow: 'hidden'
+    overflow: 'hidden',
+    fontSize: '0.8em',
   }
 };
 

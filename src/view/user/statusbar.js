@@ -32,9 +32,9 @@ var styles = {
     padding: 2,
     position: 'fixed',
     fontFamily: 'Helvetica,Arial,sans-serif',
-    fontSize: 13,
+    fontSize: '0.8em',
     width: '100%',
-    height: '5%',
+    height: '16pt',
   },
   menubuttons: {
     float: 'right',
@@ -92,26 +92,19 @@ module.exports = React.createClass({
     ChattyActions.cancelNewThread();
   },
   render: function() {
-    var homeLink = null;
+    var homeLink,status,replyBox = null;
     var props = this.props;
     if(this.props.showHomeLink) {
       homeLink = <Link to="ChattyHome">Back to Chatty</Link>;
     }
     
-    var status = null;
     if(props.connected) {
       status = <span style={styles.success}>Connected</span>;
     } else {
       status = <a onClick={this.fullRefresh}>Not connected - click to connect
         </a>;
     }
-    var userinfo = null;
-    if(props.username && props.username != "") {
-      userinfo = <span>
-          <span style={styles.date}>({props.unreadPMs} / {props.totalPMs})</span>
-        </span>;
-    } 
-    var replyBox = null;
+
     if(props.showNewThreadBox == true) {
       replyBox = <div style={styles.replyBoxContainer}>
         <div><strong>New Thread</strong>
@@ -120,11 +113,11 @@ module.exports = React.createClass({
           <ReplyBox parentCommentId={0}/>
       </div>;
     }
-    
+    var notifications = props.unseenReplies;
     return (
       <div style={styles.parent}>
         <div style={styles.statusbar}>
-          {homeLink} {status} {userinfo}
+          {homeLink} {status}
           <div style={styles.menubuttons}>
             <img 
               src="/build/icons/sort-amount-desc.svg" 
@@ -136,11 +129,13 @@ module.exports = React.createClass({
               style={styles.menubutton} 
               onClick={this.onNewThreadClick} 
             />
-            <img 
-              src="/build/icons/menu.svg" 
-              style={styles.menubutton} 
-              onClick={this.onMenuClick} 
-            />
+            <span data-badge={notifications} className="badge1">
+              <img 
+                src="/build/icons/menu.svg" 
+                style={styles.menubutton} 
+                onClick={this.onMenuClick} 
+              />
+            </span>
           </div>
         </div>
         {replyBox}

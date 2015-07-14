@@ -9,7 +9,7 @@ var _ = require("lodash");
 var styles = {
   highlightedComment: {
     background: '#E0F3FF',
-    fontSize: 13,
+    //fontSize: '0.8em',
     whiteSpace: 'normal',
     border: '1px solid #cddaf3',
     padding: '2px',
@@ -23,7 +23,7 @@ var styles = {
   commentContainer: {
     marginLeft: 12,
     borderLeft: '1px solid #cdced0',
-    fontSize: 11,
+    //fontSize: '1em',
     whiteSpace: 'nowrap'
   },
   username: {

@@ -113,7 +113,12 @@ module.exports = React.createClass({
           <ReplyBox parentCommentId={0}/>
       </div>;
     }
-    var notifications = props.unseenReplies;
+    var notifications = props.unseenReplies.length;
+    
+    if(notifications === 0) {
+      notifications = null;
+    }
+    
     return (
       <div style={styles.parent}>
         <div style={styles.statusbar}>
@@ -129,11 +134,13 @@ module.exports = React.createClass({
               style={styles.menubutton} 
               onClick={this.onNewThreadClick} 
             />
-            <span data-badge={notifications} className="badge1">
+            <span data-badge={notifications} className="badge1"
+              onClick={this.onMenuClick} 
+              >
               <img 
                 src="/build/icons/menu.svg" 
                 style={styles.menubutton} 
-                onClick={this.onMenuClick} 
+                
               />
             </span>
           </div>

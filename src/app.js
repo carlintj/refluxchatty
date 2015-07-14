@@ -23,6 +23,7 @@ var App = React.createClass({
         username={this.state.UserStore.username} 
         connected={this.state.ChattyStore.connected}
         showNewThreadBox={this.state.ChattyStore.showNewThreadBox}
+        unseenReplies={this.state.UserStore.unseenReplies}
         />
       <StatusMenu isMenuOpened={this.state.UserStore.isMenuOpened}
         lastEventId={this.state.ChattyStore.eventId} 

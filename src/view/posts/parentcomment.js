@@ -23,6 +23,9 @@ var styles = {
     background: '#E0F3FF',
     border: '1px solid #cddaf3',
   },
+  dummyBorder: {
+    border: '1px solid #FFFFFF',
+  },
   parentInformative: {
     fontWeight: 'bold',
     color: '#0000FF'
@@ -127,7 +130,7 @@ var ParentComment = React.createClass({
           <div style={combine(styles.parentComment, props.searchMatch && styles.searchMatch) }>
           {scroller}
             <div ref="anchor" 
-              style={combine(props.focused && styles.highlightedParent)}
+              style={combine(styles.dummyBorder,props.focused && styles.highlightedParent)}
               onClick={this.onParentClick}
             >
               <span style={styles.username}>

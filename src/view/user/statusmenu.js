@@ -15,6 +15,12 @@ var styles = {
     height: '100%',
     width: '200px',
     borderLeft: 'solid 2px #6F6F70',
+    fontFamily: 'Helvetica,Arial,sans-serif',
+    fontSize: '1em',
+  },
+  clickable: {
+    cursor: 'pointer',
+    color: '#004FFF'
   },
 };
 
@@ -27,6 +33,16 @@ var StatusMenu = React.createClass({
   },
   getInitialState: function() {
     return {showingReplies : false};
+  },
+  onShowReplies: function() {
+    if(this.props.unseenReplies.length == 0) {
+      this.state.showingReplies = false;
+    } else {
+      this.state.showingReplies = true;
+    }
+    
+    ChattyActions.showThreads(this.props.unseenReplies);
+    UserActions.clearReplies();
   },
   render: function() {
     var loginScreen = null;
@@ -46,7 +62,7 @@ var StatusMenu = React.createClass({
     if(this.state.showingReplies && this.props.unseenReplies.length == 0) {
       replies = <div><a style={styles.clickable} onClick={this.onShowReplies}>Show all</a></div>;
     } else if (this.props.unseenReplies.length !== 0) {
-       replies = <div><a style={styles.clickable} onClick={this.onShowReplies}>{this.props.unseenReplies.length}</a></div>;
+       replies = <div><a style={styles.clickable} onClick={this.onShowReplies}>{this.props.unseenReplies.length} Replies</a></div>;
     }
     
     var searchBox = null;
@@ -57,7 +73,6 @@ var StatusMenu = React.createClass({
     if(!this.props.isMenuOpened) return null;
     return (<div style={styles.openedMenu}>
       <div>Last Event ID: {this.props.lastEventId}</div> 
-      <div><a href="#" style={styles.clickable} onClick={this.onReorderClick}>Reorder</a></div>
       {replies}
       {loginScreen}
       {userinfo}

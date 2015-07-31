@@ -43,7 +43,6 @@ var styles = {
     //borderTop: '1px solid #cdced0',
     //borderRadius: '5px',
     //padding: '2px',
-    fontSize: 11,
     whiteSpace: 'nowrap'
   },
   commentInformative: {
@@ -57,7 +56,8 @@ var styles = {
     cursor: 'pointer',
   },
   commentBody: {
-    overflow: 'hidden'
+    overflow: 'hidden',
+    fontSize: '0.8em',
   }
 };
 
@@ -123,8 +123,8 @@ module.exports = React.createClass({
       commentStyle = styleutil(commentStyle,styles.commentNWS);
     }
 
-    return (<div style={styles.commentContainer} onClick={this.handleClick}>
-    <div style={commentStyle} ref="hover">
+    return (<div style={styles.commentContainer}>
+    <div style={commentStyle} ref="hover" onClick={this.handleClick}>
       <span style={styles.username}>{props.author}</span>
       &nbsp; - &nbsp;
       <span dangerouslySetInnerHTML={{__html: comment}} ></span>

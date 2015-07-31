@@ -6,7 +6,6 @@ var Router = require('react-router');
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
 var ReplyBox = require("../posts/replybox.js");
 
-
 var styles = {
   parent: {
     overflow: 'auto',
@@ -33,19 +32,20 @@ var styles = {
     padding: 2,
     position: 'fixed',
     fontFamily: 'Helvetica,Arial,sans-serif',
-    fontSize: 13,
+    fontSize: '0.8em',
     width: '100%',
-    height: '20px',
+    height: '16pt',
   },
   menubuttons: {
     float: 'right',
-    //position: 'fixed',
-    paddingRight: '5px',
+    //paddingRight: '5px',
+    cursor: 'pointer',
+    height:'100%',
   },
   menubutton: {
-    height: '20px',
     paddingLeft: '10px',
     paddingRight: '10px',
+    height:'100%',
   },
   replyBoxContainer: {
     margin: '15px',
@@ -92,26 +92,19 @@ module.exports = React.createClass({
     ChattyActions.cancelNewThread();
   },
   render: function() {
-    var homeLink = null;
+    var homeLink,status,replyBox = null;
     var props = this.props;
     if(this.props.showHomeLink) {
       homeLink = <Link to="ChattyHome">Back to Chatty</Link>;
     }
     
-    var status = null;
     if(props.connected) {
       status = <span style={styles.success}>Connected</span>;
     } else {
       status = <a onClick={this.fullRefresh}>Not connected - click to connect
         </a>;
     }
-    var userinfo = null;
-    if(props.username && props.username != "") {
-      userinfo = <span>
-          <span style={styles.date}>({props.unreadPMs} / {props.totalPMs})</span>
-        </span>;
-    } 
-    var replyBox = null;
+
     if(props.showNewThreadBox == true) {
       replyBox = <div style={styles.replyBoxContainer}>
         <div><strong>New Thread</strong>
@@ -120,28 +113,39 @@ module.exports = React.createClass({
           <ReplyBox parentCommentId={0}/>
       </div>;
     }
+    var notifications = props.unseenReplies.length;
+    
+    if(notifications === 0) {
+      notifications = null;
+    }
     
     return (
       <div style={styles.parent}>
         <div style={styles.statusbar}>
-          {homeLink} {status} 
+          {homeLink} {status}
           <div style={styles.menubuttons}>
-            <img src="/build/icons/sort-amount-desc.svg" style={styles.menubutton} onClick={this.onReorderClick} />
-            <img src="/build/icons/pencil.svg" style={styles.menubutton} onClick={this.onNewThreadClick} />
-            <img src="/build/icons/menu.svg" style={styles.menubutton} onClick={this.onMenuClick} />
+            <img 
+              src="/build/icons/sort-amount-desc.svg" 
+              style={styles.menubutton} 
+              onClick={this.onReorderClick} 
+            />
+            <img 
+              src="/build/icons/pencil.svg" 
+              style={styles.menubutton} 
+              onClick={this.onNewThreadClick} 
+            />
+            <span data-badge={notifications} className="badge1"
+              onClick={this.onMenuClick} 
+              >
+              <img 
+                src="/build/icons/menu.svg" 
+                style={styles.menubutton} 
+                
+              />
+            </span>
           </div>
         </div>
         {replyBox}
       </div>);
-  },
-  onShowReplies: function() {
-    if(this.props.unseenReplies.length == 0) {
-      this.state.showingReplies = false;
-    } else {
-      this.state.showingReplies = true;
-    }
-    
-    ChattyActions.showThreads(this.props.unseenReplies);
-    UserActions.clearReplies();
   },
 });

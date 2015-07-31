@@ -1,6 +1,5 @@
 var _ = require("lodash");
 var React = require("react/addons");
-var styleutil = require("../../util/styleutil.js");
 var PostLink = require("./postlink.js");
 
 

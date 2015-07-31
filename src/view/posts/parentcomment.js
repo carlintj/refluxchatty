@@ -73,6 +73,33 @@ var ParentComment = React.createClass({
       if(this.props.searchMatch != nextProps.searchMatch) return true;
       return false;
     },
+    componentWillReceiveProps: function(nextProps) {
+      if(nextProps.replyCount != this.props.replyCount) {
+        this.setState({'highlightReplies': true});
+      } else {
+        this.setState({'highlightReplies': false});
+      }
+    },
+    componentDidUpdate: function() {
+      var repliesDiv = this.refs.replies;
+      if(repliesDiv) {
+        var el = React.findDOMNode(repliesDiv);
+        if(el.classList.contains('highlight')) {
+          setTimeout(function() {
+            el.classList.remove('highlight');
+          },10000);  
+        }
+      }
+    },
+    onRepliesClick: function() {
+      ChattyActions.toggleParentComment(this.props.id);
+    },
+    onCollapseClick: function() {
+      ChattyActions.toggleParentComment(this.props.id);
+    },
+    onParentClick: function() {
+      if(this.expandedChildId !== 0) ChattyActions.highlightParent(this.props.id);
+    },
     render: function() {
       if(this.props.hidden) return null;
       var props = this.props;
@@ -81,10 +108,7 @@ var ParentComment = React.createClass({
         return null;
       }
       
-      var replyPosts = null;
-      var replies = null;
-      var replyBox = null;
-      var scroller = null;
+      var replyPosts, replies, replyBox, scroller = null;
       
       if (props.replyCount > 0) {
         if(props.expanded) {
@@ -148,33 +172,6 @@ var ParentComment = React.createClass({
         </div>
       );
     },
-    componentWillReceiveProps: function(nextProps) {
-      if(nextProps.replyCount != this.props.replyCount) {
-        this.setState({'highlightReplies': true});
-      } else {
-        this.setState({'highlightReplies': false});
-      }
-    },
-    componentDidUpdate: function() {
-      var repliesDiv = this.refs.replies;
-      if(repliesDiv) {
-        var el = React.findDOMNode(repliesDiv);
-        if(el.classList.contains('highlight')) {
-          setTimeout(function() {
-            el.classList.remove('highlight');
-          },10000);  
-        }
-      }
-    },
-    onRepliesClick: function() {
-      ChattyActions.toggleParentComment(this.props.id);
-    },
-    onCollapseClick: function() {
-      ChattyActions.toggleParentComment(this.props.id);
-    },
-    onParentClick: function() {
-      if(this.expandedChildId !== 0) ChattyActions.highlightParent(this.props.id);
-    }
 });
 
 module.exports = ParentComment;

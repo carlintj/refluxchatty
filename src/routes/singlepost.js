@@ -11,7 +11,6 @@ var styles = {
     paddingLeft: 20,
     paddingRight: 20,
     fontFamily: 'Helvetica,Arial,sans-serif',
-    fontSize: '0.8em',
   },
 };
 

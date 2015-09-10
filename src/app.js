@@ -9,12 +9,22 @@ var Router = require('react-router');
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
 var ChattyHome = require("./routes/chattyhome.js");
 var SinglePost = require("./routes/singlepost.js");
+var ChattyActions = require("./store/chattyactions.js");
+var keymaster = require("keymaster");
 
 var App = React.createClass({
   mixins: [
     Reflux.connect(UserStore,"UserStore"),
     Reflux.connect(ChattyStore,"ChattyStore"),
   ],
+  componentDidMount: function() {
+    keymaster('a', function() {
+       ChattyActions.selectPrevComment();
+    });
+    keymaster('z', function() {
+        ChattyActions.selectNextComment();
+    });
+  },
   render: function () {
     var showHomeLink = true;
     return (<div>

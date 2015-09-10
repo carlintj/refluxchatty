@@ -7,12 +7,7 @@ var keymaster = require("keymaster");
 module.exports = React.createClass({
     componentDidMount: function () {
         ChattyActions.startChatty();
-        keymaster('a', function() {
-           ChattyActions.selectPrevComment();
-        });
-        keymaster('z', function() {
-            ChattyActions.selectNextComment();
-        });
+        
         keymaster('j', function() {
            ChattyActions.selectNextParent();
         });
@@ -40,8 +35,6 @@ module.exports = React.createClass({
     },
     componentWillUnmount: function() {
       ChattyActions.pauseChatty();
-      keymaster.unbind('a');
-      keymaster.unbind('z');
       keymaster.unbind('j');
       keymaster.unbind('k');
       keymaster.unbind('x');

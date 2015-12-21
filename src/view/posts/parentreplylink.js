@@ -1,5 +1,7 @@
 var _ = require("lodash");
-var React = require("react/addons");
+var React = require("react");
+var ReactDOM = require('react-dom');
+
 
 var styles = {
   clickable: {
@@ -19,7 +21,7 @@ var ParentReplyLink = React.createClass({
   componentDidUpdate: function() {
     var repliesDiv = this.refs.replies;
     if(repliesDiv) {
-      var el = React.findDOMNode(repliesDiv);
+      var el = ReactDOM.findDOMNode(repliesDiv);
       if(el.classList.contains('highlight')) {
         setTimeout(function() {
           el.classList.remove('highlight');

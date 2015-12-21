@@ -1,12 +1,12 @@
-var React = require("react/addons");
+var React = require("react");
+var ReactDOM = require('react-dom');
 var Reflux = require("reflux");
 var Chatty = require("./view/chatty.js");
 var StatusBar = require("./view/user/statusbar.js");
 var StatusMenu = require("./view/user/statusmenu.js");
 var ChattyStore = require("./store/chattystore.js");
 var UserStore = require("./store/userstore.js");
-var Router = require('react-router');
-var { Route, DefaultRoute, RouteHandler, Link } = Router;
+import { Router, Route, IndexRoute } from 'react-router';
 var ChattyHome = require("./routes/chattyhome.js");
 var SinglePost = require("./routes/singlepost.js");
 var ChattyActions = require("./store/chattyactions.js");
@@ -46,19 +46,19 @@ var App = React.createClass({
         unseenReplies={this.state.UserStore.unseenReplies}
         totalPMs={this.state.UserStore.totalPMs}
         />
-      <RouteHandler UserStore={this.state.UserStore} 
-        ChattyStore={this.state.ChattyStore} />
+        {React.cloneElement(this.props.children, {UserStore: this.state.UserStore,ChattyStore:this.state.ChattyStore})}
     </div>);
   }
 });
 
 var routes = (
   <Route handler={App}>
-    <DefaultRoute name="ChattyHome" handler={ChattyHome} />
-    <Route name="SinglePost" handler={SinglePost}/>
+    <Route path="/" component={App} >
+      <IndexRoute component={ChattyHome} />
+      <Route path="SinglePost/:threadId" component={SinglePost}/>
+    </Route>
+    
   </Route>
 );
 
-Router.run(routes, function (Handler) {
-  React.render(<Handler/>, document.body);
-});
+ReactDOM.render(<Router>{routes}</Router>, document.getElementById('app'));

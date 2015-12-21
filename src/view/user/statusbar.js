@@ -1,9 +1,9 @@
-var React = require("react/addons");
+var React = require("react");
 var ChattyActions = require("../../store/chattyactions.js");
 var UserActions = require("../../store/useractions.js");
 var combine = require("../../util/styleutil.js");
 var Router = require('react-router');
-var { Route, DefaultRoute, RouteHandler, Link } = Router;
+var { Route, DefaultRoute, RouteHandler, IndexLink } = Router;
 var ReplyBox = require("../posts/replybox.js");
 
 var styles = {
@@ -61,11 +61,7 @@ module.exports = React.createClass({
   propTypes: {
     username: React.PropTypes.string.isRequired,
     connected: React.PropTypes.bool.isRequired,
-    lastEventId: React.PropTypes.number.isRequired,
-    totalPMs: React.PropTypes.number.isRequired,
-    unreadPMs: React.PropTypes.number.isRequired,
     unseenReplies: React.PropTypes.array.isRequired,
-    showSearch: React.PropTypes.bool.isRequired,
     showHomeLink: React.PropTypes.bool.isRequired,
     showNewThreadBox: React.PropTypes.bool.isRequired,
   },
@@ -95,7 +91,7 @@ module.exports = React.createClass({
     var homeLink,status,replyBox = null;
     var props = this.props;
     if(this.props.showHomeLink) {
-      homeLink = <Link to="ChattyHome">Back to Chatty</Link>;
+      homeLink = <IndexLink  to="/">Back to Chatty</IndexLink>;
     }
     
     if(props.connected) {

@@ -1,4 +1,4 @@
-var React = require("react/addons");
+var React = require("react");
 var Router = require('react-router');
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
 var ChattyActions = require("../store/chattyactions.js");
@@ -27,12 +27,13 @@ var SinglePost =  React.createClass({
   },
   componentWillReceiveProps: function(nextProps) {
     var { router } = this.context;
-    var threadId = router.getCurrentQuery().threadId;
-    var postId = router.getCurrentQuery().postId;
+    
+    var threadId = this.props.routeParams.threadId;
+    //var postId = router.getCurrentQuery().postId;
     if(this.state.threadId != threadId) {
       this.setState({
         threadId: Number(threadId),
-        postId: Number(postId),
+        postId: Number(0),
         focused: false,
       });
       ChattyActions.loadPostIfNotFound(threadId);
@@ -46,6 +47,7 @@ var SinglePost =  React.createClass({
   },
   render: function () {
     if(!this.state.threadId) return null;
+    
     var comment = this.props.ChattyStore.findThreadByPostId(this.state.threadId);
     if(!comment) { 
       return null;

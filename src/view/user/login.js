@@ -1,8 +1,9 @@
-var React = require("react/addons");
+var React = require("react");
 var UserActions = require("../../store/useractions.js");
+var LinkedStateMixin = require("react-addons-linked-state-mixin");
 
 module.exports = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   getInitialState: function() {
     return {
       username: "",

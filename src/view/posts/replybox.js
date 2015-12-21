@@ -1,4 +1,5 @@
-var React = require("react/addons");
+var React = require("react");
+var LinkedStateMixin = require("react-addons-linked-state-mixin");
 var ChattyActions = require("../../store/chattyactions.js");
 
 var styles = {
@@ -9,7 +10,7 @@ var styles = {
 };
 
 module.exports = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   propTypes: { 
     parentCommentId: React.PropTypes.number.isRequired
   },

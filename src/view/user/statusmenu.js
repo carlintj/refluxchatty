@@ -1,4 +1,4 @@
-var React = require("react/addons");
+var React = require("react");
 var UserActions = require("../../store/useractions.js");
 var ChattyActions = require("../../store/chattyactions.js");
 var LoginScreen = require("./login.js");

@@ -1,9 +1,8 @@
-var React = require("react/addons");
+var React = require("react");
 var CommentList = require("./posts/commentlist.js");
 var ChattyActions = require("../store/chattyactions.js");
 var keymaster = require("keymaster");
 
-//TODO add unmount for deregistering keymaster
 module.exports = React.createClass({
     componentDidMount: function () {
         ChattyActions.startChatty();

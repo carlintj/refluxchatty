@@ -1,4 +1,4 @@
-var React = require("react/addons");
+var React = require("react");
 var styleutil = require("../../util/styleutil.js");
 var _ = require("lodash");
 var Router = require('react-router');

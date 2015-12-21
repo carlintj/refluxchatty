@@ -1,4 +1,4 @@
-var React = require("react/addons");
+var React = require("react");
 var combine = require("../../util/styleutil.js");
 var renderChildComments = require("./childcomment.js").renderChildComments;
 var ChattyActions = require("../../store/chattyactions.js");
@@ -100,7 +100,7 @@ var ParentComment = React.createClass({
       
       var replyPosts, replies, replyBox, scroller = null;
       
-      replies = <ParentReplyLink expanded={props.expanded} 
+      replies = <ParentReplyLink expanded={props.expanded || false} 
         replyCount={props.replyCount}
         latestReply={props.latestReply}
         highlightReplies={this.state.highlightReplies}

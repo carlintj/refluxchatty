@@ -27,26 +27,27 @@ var App = React.createClass({
   },
   render: function () {
     var showHomeLink = true;
+    var {ChattyStore, UserStore} = this.state;
     return (<div>
       <StatusBar 
         showHomeLink={showHomeLink}
-        username={this.state.UserStore.username} 
-        connected={this.state.ChattyStore.connected}
-        showNewThreadBox={this.state.ChattyStore.showNewThreadBox}
-        unseenReplies={this.state.UserStore.unseenReplies}
+        username={UserStore.username} 
+        connected={ChattyStore.connected}
+        showNewThreadBox={ChattyStore.showNewThreadBox}
+        unseenReplies={UserStore.unseenReplies}
         />
-      <StatusMenu isMenuOpened={this.state.UserStore.isMenuOpened}
-        lastEventId={this.state.ChattyStore.eventId} 
-        username={this.state.UserStore.username} 
-        showLogin={this.state.UserStore.showLogin}
-        loginMessage={this.state.UserStore.loginMessage}
+      <StatusMenu isMenuOpened={UserStore.isMenuOpened}
+        lastEventId={ChattyStore.eventId} 
+        username={UserStore.username} 
+        showLogin={UserStore.showLogin}
+        loginMessage={UserStore.loginMessage}
         showSearch={this.state.showSearch}
-        pms={this.state.UserStore.pms}
-        unreadPMs={this.state.UserStore.unreadPMs}
-        unseenReplies={this.state.UserStore.unseenReplies}
-        totalPMs={this.state.UserStore.totalPMs}
+        pms={UserStore.pms}
+        unreadPMs={UserStore.unreadPMs}
+        unseenReplies={UserStore.unseenReplies}
+        totalPMs={UserStore.totalPMs}
         />
-        {React.cloneElement(this.props.children, {UserStore: this.state.UserStore,ChattyStore:this.state.ChattyStore})}
+        {React.cloneElement(this.props.children, {UserStore,ChattyStore})}
     </div>);
   }
 });

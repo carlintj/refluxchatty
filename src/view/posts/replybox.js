@@ -1,4 +1,6 @@
-var React = require("react/addons");
+var React = require("react");
+var ReactDOM = require('react-dom');
+var LinkedStateMixin = require("react-addons-linked-state-mixin");
 var ChattyActions = require("../../store/chattyactions.js");
 
 var styles = {
@@ -9,12 +11,12 @@ var styles = {
 };
 
 module.exports = React.createClass({
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   propTypes: { 
     parentCommentId: React.PropTypes.number.isRequired
   },
   componentDidMount: function() {
-    var textNode = React.findDOMNode(this.refs.commentBox);
+    var textNode = ReactDOM.findDOMNode(this.refs.commentBox);
     textNode.focus();
   },
   getInitialState: function() {

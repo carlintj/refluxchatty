@@ -1,12 +1,12 @@
-var React = require("react/addons");
+var React = require("react");
 var combine = require("../../util/styleutil.js");
 var renderChildComments = require("./childcomment.js").renderChildComments;
-var ChattyActions = require("../../store/chattyactions.js");
 var AutoscrollingMixin = require("../misc/autoscrollingmixin.js");
 var ReplyBox = require("./replybox.js");
 var ReplyButton = require("./replybutton.js");
 var _ = require("lodash");
 var PostBody = require("./postbody.js");
+var ParentReplyLink =require("./parentreplylink.js");
 
 var styles = {
   clickable: {
@@ -80,25 +80,14 @@ var ParentComment = React.createClass({
         this.setState({'highlightReplies': false});
       }
     },
-    componentDidUpdate: function() {
-      var repliesDiv = this.refs.replies;
-      if(repliesDiv) {
-        var el = React.findDOMNode(repliesDiv);
-        if(el.classList.contains('highlight')) {
-          setTimeout(function() {
-            el.classList.remove('highlight');
-          },10000);  
-        }
-      }
-    },
     onRepliesClick: function() {
-      ChattyActions.toggleParentComment(this.props.id);
+      this.props.chattyActions.toggleParentComment(this.props.id);
     },
     onCollapseClick: function() {
-      ChattyActions.toggleParentComment(this.props.id);
+      this.props.chattyActions.toggleParentComment(this.props.id);
     },
     onParentClick: function() {
-      if(this.expandedChildId !== 0) ChattyActions.highlightParent(this.props.id);
+      if(this.expandedChildId !== 0) this.props.chattyActions.highlightParent(this.props.id);
     },
     render: function() {
       if(this.props.hidden) return null;
@@ -110,36 +99,28 @@ var ParentComment = React.createClass({
       
       var replyPosts, replies, replyBox, scroller = null;
       
-      if (props.replyCount > 0) {
-        if(props.expanded) {
-          replyPosts = renderChildComments(props.threadId,props.children, 
-              props.expandedChildId,props.replyingTo,props.username);
-          replies = <div><a style={styles.clickable} 
-            onClick={this.onCollapseClick}>Collapse</a></div>;
-        } else {
-          var highlightClass = '';
-          if(this.state.highlightReplies) {
-            highlightClass = 'highlight';
-          }
-          var replyStr = props.replyCount > 1 ? "replies" : "reply";
-          replies = <div ref="replies" className={highlightClass}><a style={styles.clickable} 
-              onClick={this.onRepliesClick}>
-              {props.replyCount} {replyStr}</a>
-              &nbsp;<span style={styles.date}>Last reply @ {props.latestReply}</span>
-            </div>;
-          }
-      } else {
-        replies = <span>No replies</span>;
+      replies = <ParentReplyLink expanded={props.expanded || false} 
+        replyCount={props.replyCount}
+        latestReply={props.latestReply}
+        highlightReplies={this.state.highlightReplies}
+        onRepliesClick={this.onRepliesClick}
+        onCollapseClick={this.onCollapseClick}
+      />;
+      
+      if(props.expanded) {
+        replyPosts = renderChildComments(props.threadId,props.children, 
+          props.expandedChildId,props.replyingTo,props.username);  
       }
+      
 
       if(props.focused && (props.id === props.expandedChildId || !props.expanded )) {
-        scroller = <AutoscrollingMixin parent={this} />
+        scroller = <AutoscrollingMixin parent={this} />;
       } else {
         scroller = null;
       }
 
       if(props.replyingTo === props.id) {
-        replyBox = <ReplyBox parentCommentId={props.id}/>
+        replyBox = <ReplyBox parentCommentId={props.id}/>;
       }
       
       var categoryStyle=null;

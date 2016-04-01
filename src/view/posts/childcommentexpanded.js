@@ -1,4 +1,4 @@
-var React = require("react/addons");
+var React = require("react");
 var styleutil = require("../../util/styleutil.js");
 var AutoscrollingMixin = require("../misc/autoscrollingmixin.js");
 var ReplyBox = require("./replybox.js");

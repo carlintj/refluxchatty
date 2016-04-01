@@ -1,4 +1,4 @@
-var React = require("react/addons");
+var React = require("react");
 var ChattyActions = require("../../store/chattyactions.js");
 var combine = require("../../util/styleutil.js");
 var HoverMixin = require("..//misc/hovermixin.js");

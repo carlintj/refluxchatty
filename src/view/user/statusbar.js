@@ -1,9 +1,8 @@
-var React = require("react/addons");
-var ChattyActions = require("../../store/chattyactions.js");
+var React = require("react");
 var UserActions = require("../../store/useractions.js");
 var combine = require("../../util/styleutil.js");
 var Router = require('react-router');
-var { Route, DefaultRoute, RouteHandler, Link } = Router;
+var { Route, DefaultRoute, RouteHandler, IndexLink } = Router;
 var ReplyBox = require("../posts/replybox.js");
 
 var styles = {
@@ -61,19 +60,15 @@ module.exports = React.createClass({
   propTypes: {
     username: React.PropTypes.string.isRequired,
     connected: React.PropTypes.bool.isRequired,
-    lastEventId: React.PropTypes.number.isRequired,
-    totalPMs: React.PropTypes.number.isRequired,
-    unreadPMs: React.PropTypes.number.isRequired,
     unseenReplies: React.PropTypes.array.isRequired,
-    showSearch: React.PropTypes.bool.isRequired,
     showHomeLink: React.PropTypes.bool.isRequired,
     showNewThreadBox: React.PropTypes.bool.isRequired,
   },
   fullRefresh: function() {
-    ChattyActions.fullRefresh();
+    this.props.fullRefresh();
   },
   onReorderClick: function() {
-    ChattyActions.reorderThreads();
+    this.props.reorderThreads();
   },
   checkPMs: function() {
     UserActions.requestMessageCount();
@@ -86,16 +81,16 @@ module.exports = React.createClass({
     UserActions.toggleMenu();
   },
   onNewThreadClick: function() {
-    ChattyActions.showNewThread();
+    this.props.showNewThread();
   },
   onCancelNewThreadClick: function() {
-    ChattyActions.cancelNewThread();
+    this.props.cancelNewThread();
   },
   render: function() {
     var homeLink,status,replyBox = null;
     var props = this.props;
     if(this.props.showHomeLink) {
-      homeLink = <Link to="ChattyHome">Back to Chatty</Link>;
+      homeLink = <IndexLink  to="/">Back to Chatty</IndexLink>;
     }
     
     if(props.connected) {

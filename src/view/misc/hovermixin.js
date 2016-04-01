@@ -1,4 +1,6 @@
-var React = require("react/addons");
+var React = require("react");
+var ReactDOM = require('react-dom');
+
 
 module.exports = {
   componentWillMount: function() {
@@ -8,7 +10,7 @@ module.exports = {
   componentDidMount: function() {
     var hover = this.refs.hover;
     if(hover) {
-      var dom = React.findDOMNode(hover);
+      var dom = ReactDOM.findDOMNode(hover);
       dom.addEventListener("mouseover", this.onOver);//.bind(this));
       dom.addEventListener("mouseout", this.onOut);//.bind(this));  
     } else {
@@ -18,7 +20,7 @@ module.exports = {
   componentWillUnmount: function() {
         var hover = this.refs.hover;
     if(hover) {
-      var dom = React.findDOMNode(hover);
+      var dom = ReactDOM.findDOMNode(hover);
       dom.removeEventListener("mouseover", this.onOver);
       dom.removeEventListener("mouseout", this.onOut);
     } else {

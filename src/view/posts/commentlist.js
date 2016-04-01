@@ -1,4 +1,4 @@
-var React = require("react/addons");
+var React = require("react");
 var ParentComment = require("./parentcomment.js");
 
 var styles = {
@@ -32,6 +32,8 @@ module.exports = React.createClass({
         username={_this.props.username}
         category={comment.category}
         searchMatch={comment.searchMatch}
+        chattyActions={_this.props.chattyActions}
+        userActions={_this.props.userActions}
         />);
     });
     

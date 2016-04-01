@@ -1,18 +1,12 @@
-var React = require("react/addons");
+var React = require("react");
 var CommentList = require("./posts/commentlist.js");
 var ChattyActions = require("../store/chattyactions.js");
 var keymaster = require("keymaster");
 
-//TODO add unmount for deregistering keymaster
 module.exports = React.createClass({
     componentDidMount: function () {
         ChattyActions.startChatty();
-        keymaster('a', function() {
-           ChattyActions.selectPrevComment();
-        });
-        keymaster('z', function() {
-            ChattyActions.selectNextComment();
-        });
+        
         keymaster('j', function() {
            ChattyActions.selectNextParent();
         });
@@ -40,8 +34,6 @@ module.exports = React.createClass({
     },
     componentWillUnmount: function() {
       ChattyActions.pauseChatty();
-      keymaster.unbind('a');
-      keymaster.unbind('z');
       keymaster.unbind('j');
       keymaster.unbind('k');
       keymaster.unbind('x');
@@ -56,7 +48,10 @@ module.exports = React.createClass({
         <CommentList threads={this.props.threads} 
           visibleThreads={this.props.visibleThreads}
           replyingTo={this.props.replyingTo} 
-          username={this.props.username}/>
+          username={this.props.username}
+          chattyActions={this.props.chattyActions}
+          userActions={this.props.userActions}
+          />
       </div>);
     }
 });

@@ -1,14 +1,14 @@
-var React = require("react/addons");
-var ChattyActions = require("../../store/chattyactions.js");
+var React = require("react");
+var LinkedStateMixin = require("react-addons-linked-state-mixin");
 
 module.exports =  React.createClass({
   displayName: 'SearchBox',
-  mixins: [React.addons.LinkedStateMixin],
+  mixins: [LinkedStateMixin],
   getInitialState: function() {
     return {searchStr: ''};
   },
   runSearch : function() {
-    ChattyActions.runSearch(this.state.searchStr);
+    console.log("I don't actually do anything");
   },
   render : function() {
     var style = {paddingTop: '40px'};

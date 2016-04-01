@@ -131,7 +131,7 @@ module.exports = Reflux.createStore({
     });
   },
   startChatty: function() {
-    if(this.threads.length > 0 ) {
+    if(this.threads.length > 0 && this.eventId != 0 ) {
       //resuming after being paused, just kick off event
       this.paused = false;
       this.sendData();

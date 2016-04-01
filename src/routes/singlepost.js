@@ -1,9 +1,7 @@
 var React = require("react");
 var Router = require('react-router');
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
-var ChattyActions = require("../store/chattyactions.js");
 var ParentComment = require("../view/posts/parentcomment.js");
-var _ = require("lodash");
 
 var styles = {
   commentBody : {
@@ -26,8 +24,6 @@ var SinglePost =  React.createClass({
     };
   },
   componentWillReceiveProps: function(nextProps) {
-    var { router } = this.context;
-    
     var threadId = this.props.routeParams.threadId;
     //var postId = router.getCurrentQuery().postId;
     if(this.state.threadId != threadId) {
@@ -36,11 +32,11 @@ var SinglePost =  React.createClass({
         postId: Number(0),
         focused: false,
       });
-      ChattyActions.loadPostIfNotFound(threadId);
+      this.props.loadPostIfNotFound(threadId);
     } else if(!this.state.focused) {
         var t = this.props.ChattyStore.findThreadByPostId(threadId);
         if (t) {
-          ChattyActions.selectComment(t.id,this.state.postId);
+          this.props.selectComment(t.id,this.state.postId);
           this.setState({focused: true});
         }
       }

@@ -1,5 +1,4 @@
 var React = require("react");
-var ChattyActions = require("../../store/chattyactions.js");
 var UserActions = require("../../store/useractions.js");
 var combine = require("../../util/styleutil.js");
 var Router = require('react-router');
@@ -66,10 +65,10 @@ module.exports = React.createClass({
     showNewThreadBox: React.PropTypes.bool.isRequired,
   },
   fullRefresh: function() {
-    ChattyActions.fullRefresh();
+    this.props.fullRefresh();
   },
   onReorderClick: function() {
-    ChattyActions.reorderThreads();
+    this.props.reorderThreads();
   },
   checkPMs: function() {
     UserActions.requestMessageCount();
@@ -82,10 +81,10 @@ module.exports = React.createClass({
     UserActions.toggleMenu();
   },
   onNewThreadClick: function() {
-    ChattyActions.showNewThread();
+    this.props.showNewThread();
   },
   onCancelNewThreadClick: function() {
-    ChattyActions.cancelNewThread();
+    this.props.cancelNewThread();
   },
   render: function() {
     var homeLink,status,replyBox = null;

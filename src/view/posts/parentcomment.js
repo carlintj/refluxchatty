@@ -1,7 +1,6 @@
 var React = require("react");
 var combine = require("../../util/styleutil.js");
 var renderChildComments = require("./childcomment.js").renderChildComments;
-var ChattyActions = require("../../store/chattyactions.js");
 var AutoscrollingMixin = require("../misc/autoscrollingmixin.js");
 var ReplyBox = require("./replybox.js");
 var ReplyButton = require("./replybutton.js");
@@ -82,13 +81,13 @@ var ParentComment = React.createClass({
       }
     },
     onRepliesClick: function() {
-      ChattyActions.toggleParentComment(this.props.id);
+      this.props.chattyActions.toggleParentComment(this.props.id);
     },
     onCollapseClick: function() {
-      ChattyActions.toggleParentComment(this.props.id);
+      this.props.chattyActions.toggleParentComment(this.props.id);
     },
     onParentClick: function() {
-      if(this.expandedChildId !== 0) ChattyActions.highlightParent(this.props.id);
+      if(this.expandedChildId !== 0) this.props.chattyActions.highlightParent(this.props.id);
     },
     render: function() {
       if(this.props.hidden) return null;

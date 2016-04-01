@@ -10,6 +10,7 @@ import { Router, Route, IndexRoute } from 'react-router';
 var ChattyHome = require("./routes/chattyhome.js");
 var SinglePost = require("./routes/singlepost.js");
 var ChattyActions = require("./store/chattyactions.js");
+var UserActions = require("./store/useractions.js");
 var keymaster = require("keymaster");
 
 var App = React.createClass({
@@ -35,6 +36,11 @@ var App = React.createClass({
         connected={ChattyStore.connected}
         showNewThreadBox={ChattyStore.showNewThreadBox}
         unseenReplies={UserStore.unseenReplies}
+        fullRefresh={ChattyActions.fullRefresh}
+        reorderThreads={ChattyActions.reorderThreads}
+        showNewThread={ChattyActions.showNewThread}
+        cancelNewThread={ChattyActions.cancelNewThread}
+        
         />
       <StatusMenu isMenuOpened={UserStore.isMenuOpened}
         lastEventId={ChattyStore.eventId} 
@@ -46,8 +52,10 @@ var App = React.createClass({
         unreadPMs={UserStore.unreadPMs}
         unseenReplies={UserStore.unseenReplies}
         totalPMs={UserStore.totalPMs}
+        reorderThreads={ChattyActions.reorderThreads}
+        showThreads={ChattyActions.showThreads}
         />
-        {React.cloneElement(this.props.children, {UserStore,ChattyStore})}
+        {React.cloneElement(this.props.children, {UserStore,ChattyStore,chattyActions: ChattyActions,userActions: UserActions})}
     </div>);
   }
 });

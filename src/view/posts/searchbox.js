@@ -1,5 +1,4 @@
 var React = require("react");
-var ChattyActions = require("../../store/chattyactions.js");
 var LinkedStateMixin = require("react-addons-linked-state-mixin");
 
 module.exports =  React.createClass({
@@ -9,7 +8,7 @@ module.exports =  React.createClass({
     return {searchStr: ''};
   },
   runSearch : function() {
-    ChattyActions.runSearch(this.state.searchStr);
+    console.log("I don't actually do anything");
   },
   render : function() {
     var style = {paddingTop: '40px'};

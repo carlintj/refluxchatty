@@ -1,6 +1,5 @@
 var React = require("react");
 var UserActions = require("../../store/useractions.js");
-var ChattyActions = require("../../store/chattyactions.js");
 var LoginScreen = require("./login.js");
 var SearchBox = require("../posts/searchbox.js");
 
@@ -29,7 +28,7 @@ var StatusMenu = React.createClass({
     UserActions.showLoginForm();
   },
     onReorderClick: function() {
-    ChattyActions.reorderThreads();
+    this.props.reorderThreads();
   },
   getInitialState: function() {
     return {showingReplies : false};
@@ -41,7 +40,7 @@ var StatusMenu = React.createClass({
       this.state.showingReplies = true;
     }
     
-    ChattyActions.showThreads(this.props.unseenReplies);
+    this.props.showThreads(this.props.unseenReplies);
     UserActions.clearReplies();
   },
   render: function() {

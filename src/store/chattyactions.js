@@ -1,5 +1,4 @@
 var reqwest = require("reqwest");
-var _ = require("lodash");
 var Reflux = require('reflux');
 
 var URLs = {

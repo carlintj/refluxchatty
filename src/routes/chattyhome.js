@@ -8,6 +8,8 @@ module.exports = React.createClass({
         visibleThreads={this.props.ChattyStore.visibleThreads}
         replyingTo={this.props.ChattyStore.replyingTo} 
         username={this.props.UserStore.username}
+        chattyActions={this.props.chattyActions}
+        userActions={this.props.userActions}
       />);
   }
 });

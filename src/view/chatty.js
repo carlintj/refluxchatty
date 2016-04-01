@@ -48,7 +48,10 @@ module.exports = React.createClass({
         <CommentList threads={this.props.threads} 
           visibleThreads={this.props.visibleThreads}
           replyingTo={this.props.replyingTo} 
-          username={this.props.username}/>
+          username={this.props.username}
+          chattyActions={this.props.chattyActions}
+          userActions={this.props.userActions}
+          />
       </div>);
     }
 });

@@ -62,7 +62,7 @@ var ParentComment = React.createClass({
     getInitialState: function() {
       return ({'highlightReplies': false});
     },
-    shouldComponentUpdate: function(nextProps, nextState) {
+    shouldComponentUpdate: function(nextProps) {
       if(this.props.replyingTo != nextProps.replyingTo) return true;
       if(this.props.hidden != nextProps.hidden) return true;
       if(this.props.replyCount != nextProps.replyCount) return true;

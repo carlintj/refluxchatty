@@ -1,8 +1,6 @@
 var React = require('react');
-var styleutil = require('../../util/styleutil.js');
-var _ = require('lodash');
 var Router = require('react-router');
-var { Route, DefaultRoute, RouteHandler, Link } = Router;
+var { Link } = Router;
 
 var styles = {
   img: {
@@ -61,7 +59,7 @@ var ImageLink = React.createClass({
       return <a href={this.props.url} onClick={this.onImageClick}>{this.props.url}</a>;
     }
     var domain = imageHostRegex.exec(this.props.url)[1];
-    if(!!imageEmbeds[domain]) {
+    if(imageEmbeds[domain]) {
       return <div><img style={styles.img} src={imageEmbeds[domain](this.props.url)} onClick={this.onImageClick} /></div>;  
     }
     return <a href={this.props.url} onClick={this.onImageClick}>{this.props.url}</a>;
@@ -75,11 +73,11 @@ module.exports = React.createClass({
     },
     render: function() {
       var m = chattyRegex.exec(this.props.url);
-      if(!!m) {
+      if(m) {
         return  <ChattyLink url={this.props.url} />;
       }
       m = imageHostRegex.exec(this.props.url);
-      if(!!m) {
+      if(m) {
         return <ImageLink url={this.props.url} />;
       }
       return <a href={this.props.url} target="_blank">{this.props.text}</a>;

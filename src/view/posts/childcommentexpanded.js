@@ -4,7 +4,6 @@ var AutoscrollingMixin = require('../misc/autoscrollingmixin.js');
 var ReplyBox = require('./replybox.js');
 var ReplyButton = require('./replybutton.js');
 var PostBody = require('./postbody.js');
-var _ = require('lodash');
 
 var styles = {
   highlightedComment: {

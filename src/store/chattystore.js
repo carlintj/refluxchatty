@@ -373,10 +373,10 @@ module.exports = Reflux.createStore({
   },
   openReply: function(threadId,commentId) {
     if(!!threadId && !!commentId) {
-      var thread = _.find(this.threads, {
+      let thread = _.find(this.threads, {
         id: threadId
       });
-      if(!!thread) {
+      if(thread) {
         this.replyingTo = commentId;
         thread.expandedChildId = commentId;
         thread.focused = true;
@@ -385,7 +385,7 @@ module.exports = Reflux.createStore({
       }
     } else {
       this.replyingTo = 0;
-      var thread = _.find(this.threads, {
+      let thread = _.find(this.threads, {
         focused: true
       });
       if (thread) {
@@ -435,7 +435,7 @@ module.exports = Reflux.createStore({
     var thread = null;
     _.each(this.threads, (t) => {
       var post = findChildComment(t, postId);
-      if(!!post) {
+      if(post) {
         thread = t;
       }
     });

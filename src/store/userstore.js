@@ -65,9 +65,9 @@ module.exports = Reflux.createStore({
     }
   },
   getMessageCountFailed: function(error) {
-
+    console.warn('error in getMessageCount', error);
   },
-  submitCommentCompleted: function(data) {
+  submitCommentCompleted: function() {
     
   },
   showLoginForm: function() {

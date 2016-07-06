@@ -1,6 +1,4 @@
 var React = require('react');
-var Router = require('react-router');
-var { Route, DefaultRoute, RouteHandler, Link } = Router;
 var ParentComment = require('../view/posts/parentcomment.js');
 
 var styles = {
@@ -23,7 +21,7 @@ var SinglePost =  React.createClass({
       focused : false
     };
   },
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps: function() {
     var threadId = this.props.routeParams.threadId;
     //var postId = router.getCurrentQuery().postId;
     if(this.state.threadId != threadId) {

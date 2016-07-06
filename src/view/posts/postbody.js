@@ -6,6 +6,7 @@ var PostLink = require('./postlink.js');
 var findTags = function(body, tags) {
    var startIndex = 0, searchStrLen = body.length;
    var index, indices = [];
+   searchStrLen;
    _.forEach(tags,(tag) => {
      var start = '<' + tag;
      var end = '</' + tag +'>';

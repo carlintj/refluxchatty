@@ -1,16 +1,10 @@
 var React = require('react');
-var styleutil = require('../../util/styleutil.js');
 var ChattyActions = require('../../store/chattyactions.js');
 var ChildCommentCollapsed = require('./childcommentcollapsed.js');
 var ChildCommentExpanded = require('./childcommentexpanded.js');
 
-var fixComment = function(comment) {
-  var div = document.createElement('div');
-  div.innerHTML = comment;
-  return div.innerHTML;
-};
 var renderChildComments = function(threadId,children,expandedChildId,replyingTo,username) {
-  var replies = children.map(function(comment,i) {
+  var replies = children.map(function(comment) {
     return (<ChildComment key={comment.id} 
     id = {comment.id}
     author={comment.author} 

@@ -12,7 +12,7 @@ var styles = {
 module.exports = React.createClass({
   render: function() {
     var _this = this;
-    var comments = this.props.threads.map(function(comment,i) {
+    var comments = this.props.threads.map(function(comment) {
       return (<ParentComment key={comment.id}
         id={comment.id}
         author={comment.author} 

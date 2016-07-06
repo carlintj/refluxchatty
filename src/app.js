@@ -1,7 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Reflux = require('reflux');
-var Chatty = require('./view/chatty.js');
 var StatusBar = require('./view/user/statusbar.js');
 var StatusMenu = require('./view/user/statusmenu.js');
 var ChattyStore = require('./store/chattystore.js');

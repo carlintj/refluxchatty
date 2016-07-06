@@ -1,4 +1,4 @@
-var React = require("react");
+var React = require('react');
 var ReactDOM = require('react-dom');
 
 
@@ -11,20 +11,20 @@ module.exports = {
     var hover = this.refs.hover;
     if(hover) {
       var dom = ReactDOM.findDOMNode(hover);
-      dom.addEventListener("mouseover", this.onOver);//.bind(this));
-      dom.addEventListener("mouseout", this.onOut);//.bind(this));  
+      dom.addEventListener('mouseover', this.onOver);//.bind(this));
+      dom.addEventListener('mouseout', this.onOut);//.bind(this));  
     } else {
-      console.warn("unable to find hover ref");
+      console.warn('unable to find hover ref');
     }
   },
   componentWillUnmount: function() {
         var hover = this.refs.hover;
     if(hover) {
       var dom = ReactDOM.findDOMNode(hover);
-      dom.removeEventListener("mouseover", this.onOver);
-      dom.removeEventListener("mouseout", this.onOut);
+      dom.removeEventListener('mouseover', this.onOver);
+      dom.removeEventListener('mouseout', this.onOut);
     } else {
-      console.warn("unable to find hover ref");
+      console.warn('unable to find hover ref');
     }
   },
   onOver: function() {

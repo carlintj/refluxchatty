@@ -1,10 +1,10 @@
 var Reflux = require('reflux');
-var reqwest = require("reqwest");
+var reqwest = require('reqwest');
 
 var URLs = {
-  login: "//winchatty.com/v2/verifyCredentials",
-  getMessageCount: "//winchatty.com/v2/getMessageCount",
-  submitComment: "//winchatty.com/v2/postComment"
+  login: '//winchatty.com/v2/verifyCredentials',
+  getMessageCount: '//winchatty.com/v2/getMessageCount',
+  submitComment: '//winchatty.com/v2/postComment'
 };
 
 var Actions = Reflux.createActions({

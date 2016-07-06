@@ -1,6 +1,6 @@
-var isElementInViewport = require("../../util/elementscrolling.js").isElementInViewport;
-var scrollIntoView = require("../../util/elementscrolling.js").scrollIntoView;
-var React = require("react");
+var isElementInViewport = require('../../util/elementscrolling.js').isElementInViewport;
+var scrollIntoView = require('../../util/elementscrolling.js').scrollIntoView;
+var React = require('react');
 var ReactDOM = require('react-dom');
 
 
@@ -17,7 +17,7 @@ module.exports = React.createClass({
           }
         }
         else {
-          console.warn("unable to find anchor. parent: ", this.props.parent);
+          console.warn('unable to find anchor. parent: ', this.props.parent);
         }
         this.setState({hasAnchored : true});
       }

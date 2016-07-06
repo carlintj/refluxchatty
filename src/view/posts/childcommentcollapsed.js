@@ -1,6 +1,6 @@
-var React = require("react");
-var styleutil = require("../../util/styleutil.js");
-var HoverMixin = require("..//misc/hovermixin.js");
+var React = require('react');
+var styleutil = require('../../util/styleutil.js');
+var HoverMixin = require('..//misc/hovermixin.js');
 
 var styles = {
   commentAge1: {
@@ -102,10 +102,10 @@ module.exports = React.createClass({
   mixins: [HoverMixin],
   render: function() {
     var props = this.props;
-    var comment = props.body.replace(/<br \/>/g, " ");
+    var comment = props.body.replace(/<br \/>/g, ' ');
     if (getVisibleLength(this.props.body) > 200) {
       comment = comment.substring(0, 200);
-      comment = fixComment(comment + "...");
+      comment = fixComment(comment + '...');
     }
 
     var ageStyle = calculateAgeStyle(props.date);
@@ -117,9 +117,9 @@ module.exports = React.createClass({
     if(this.state.hovered) {
       commentStyle = styleutil(styles.hoveredComment,styles.commentBody);
     }
-    else if(props.category === "informative") {
+    else if(props.category === 'informative') {
       commentStyle = styleutil(commentStyle,styles.commentInformative);
-    } else if(props.category === "nws") {
+    } else if(props.category === 'nws') {
       commentStyle = styleutil(commentStyle,styles.commentNWS);
     }
 

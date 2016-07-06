@@ -1,7 +1,7 @@
-var React = require("react");
+var React = require('react');
 var ReactDOM = require('react-dom');
-var LinkedStateMixin = require("react-addons-linked-state-mixin");
-var ChattyActions = require("../../store/chattyactions.js");
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
+var ChattyActions = require('../../store/chattyactions.js');
 
 var styles = {
   commentBox: {
@@ -20,27 +20,27 @@ module.exports = React.createClass({
     textNode.focus();
   },
   getInitialState: function() {
-    return {body: ""};
+    return {body: ''};
   },
   render: function(){
     //JSX can't escape {
-    var red = "r{ ... }r";
-    var green = "g{ ... }g";
-    var blue = "b{ ... }b";
-    var yellow = "y{ ... }y";
-    var olive = "e[ ... ]e";
-    var lime = "l[ ... ]l";
-    var orange = "n[ ... ]n";
-    var pink = "p[ ... ]p";
+    var red = 'r{ ... }r';
+    var green = 'g{ ... }g';
+    var blue = 'b{ ... }b';
+    var yellow = 'y{ ... }y';
+    var olive = 'e[ ... ]e';
+    var lime = 'l[ ... ]l';
+    var orange = 'n[ ... ]n';
+    var pink = 'p[ ... ]p';
     
-    var italics = "/[ ... ]/";
-    var bold = "b[ ... ]b";
-    var quote = "q[ ... ]q";
-    var sample = "s[ ... ]s";
-    var underline = "_[ ... ]_";
-    var strike = "-[ ... ]-";
-    var spoiler = "o[ ... ]o";
-    var code = "/{{ ... }}/";
+    var italics = '/[ ... ]/';
+    var bold = 'b[ ... ]b';
+    var quote = 'q[ ... ]q';
+    var sample = 's[ ... ]s';
+    var underline = '_[ ... ]_';
+    var strike = '-[ ... ]-';
+    var spoiler = 'o[ ... ]o';
+    var code = '/{{ ... }}/';
     
     var container = {display: 'flex'};
     var fixed = {width: '530px'};

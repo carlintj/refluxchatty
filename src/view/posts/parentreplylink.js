@@ -1,5 +1,5 @@
-var _ = require("lodash");
-var React = require("react");
+var _ = require('lodash');
+var React = require('react');
 var ReactDOM = require('react-dom');
 
 
@@ -41,7 +41,7 @@ var ParentReplyLink = React.createClass({
           if(props.highlightReplies) {
             highlightClass = 'highlight';
           }
-          var replyStr = props.replyCount > 1 ? "replies" : "reply";
+          var replyStr = props.replyCount > 1 ? 'replies' : 'reply';
           return (<div ref="replies" className={highlightClass}><a style={styles.clickable} 
               onClick={props.onRepliesClick}>
               {props.replyCount} {replyStr}</a>

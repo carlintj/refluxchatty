@@ -1,5 +1,5 @@
-var React = require("react");
-var Chatty = require("../view/chatty.js");
+var React = require('react');
+var Chatty = require('../view/chatty.js');
 
 module.exports = React.createClass({
   render: function () {

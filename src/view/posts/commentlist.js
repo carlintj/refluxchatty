@@ -1,5 +1,5 @@
-var React = require("react");
-var ParentComment = require("./parentcomment.js");
+var React = require('react');
+var ParentComment = require('./parentcomment.js');
 
 var styles = {
   commentBody : {

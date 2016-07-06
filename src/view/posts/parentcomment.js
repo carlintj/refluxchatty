@@ -1,12 +1,12 @@
-var React = require("react");
-var combine = require("../../util/styleutil.js");
-var renderChildComments = require("./childcomment.js").renderChildComments;
-var AutoscrollingMixin = require("../misc/autoscrollingmixin.js");
-var ReplyBox = require("./replybox.js");
-var ReplyButton = require("./replybutton.js");
-var _ = require("lodash");
-var PostBody = require("./postbody.js");
-var ParentReplyLink =require("./parentreplylink.js");
+var React = require('react');
+var combine = require('../../util/styleutil.js');
+var renderChildComments = require('./childcomment.js').renderChildComments;
+var AutoscrollingMixin = require('../misc/autoscrollingmixin.js');
+var ReplyBox = require('./replybox.js');
+var ReplyButton = require('./replybutton.js');
+var _ = require('lodash');
+var PostBody = require('./postbody.js');
+var ParentReplyLink =require('./parentreplylink.js');
 
 var styles = {
   clickable: {
@@ -124,9 +124,9 @@ var ParentComment = React.createClass({
       }
       
       var categoryStyle=null;
-      if(props.category === "nws") {
+      if(props.category === 'nws') {
         categoryStyle = styles.parentNWS;
-      } else if(props.category === "informative") {
+      } else if(props.category === 'informative') {
         categoryStyle = styles.parentInformative;
       }
       

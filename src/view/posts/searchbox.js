@@ -1,5 +1,5 @@
-var React = require("react");
-var LinkedStateMixin = require("react-addons-linked-state-mixin");
+var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 module.exports =  React.createClass({
   displayName: 'SearchBox',
@@ -8,7 +8,7 @@ module.exports =  React.createClass({
     return {searchStr: ''};
   },
   runSearch : function() {
-    console.log("I don't actually do anything");
+    console.log('I don\'t actually do anything');
   },
   render : function() {
     var style = {paddingTop: '40px'};

@@ -1,7 +1,7 @@
-var React = require("react");
-var CommentList = require("./posts/commentlist.js");
-var ChattyActions = require("../store/chattyactions.js");
-var keymaster = require("keymaster");
+var React = require('react');
+var CommentList = require('./posts/commentlist.js');
+var ChattyActions = require('../store/chattyactions.js');
+var keymaster = require('keymaster');
 
 module.exports = React.createClass({
     componentDidMount: function () {

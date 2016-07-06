@@ -1,10 +1,10 @@
-var React = require("react");
-var styleutil = require("../../util/styleutil.js");
-var AutoscrollingMixin = require("../misc/autoscrollingmixin.js");
-var ReplyBox = require("./replybox.js");
-var ReplyButton = require("./replybutton.js");
-var PostBody = require("./postbody.js");
-var _ = require("lodash");
+var React = require('react');
+var styleutil = require('../../util/styleutil.js');
+var AutoscrollingMixin = require('../misc/autoscrollingmixin.js');
+var ReplyBox = require('./replybox.js');
+var ReplyButton = require('./replybutton.js');
+var PostBody = require('./postbody.js');
+var _ = require('lodash');
 
 var styles = {
   highlightedComment: {
@@ -45,9 +45,9 @@ module.exports = React.createClass({
     }
     
     var commentStyle = styles.highlightedComment;
-    if(props.category === "informative") {
+    if(props.category === 'informative') {
       commentStyle = styleutil(commentStyle,styles.commentExpandedInformative);
-    } else if(props.category === "nws") {
+    } else if(props.category === 'nws') {
       commentStyle = styleutil(commentStyle,styles.commentExpandedNWS);
     }
 

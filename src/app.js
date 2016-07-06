@@ -1,17 +1,17 @@
-var React = require("react");
+var React = require('react');
 var ReactDOM = require('react-dom');
-var Reflux = require("reflux");
-var Chatty = require("./view/chatty.js");
-var StatusBar = require("./view/user/statusbar.js");
-var StatusMenu = require("./view/user/statusmenu.js");
-var ChattyStore = require("./store/chattystore.js");
-var UserStore = require("./store/userstore.js");
+var Reflux = require('reflux');
+var Chatty = require('./view/chatty.js');
+var StatusBar = require('./view/user/statusbar.js');
+var StatusMenu = require('./view/user/statusmenu.js');
+var ChattyStore = require('./store/chattystore.js');
+var UserStore = require('./store/userstore.js');
 import { Router, Route, IndexRoute,useRouterHistory } from 'react-router';
-var ChattyHome = require("./routes/chattyhome.js");
-var SinglePost = require("./routes/singlepost.js");
-var ChattyActions = require("./store/chattyactions.js");
-var UserActions = require("./store/useractions.js");
-var keymaster = require("keymaster");
+var ChattyHome = require('./routes/chattyhome.js');
+var SinglePost = require('./routes/singlepost.js');
+var ChattyActions = require('./store/chattyactions.js');
+var UserActions = require('./store/useractions.js');
+var keymaster = require('keymaster');
 
 
 //here to remove ugly url stuff
@@ -20,8 +20,8 @@ const appHistory = useRouterHistory(createHashHistory)({ queryKey: false })
 
 var App = React.createClass({
   mixins: [
-    Reflux.connect(UserStore,"UserStore"),
-    Reflux.connect(ChattyStore,"ChattyStore"),
+    Reflux.connect(UserStore,'UserStore'),
+    Reflux.connect(ChattyStore,'ChattyStore'),
   ],
   componentDidMount: function() {
     keymaster('a', function() {

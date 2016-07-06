@@ -1,10 +1,10 @@
 var Reflux = require('reflux');
-var _ = require("lodash");
-var ChattyActions = require("./chattyactions.js");
-var processThread = require("../util/apiservice.js").processThread;
-var getPost = require("../util/apiservice.js").getPost;
-var UserActions = require("./useractions.js");
-var UserStore = require("./userstore.js");
+var _ = require('lodash');
+var ChattyActions = require('./chattyactions.js');
+var processThread = require('../util/apiservice.js').processThread;
+var getPost = require('../util/apiservice.js').getPost;
+var UserActions = require('./useractions.js');
+var UserStore = require('./userstore.js');
 var localStorage = require('store');
 
 var findChildComment = function(parentThread, childCommentId) {
@@ -30,7 +30,7 @@ var getSiblings = function(parentThread, comment) {
 var mergeEvents = function(threads, events, store) {
   try {
     _.each(events, (event) => {
-      if (event.eventType == "newPost") {
+      if (event.eventType == 'newPost') {
         var newPost = event.eventData.post;
         if (newPost.parentId !== 0) {
           var thread = _.find(threads, {
@@ -52,11 +52,11 @@ var mergeEvents = function(threads, events, store) {
               }
             }
             else {
-              console.warn("unable to find parent comment in thread", newPost);
+              console.warn('unable to find parent comment in thread', newPost);
             }
           }
           else {
-            console.warn("unable to find thread", newPost.threadId, newPost);
+            console.warn('unable to find thread', newPost.threadId, newPost);
             ChattyActions.getThread(newPost.threadId);
             //store.connected= false;
           }
@@ -67,8 +67,8 @@ var mergeEvents = function(threads, events, store) {
           newThread.threadId = newPost.threadId;
           newThread.hidden = false;
           newThread.searchMatch = false;
-          if (newThread.author === "Shacknews") {
-            newThread.body = newThread.body.replace("href=\"", "href=\"http://www.shacknews.com");
+          if (newThread.author === 'Shacknews') {
+            newThread.body = newThread.body.replace('href="', 'href="http://www.shacknews.com');
           } 
 
           store.threads.push(newThread);
@@ -77,7 +77,7 @@ var mergeEvents = function(threads, events, store) {
     });
   }
   catch (e) {
-    console.error("error merging events", e, events, threads);
+    console.error('error merging events', e, events, threads);
     store.connected = false;
     this.sendData();
   }
@@ -108,7 +108,7 @@ module.exports = Reflux.createStore({
     return {
       threads: [],
       loading: false,
-      username: "",
+      username: '',
       connected: false,
       eventId: 0,
       visibleThreads: [],
@@ -381,7 +381,7 @@ module.exports = Reflux.createStore({
         thread.expandedChildId = commentId;
         thread.focused = true;
       } else {
-        console.warn("could not find thread to reply");
+        console.warn('could not find thread to reply');
       }
     } else {
       this.replyingTo = 0;
@@ -392,7 +392,7 @@ module.exports = Reflux.createStore({
         this.replyingTo = thread.expandedChildId;
       }
       else {
-        console.warn("could not find focused thread on openReply");
+        console.warn('could not find focused thread on openReply');
       }
     }
     

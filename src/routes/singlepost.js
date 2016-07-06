@@ -1,7 +1,7 @@
-var React = require("react");
+var React = require('react');
 var Router = require('react-router');
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
-var ParentComment = require("../view/posts/parentcomment.js");
+var ParentComment = require('../view/posts/parentcomment.js');
 
 var styles = {
   commentBody : {

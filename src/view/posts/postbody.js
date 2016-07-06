@@ -1,14 +1,14 @@
-var _ = require("lodash");
-var React = require("react");
-var PostLink = require("./postlink.js");
+var _ = require('lodash');
+var React = require('react');
+var PostLink = require('./postlink.js');
 
 
 var findTags = function(body, tags) {
    var startIndex = 0, searchStrLen = body.length;
    var index, indices = [];
    _.forEach(tags,(tag) => {
-     var start = "<" + tag;
-     var end = "</" + tag +">";
+     var start = '<' + tag;
+     var end = '</' + tag +'>';
      while ((index = body.indexOf(start, startIndex)) > -1) {
        var endIndex = body.indexOf(end,startIndex) + end.length;
         indices.push({

@@ -1,9 +1,9 @@
-var React = require("react");
-var UserActions = require("../../store/useractions.js");
-var combine = require("../../util/styleutil.js");
+var React = require('react');
+var UserActions = require('../../store/useractions.js');
+var combine = require('../../util/styleutil.js');
 var Router = require('react-router');
 var { Route, DefaultRoute, RouteHandler, IndexLink } = Router;
-var ReplyBox = require("../posts/replybox.js");
+var ReplyBox = require('../posts/replybox.js');
 
 var styles = {
   parent: {

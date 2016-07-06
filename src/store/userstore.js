@@ -1,5 +1,5 @@
-var Reflux = require("reflux");
-var UserActions = require ("./useractions.js");
+var Reflux = require('reflux');
+var UserActions = require ('./useractions.js');
 var localStorage = require ('store');
 
 //actions which require u/p must originate from here to limit the number of
@@ -9,21 +9,21 @@ var localStorage = require ('store');
 module.exports = Reflux.createStore({
   listenables: [UserActions],
   init: function() {
-    this.tempusername = "";
-    this.temppassword = "";
+    this.tempusername = '';
+    this.temppassword = '';
 
     this.pms = [];
     this.unseenReplies = [];
     this.totalPMs = 0;
     this.unreadPMs = 0;
     this.showLogin = false;
-    this.loginMessage = localStorage.get('username') || "";
+    this.loginMessage = localStorage.get('username') || '';
     this.isMenuOpened = false;
     this.sendData();
   },
   getInitialState: function() {
     return {
-      username: localStorage.get('username') || "",
+      username: localStorage.get('username') || '',
       pms: [],
       showLogin: false,
       totalPMs: 0,
@@ -42,13 +42,13 @@ module.exports = Reflux.createStore({
       localStorage.set('username', this.tempusername);
       localStorage.set('password', this.temppassword);
 
-      this.tempusername = "";
-      this.temppassword = "";
-      this.loginMessage = "";
+      this.tempusername = '';
+      this.temppassword = '';
+      this.loginMessage = '';
 
       UserActions.requestMessageCount();
     } else {
-      this.loginMessage = "Error logging in.  Check your username and password dummy";
+      this.loginMessage = 'Error logging in.  Check your username and password dummy';
     }
 
     this.sendData();

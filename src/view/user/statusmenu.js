@@ -1,7 +1,7 @@
-var React = require("react");
-var UserActions = require("../../store/useractions.js");
-var LoginScreen = require("./login.js");
-var SearchBox = require("../posts/searchbox.js");
+var React = require('react');
+var UserActions = require('../../store/useractions.js');
+var LoginScreen = require('./login.js');
+var SearchBox = require('../posts/searchbox.js');
 
 var styles = {
   openedMenu: {
@@ -50,7 +50,7 @@ var StatusMenu = React.createClass({
     }
     
     var userinfo;
-    if(this.props.username && this.props.username != "") {
+    if(this.props.username && this.props.username != '') {
       userinfo = <span>Logged in as {this.props.username}</span>;
     }
     else if(!this.props.showLogin){

@@ -1,6 +1,6 @@
-var React = require("react");
-var styleutil = require("../../util/styleutil.js");
-var _ = require("lodash");
+var React = require('react');
+var styleutil = require('../../util/styleutil.js');
+var _ = require('lodash');
 var Router = require('react-router');
 var { Route, DefaultRoute, RouteHandler, Link } = Router;
 
@@ -15,14 +15,14 @@ var imageHostRegex = new RegExp(/((imgur\.com)|(chattypics\.com))/);
 
 var imgurEmbed = new RegExp(/(http|https):\/\/(www\.)?(imgur\.com\/)(\w+)/);
 var imageEmbeds = {
-  "chattypics.com": function(rawUrl) {
+  'chattypics.com': function(rawUrl) {
     return rawUrl;
   },
-  "imgur.com": function(rawUrl) {
+  'imgur.com': function(rawUrl) {
     var m = imgurEmbed.exec(rawUrl);
     var url = rawUrl;
     if(!!m && !!m[4]) {
-      url = "//i.imgur.com/"+m[4]+".jpg";
+      url = '//i.imgur.com/'+m[4]+'.jpg';
     }
     return url;
   },

@@ -1,13 +1,13 @@
-var _ = require("lodash");
+var _ = require('lodash');
 
 var getTimeString = function(date) {
   var now = new Date(Date.now());
 
   var hour = date.getHours();
   var minute = date.getMinutes();
-  var ap = "AM";
+  var ap = 'AM';
   if (hour > 11) {
-    ap = "PM";
+    ap = 'PM';
   }
   if (hour > 12) {
     hour = hour - 12;
@@ -16,10 +16,10 @@ var getTimeString = function(date) {
     hour = 12;
   }
   if (hour < 10) {
-    hour = "0" + hour;
+    hour = '0' + hour;
   }
   if (minute < 10) {
-    minute = "0" + minute;
+    minute = '0' + minute;
   }
 
   var timeString = hour + ':' + minute + ' ' + ap;
@@ -80,8 +80,8 @@ var processThread = function(thread) {
 
   post.focused = false;
   post.expandedChildId = 0;
-  if(post.author ==="Shacknews") {
-    post.body = post.body.replace("href=\"", "href=\"http://www.shacknews.com");
+  if(post.author ==='Shacknews') {
+    post.body = post.body.replace('href="', 'href="http://www.shacknews.com');
   }
   return post;
 };

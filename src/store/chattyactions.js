@@ -1,13 +1,13 @@
-var reqwest = require("reqwest");
+var reqwest = require('reqwest');
 var Reflux = require('reflux');
 import _ from 'lodash';
 
 var URLs = {
-  getChatty: "//winchatty.com/v2/getChatty",
-  getNewestEventId: "//winchatty.com/v2/getNewestEventId",
-  waitForEvent: "//winchatty.com/v2/waitForEvent?lastEventId=",
-  verifyCredentials: "//winchatty.com/v2/verifyCredentials",
-  getThread: "//winchatty.com/v2/getThread?id="
+  getChatty: '//winchatty.com/v2/getChatty',
+  getNewestEventId: '//winchatty.com/v2/getNewestEventId',
+  waitForEvent: '//winchatty.com/v2/waitForEvent?lastEventId=',
+  verifyCredentials: '//winchatty.com/v2/verifyCredentials',
+  getThread: '//winchatty.com/v2/getThread?id='
 };
 
 var Actions = Reflux.createActions({

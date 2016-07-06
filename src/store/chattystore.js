@@ -38,12 +38,15 @@ var mergeEvents = function(threads, events, store) {
           });
           if (thread) {
             var parent = findChildComment(thread, newPost.parentId);
+
             if (parent) {
               var fixedPost = getPost(newPost);
+
               parent.children.push(fixedPost);
               thread.replyCount++;
               thread.latestReply = fixedPost.date;
               thread.latestReplyStr = fixedPost.dateStr;
+
               if (parent.author === store.username) {
                 UserActions.newReplyNotification(thread.id, newPost.id);
               }
@@ -76,6 +79,7 @@ var mergeEvents = function(threads, events, store) {
   catch (e) {
     console.error("error merging events", e, events, threads);
     store.connected = false;
+    this.sendData();
   }
 };
 
@@ -262,31 +266,27 @@ module.exports = Reflux.createStore({
   selectNextParent: function() {
     this.replyingTo = 0;
     var thread = undefined;
-    for (var i = 0; i < this.threads.length; i++) {
-      if (this.threads[i].focused) {
-        thread = this.threads[i + 1];
-        break;
-      }
+    var visibleThreads = _.filter(this.threads, {'hidden': false})
+    var i = _.findIndex(visibleThreads, {'focused': true});
+    if(i != visibleThreads.length) {
+      thread = visibleThreads[i + 1];
+    } else {
+      thread = visibleThreads[0];
     }
-    if (thread == undefined) {
-      thread = this.threads[0];
-    }
+
     this.highlightParent(thread.id);
   },
   selectPrevParent: function() {
     this.replyingTo = 0;
-    var i = this.threads.length - 1;
     var thread = undefined;
-    for (; i >= 0; i--) {
-      if (this.threads[i].focused) {
-        thread = this.threads[i - 1];
-        break;
-      }
+    var visibleThreads = _.filter(this.threads, {'hidden': false})
+    var i = _.findIndex(visibleThreads, {'focused': true});
+    if(i > 0) {
+      thread = visibleThreads[i - 1];
+    } else {
+      thread = visibleThreads[0];
     }
 
-    if (thread == undefined) {
-      thread = this.threads[0];
-    }
     this.highlightParent(thread.id);
   },
   selectFirstParent: function() {

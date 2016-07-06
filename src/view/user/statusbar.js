@@ -120,12 +120,12 @@ module.exports = React.createClass({
           {homeLink} {status}
           <div style={styles.menubuttons}>
             <img 
-              src="/build/icons/sort-amount-desc.svg" 
+              src="build/icons/sort-amount-desc.svg" 
               style={styles.menubutton} 
               onClick={this.onReorderClick} 
             />
             <img 
-              src="/build/icons/pencil.svg" 
+              src="build/icons/pencil.svg" 
               style={styles.menubutton} 
               onClick={this.onNewThreadClick} 
             />
@@ -133,7 +133,7 @@ module.exports = React.createClass({
               onClick={this.onMenuClick} 
               >
               <img 
-                src="/build/icons/menu.svg" 
+                src="build/icons/menu.svg" 
                 style={styles.menubutton} 
                 
               />

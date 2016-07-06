@@ -11,7 +11,7 @@
     "react": "^0.14.3",
     "react-addons-linked-state-mixin": "^0.14.3",
     "react-dom": "^0.14.3",
-    "react-router": "^1.0.2",
+    "react-router": "^2.5.1",
     "reflux": "^0.2.5",
     "reqwest": "^1.1.5",
     "store": "^1.3.20"
@@ -25,7 +25,8 @@
     "watchify": "^3.6.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "rundev": "watchify -v -t [ babelify reactify ] src/app.js -o build/app.js -d"
   },
   "author": "",
   "license": "MIT"

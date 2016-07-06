@@ -6,12 +6,17 @@ var StatusBar = require("./view/user/statusbar.js");
 var StatusMenu = require("./view/user/statusmenu.js");
 var ChattyStore = require("./store/chattystore.js");
 var UserStore = require("./store/userstore.js");
-import { Router, Route, IndexRoute } from 'react-router';
+import { Router, Route, IndexRoute,useRouterHistory } from 'react-router';
 var ChattyHome = require("./routes/chattyhome.js");
 var SinglePost = require("./routes/singlepost.js");
 var ChattyActions = require("./store/chattyactions.js");
 var UserActions = require("./store/useractions.js");
 var keymaster = require("keymaster");
+
+
+//here to remove ugly url stuff
+import { createHashHistory } from 'history'
+const appHistory = useRouterHistory(createHashHistory)({ queryKey: false })
 
 var App = React.createClass({
   mixins: [
@@ -70,4 +75,4 @@ var routes = (
   </Route>
 );
 
-ReactDOM.render(<Router>{routes}</Router>, document.getElementById('app'));
+ReactDOM.render(<Router history={appHistory}>{routes}</Router>, document.getElementById('app'));

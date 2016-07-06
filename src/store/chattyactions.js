@@ -1,5 +1,6 @@
 var reqwest = require("reqwest");
 var Reflux = require('reflux');
+import _ from 'lodash';
 
 var URLs = {
   getChatty: "//winchatty.com/v2/getChatty",
@@ -110,13 +111,15 @@ Actions.getNewestEventId.listen(function() {
 });
 
 Actions.waitForEvent.listen(function(eventId) {
-  reqwest({
+  _.delay(() => {
+    reqwest({
       url: URLs.waitForEvent + eventId,
       crossOrigin: true,
       //type: "json"
     })
     .then(Actions.waitForEvent.completed)
-    .catch(Actions.waitForEvent.failed);
+    .catch(Actions.waitForEvent.failed)
+  }, 10000);
 });
 
 Actions.getThread.listen(function(threadId) {

@@ -421,7 +421,7 @@ module.exports = Reflux.createStore({
     }
   },
   reorderThreads: function() {
-    this.threads = _.sortByOrder(this.threads, 'latestReply', false);
+    this.threads = _.sortBy(this.threads, 'latestReply', false);
     ChattyActions.selectFirstParent();
   },
   runSearch: function(searchStr) { 

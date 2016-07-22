@@ -4,6 +4,7 @@ export const GETCHATTYERROR = 'GETCHATTYERROR';
 export const GETNEWESTEVENTID = 'GETNEWESTEVENTID';
 export const WAITFOREVENT = 'WAITFOREVENT';
 export const GETTHREAD = 'GETTHREAD';
+export const TOGGLEPARENTCOMMENT = 'TOGGLEPARENTCOMMENT';
 export const HIGHLIGHTPARENT = 'HIGHLIGHTPARENT';
 export const SELECTCOMMENT = 'SELECTCOMMENT';
 export const STARTCHATTY = 'STARTCHATTY';
@@ -57,5 +58,51 @@ export function getChattyError(error) {
     return {
         type: GETCHATTYERROR,
         error
+    }
+}
+
+export function toggleParentComment(parentId) {
+    return {
+        type: TOGGLEPARENTCOMMENT,
+        parentId
+    }
+}
+
+export function highlightParent(parentId) {
+    return {
+        type: HIGHLIGHTPARENT,
+        parentId
+    }
+}
+
+export function selectComment(threadId, commentId) {
+    return {
+        type: SELECTCOMMENT,
+        threadId,
+        commentId
+    }
+}
+
+export function selectNextParent() {
+    return {
+        type: SELECTNEXTPARENT
+    }
+}
+
+export function selectPrevParent() {
+    return {
+        type: SELECTPREVCOMMENT
+    }
+}
+
+export function selectNextComment() {
+    return {
+        type: SELECTNEXTCOMMENT
+    }
+}
+
+export function selectPrevComment() {
+    return {
+        type: SELECTPREVCOMMENT
     }
 }

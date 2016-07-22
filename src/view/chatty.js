@@ -1,57 +1,60 @@
 var React = require('react');
 var CommentList = require('./posts/commentlist.js');
-var ChattyActions = require('../store/chattyactions.js');
 var keymaster = require('keymaster');
 
 module.exports = React.createClass({
     componentDidMount: function () {
-        ChattyActions.startChatty();
-        
-        keymaster('j', function() {
-           ChattyActions.selectNextParent();
+        let {chattyActions} = this.props;
+        keymaster('j', function () {
+            chattyActions.selectNextParent();
         });
-        keymaster('k', function() {
-            ChattyActions.selectPrevParent(); 
+        keymaster('k', function () {
+            chattyActions.selectPrevParent();
         });
-        keymaster('x', function() {
-            ChattyActions.toggleParentComment();
+        keymaster('x', function () {
+            chattyActions.toggleParentComment();
         });
-        keymaster('r', function() {
-          ChattyActions.openReply();
+        keymaster('r', function () {
+            chattyActions.openReply();
         });
-        keymaster('home', function() {
-            ChattyActions.selectFirstParent();
+        keymaster('home', function () {
+            chattyActions.selectFirstParent();
         });
-        keymaster('end', function() {
-            ChattyActions.selectLastParent();
+        keymaster('end', function () {
+            chattyActions.selectLastParent();
         });
-        keymaster('h', function() {
-            ChattyActions.hideSelectedThread();
+        keymaster('h', function () {
+            chattyActions.hideSelectedThread();
         });
-        keymaster('f', () => {
-          this.setState({showSearch: !this.state.showSearch});
+        keymaster('a', function () {
+            chattyActions.selectPrevComment();
         });
+        keymaster('z', function () {
+            chattyActions.selectNextComment();
+        });
+        // keymaster('f', () => {
+        //   this.setState({showSearch: !this.state.showSearch});
+        // });
     },
-    componentWillUnmount: function() {
-      ChattyActions.pauseChatty();
-      keymaster.unbind('j');
-      keymaster.unbind('k');
-      keymaster.unbind('x');
-      keymaster.unbind('r');
-      keymaster.unbind('home');
-      keymaster.unbind('end');
-      keymaster.unbind('h');
-      keymaster.unbind('f');
+    componentWillUnmount: function () {
+        keymaster.unbind('j');
+        keymaster.unbind('k');
+        keymaster.unbind('x');
+        keymaster.unbind('r');
+        keymaster.unbind('home');
+        keymaster.unbind('end');
+        keymaster.unbind('h');
+        //keymaster.unbind('f');
     },
-    render: function() {
-      return (<div>
-        <CommentList threads={this.props.threads} 
-          visibleThreads={this.props.visibleThreads}
-          replyingTo={this.props.replyingTo} 
-          username={this.props.username}
-          chattyActions={this.props.chattyActions}
-          userActions={this.props.userActions}
-          />
-      </div>);
+    render: function () {
+        //         <CommentList threads={this.props.threads} 
+        //   visibleThreads={this.props.visibleThreads}
+        //   replyingTo={this.props.replyingTo} 
+        //   username={this.props.username}
+        //   chattyActions={this.props.chattyActions}
+        //   userActions={this.props.userActions}
+        //   />
+
+        return (<CommentList {...this.props} />);
     }
 });

@@ -1,8 +1,9 @@
 var React = require('react');
 var ParentComment = require('./parentcomment.js');
+import _ from 'lodash';
 
 var styles = {
-  commentBody : {
+  commentBody: {
     paddingTop: 30,
     paddingLeft: 20,
     paddingRight: 20,
@@ -10,13 +11,13 @@ var styles = {
 };
 
 module.exports = React.createClass({
-  render: function() {
-    var _this = this;
-    var comments = this.props.threads.map(function(comment) {
+  render: function () {
+    let {replyingTo, visibleThreads, username, chattyActions, userActions, threads} = this.props;
+    var comments = _.map(threads, comment => {
       return (<ParentComment key={comment.id}
         id={comment.id}
-        author={comment.author} 
-        body={comment.body} 
+        author={comment.author}
+        body={comment.body}
         children = {comment.children}
         replyCount = {comment.replyCount}
         date = {comment.date}
@@ -27,16 +28,17 @@ module.exports = React.createClass({
         focused={comment.focused}
         hidden={comment.hidden}
         latestReply={comment.latestReplyStr}
-        replyingTo={_this.props.replyingTo}
-        visibleThreads={_this.props.visibleThreads}
-        username={_this.props.username}
         category={comment.category}
         searchMatch={comment.searchMatch}
-        chattyActions={_this.props.chattyActions}
-        userActions={_this.props.userActions}
+
+        replyingTo={replyingTo}
+        visibleThreads={visibleThreads}
+        username={username}
+        chattyActions={chattyActions}
+        userActions={userActions}
         />);
     });
-    
+
     return (
       <div style={styles.commentBody}>
         {comments}

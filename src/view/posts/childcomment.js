@@ -1,24 +1,25 @@
 var React = require('react');
-var ChattyActions = require('../../store/chattyactions.js');
 var ChildCommentCollapsed = require('./childcommentcollapsed.js');
 var ChildCommentExpanded = require('./childcommentexpanded.js');
+import _ from 'lodash';
 
-var renderChildComments = function(threadId,children,expandedChildId,replyingTo,username) {
-  var replies = children.map(function(comment) {
-    return (<ChildComment key={comment.id} 
-    id = {comment.id}
-    author={comment.author} 
-    body={comment.body} 
-    children = {comment.children}
-    date = {comment.date} 
-    dateStr = {comment.dateStr}
-    expandedChildId = {expandedChildId} 
-    threadId={threadId} 
-    replyingTo={replyingTo}
-    category={comment.category}
-    username={username}/>);
+var renderChildComments = function (threadId, children, expandedChildId, replyingTo, username, chattyActions) {
+  return _.map(children, (comment) => {
+    return (<ChildComment key={comment.id}
+      id = {comment.id}
+      author={comment.author}
+      body={comment.body}
+      children = {comment.children}
+      date = {comment.date}
+      dateStr = {comment.dateStr}
+      expandedChildId = {expandedChildId}
+      threadId={threadId}
+      replyingTo={replyingTo}
+      category={comment.category}
+      username={username}
+      chattyActions={chattyActions}
+      />);
   });
-  return replies;
 };
 
 var ChildComment = React.createClass({
@@ -32,26 +33,27 @@ var ChildComment = React.createClass({
     author: React.PropTypes.string.isRequired,
     id: React.PropTypes.number.isRequired,
     username: React.PropTypes.string.isRequired,
+    chattyActions: React.PropTypes.object.isRequired
   },
-  render: function() {
+  render: function () {
     var props = this.props;
-    var replies = renderChildComments(props.threadId,props.children, 
-      props.expandedChildId, props.replyingTo,props.username);
+    var replies = renderChildComments(props.threadId, props.children,
+      props.expandedChildId, props.replyingTo, props.username, props.chattyActions);
     var expanded = props.expandedChildId == props.id;
-    
-    if(!expanded) {
+
+    if (!expanded) {
       return (
-        <ChildCommentCollapsed body={props.body} author={props.author} 
-        date={props.date}
-        onClickEvent={this.handleClick}
-        username={props.username}
-        category={props.category}>
+        <ChildCommentCollapsed body={props.body} author={props.author}
+          date={props.date}
+          onClickEvent={this.handleClick}
+          username={props.username}
+          category={props.category}>
           {replies}
         </ChildCommentCollapsed>
       );
     } else {
       return (
-        <ChildCommentExpanded 
+        <ChildCommentExpanded
           body={props.body} author={props.author} dateStr={props.dateStr}
           id={props.id}
           threadId={props.threadId}
@@ -62,10 +64,12 @@ var ChildComment = React.createClass({
       );
     }
   },
-  handleClick : function(e) {
+  handleClick: function (e) {
     e.stopPropagation();
-    ChattyActions.selectComment(this.props.threadId,this.props.id);
+    //ChattyActions.selectComment(this.props.threadId,this.props.id);
+    let {chattyActions, threadId, id} = this.props;
+    chattyActions.selectComment(threadId, id);
   }
 });
 
-module.exports = { ChildComment : ChildComment,renderChildComments : renderChildComments };
+module.exports = { ChildComment: ChildComment, renderChildComments: renderChildComments };

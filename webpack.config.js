@@ -78,8 +78,8 @@ if(TARGET === 'start' || !TARGET) {
         // Define development specific CSS setup
         {
           test: /\.css$/,
-          loaders: ['style', 'css'],
-          include: PATHS.app
+          loader:'style!css!',
+          include: PATHS.style
         }
       ]
     },

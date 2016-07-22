@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import * as chattyactions from '../actions/chattyactions';
+import { bindActionCreators } from 'redux'
 import Chatty from '../view/chatty';
 
 @connect(state => state)
@@ -17,19 +18,21 @@ export default class App extends React.Component {
     dispatch(action);
   }
 
+  componentDidMount() {
+    this.getChatty();
+  }
+
   render() {
-    const {chattyreducer} = this.props;
-    const getChatty = this.getChatty.bind(this);
+    const {chattyreducer, dispatch} = this.props;
+    let boundActionCreators = bindActionCreators(chattyactions, dispatch)
+
     return (
       <div>
-        <div onClick={getChatty}>
-          redux chatty app
-        </div>
         <Chatty threads={chattyreducer.threads}
           visibleThreads={[]}
           replyingTo={0}
           username={""}
-          chattyActions={null}
+          chattyActions={boundActionCreators}
           userActions={null} />
       </div>
     );

@@ -1,0 +1,124 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+.jt_red {
+    text-shadow: 1px 1px 2px #f00;
+}
+.jt_green {
+    text-shadow: 1px 1px 2px #62AE65;
+}
+.jt_pink {
+    text-shadow: 1px 1px 2px #f49ac1;
+}
+.jt_olive {
+    text-shadow: 1px 1px 2px olive;
+}
+.jt_fuchsia {
+    text-shadow: 1px 1px 2px #c0ffc0;
+}
+.jt_yellow {
+    text-shadow: 1px 1px 2px #CEC23B;
+}
+.jt_blue {
+    text-shadow: 1px 1px 2px #44aedf;
+}
+.jt_lime {
+    text-shadow: 1px 1px 2px #33E033;
+}
+.jt_orange {
+    text-shadow: 1px 1px 2px #FF6A00;
+}
+.jt_italic {
+    font-style: italic;
+}
+.jt_bold {
+    font-weight: bold;
+}
+.jt_underline {
+    text-decoration: underline;
+}
+.jt_strike {
+    text-decoration: line-through;
+}
+.jt_sample {
+    font-size: 80%;
+    line-height: 10px;
+}
+.jt_quote {
+    font-family: serif;
+    font-size: 110%;
+}
+.jt_spoiler {
+    cursor: help;
+    color: #383838;
+    background-color: #383838;
+}
+.jt_spoiler:focus {
+    color: #f00;
+}
+.jt_codesmall {
+    font-family: monospace;
+}
+.jt_code {
+    display: block;
+    font-family: monospace;
+    border-left: 1px solid #666;
+    padding: 3px 0 3px 10px;
+    margin: 5px 0 5px 10px;
+}
+@-webkit-keyframes highlight-fade {
+    0% {
+        background: orange;
+    }
+    100% {
+        background: white;
+    }
+}
+@-moz-keyframes highlight-fade {
+    0% {
+        background: orange;
+    }
+    100% {
+        background: white;
+    }
+}
+@-ms-keyframes highlight-fade {
+    0% {
+        background: orange;
+    }
+    100% {
+        background: white;
+    }
+}
+@keyframes highlight-fade {
+    0% {
+        background: orange;
+    }
+    100% {
+        background: white;
+    }
+}
+.highlight {
+    -webkit-animation: highlight-fade 10s ease-out;
+    -moz-animation: highlight-fade 10s ease-out;
+    -o-animation: highlight-fade 10s ease-out;
+    animation: highlight-fade 10s ease-out;
+}
+.badge1 {
+    position:relative;
+}
+.badge1[data-badge]:after {
+    content:attr(data-badge);
+    position:absolute;
+    top:-10px;
+    right:5px;
+    font-size:.7em;
+    background:green;
+    color:white;
+    width:18px;height:18px;
+    text-align:center;
+    line-height:18px;
+    border-radius:50%;
+    box-shadow:0 0 1px #333;
+}

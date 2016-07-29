@@ -10,9 +10,9 @@ var styles = {
   },
 };
 
-module.exports = React.createClass({
+let CommentList = React.createClass({
   render: function () {
-    let {replyingTo, visibleThreads, username, chattyActions, userActions, threads} = this.props;
+    let {replyingTo, visibleThreads, username, chattyActions, userActions, threads, password} = this.props;
     var comments = _.map(threads, comment => {
       return (<ParentComment key={comment.id}
         id={comment.id}
@@ -34,11 +34,12 @@ module.exports = React.createClass({
         replyingTo={replyingTo}
         visibleThreads={visibleThreads}
         username={username}
+        password={password}
         chattyActions={chattyActions}
         userActions={userActions}
         />);
     });
-
+    
     return (
       <div style={styles.commentBody}>
         {comments}
@@ -46,3 +47,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = CommentList;

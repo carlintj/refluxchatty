@@ -6,7 +6,7 @@ import configureStore from './store/reduxstore';
 const store = configureStore();
 
 ReactDOM.render(
-  <div>
+  <div style={{background: '#EAEAEA'}}>
     <Root store={store} />
   </div>,
   document.getElementById('app')

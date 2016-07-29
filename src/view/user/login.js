@@ -1,6 +1,5 @@
-var React = require('react');
-var UserActions = require('../../store/useractions.js');
-var LinkedStateMixin = require('react-addons-linked-state-mixin');
+import React from 'react';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 
 module.exports = React.createClass({
   mixins: [LinkedStateMixin],
@@ -20,6 +19,7 @@ module.exports = React.createClass({
     );
   },
   onLogin: function() {
-    UserActions.login(this.state.username,this.state.password);
+    const {username, password} = this.state;
+    this.props.chattyActions.login(username,password);
   }
 });

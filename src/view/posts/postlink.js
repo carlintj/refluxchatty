@@ -73,7 +73,8 @@ module.exports = React.createClass({
     },
     render: function() {
       var m = chattyRegex.exec(this.props.url);
-      if(m) {
+      var noLink = false; //routing is busted atm
+      if(m && noLink) {
         return  <ChattyLink url={this.props.url} />;
       }
       m = imageHostRegex.exec(this.props.url);

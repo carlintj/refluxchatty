@@ -1,5 +1,4 @@
 var React = require('react');
-var ChattyActions = require('../../store/chattyactions.js');
 var combine = require('../../util/styleutil.js');
 var HoverMixin = require('..//misc/hovermixin.js');
 
@@ -21,7 +20,7 @@ var styles = {
   },
 };
 
-module.exports = React.createClass({
+let ReplyButton = React.createClass({
   mixins: [HoverMixin],
     render: function(){
       var style = combine(
@@ -35,6 +34,8 @@ module.exports = React.createClass({
         </div>);
     },
     onClickHandler : function() {
-      ChattyActions.openReply(this.props.threadId,this.props.commentId);
+      this.props.chattyActions.openReply(this.props.threadId,this.props.commentId);
     }
 });
+
+module.exports = ReplyButton

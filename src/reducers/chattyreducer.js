@@ -1,6 +1,9 @@
 import {initialState} from './initialState';
 import _ from 'lodash';
-import handlers from './functions/'
+import chattyhandlers from './functions/'
+import uihandlers from './userfunctions/';
+
+const handlers = _.merge(chattyhandlers, uihandlers);
 
 export default function(state = initialState, action) {
     let newState = _.cloneDeep(state);

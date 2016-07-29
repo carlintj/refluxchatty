@@ -1,5 +1,4 @@
 var React = require('react');
-var UserActions = require('../../store/useractions.js');
 var LoginScreen = require('./login.js');
 var SearchBox = require('../posts/searchbox.js');
 
@@ -25,10 +24,10 @@ var styles = {
 
 var StatusMenu = React.createClass({
   showLogin: function() {
-    UserActions.showLoginForm();
+    this.props.chattyActions.showLoginForm();
   },
     onReorderClick: function() {
-    this.props.reorderThreads();
+    this.props.chattyActions.reorderThreads();
   },
   getInitialState: function() {
     return {showingReplies : false};
@@ -41,12 +40,14 @@ var StatusMenu = React.createClass({
     }
     
     this.props.showThreads(this.props.unseenReplies);
-    UserActions.clearReplies();
+    //UserActions.clearReplies();
   },
   render: function() {
     var loginScreen = null;
     if(this.props.showLogin) {
-      loginScreen = <LoginScreen loginMessage={this.props.loginMessage}/>;
+      loginScreen = <LoginScreen loginMessage={this.props.loginMessage}
+      chattyActions = {this.props.chattyActions}
+      />;
     }
     
     var userinfo;

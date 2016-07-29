@@ -25,7 +25,12 @@ var getTimeString = function(date) {
   var timeString = hour + ':' + minute + ' ' + ap;
 
   if (now.getDate() !== date.getDate()) {
-    timeString = date.getMonth() + 1 + '/' + date.getDate() + ' ' + timeString;
+    if(now.getFullYear() != date.getFullYear()) {
+      timeString = date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear() + ' ' + timeString;
+    }
+    else {
+      timeString = date.getMonth() + 1 + '/' + date.getDate() + ' ' + timeString;
+    }
   }
 
   return timeString;

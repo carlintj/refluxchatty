@@ -111,7 +111,7 @@ var ParentComment = React.createClass({
 
     if (props.expanded) {
       replyPosts = renderChildComments(props.threadId, props.children,
-        props.expandedChildId, props.replyingTo, props.username,
+        props.expandedChildId, props.replyingTo, props.username,props.password,
         props.chattyActions);
     }
 
@@ -123,7 +123,11 @@ var ParentComment = React.createClass({
     }
 
     if (props.replyingTo === props.id) {
-      replyBox = <ReplyBox parentCommentId={props.id}/>;
+      replyBox = <ReplyBox parentCommentId={props.id} 
+      chattyActions={props.chattyActions}
+      username={props.username}
+      password={props.password} 
+      />;
     }
 
     var categoryStyle = null;
@@ -132,7 +136,7 @@ var ParentComment = React.createClass({
     } else if (props.category === 'informative') {
       categoryStyle = styles.parentInformative;
     }
-
+    
     return (
       <div style={styles.parentContainer}>
         <div style={combine(styles.parentComment, props.searchMatch && styles.searchMatch) }>
@@ -144,9 +148,9 @@ var ParentComment = React.createClass({
             <span style={styles.username}>
               {props.author}
             </span>
-            @<span style={styles.date}>{props.dateStr}</span>
+            &nbsp;@&nbsp;<span style={styles.date}>{props.dateStr}</span>
             &nbsp; <span style={categoryStyle}>{props.category}</span>
-            <ReplyButton threadId = {props.threadId} commentId = {props.id} />
+            <ReplyButton threadId = {props.threadId} commentId = {props.id} chattyActions={props.chattyActions}/>
             <PostBody body={props.body} />
             {replies}
           </div>

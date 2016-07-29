@@ -3,7 +3,8 @@ var ChildCommentCollapsed = require('./childcommentcollapsed.js');
 var ChildCommentExpanded = require('./childcommentexpanded.js');
 import _ from 'lodash';
 
-var renderChildComments = function (threadId, children, expandedChildId, replyingTo, username, chattyActions) {
+var renderChildComments = function (threadId, children, expandedChildId, replyingTo, 
+username, password, chattyActions) {
   return _.map(children, (comment) => {
     return (<ChildComment key={comment.id}
       id = {comment.id}
@@ -17,6 +18,7 @@ var renderChildComments = function (threadId, children, expandedChildId, replyin
       replyingTo={replyingTo}
       category={comment.category}
       username={username}
+      password={password}
       chattyActions={chattyActions}
       />);
   });
@@ -33,12 +35,13 @@ var ChildComment = React.createClass({
     author: React.PropTypes.string.isRequired,
     id: React.PropTypes.number.isRequired,
     username: React.PropTypes.string.isRequired,
+    password: React.PropTypes.string.isRequired,
     chattyActions: React.PropTypes.object.isRequired
   },
   render: function () {
     var props = this.props;
     var replies = renderChildComments(props.threadId, props.children,
-      props.expandedChildId, props.replyingTo, props.username, props.chattyActions);
+      props.expandedChildId, props.replyingTo, props.username,props.password, props.chattyActions);
     var expanded = props.expandedChildId == props.id;
 
     if (!expanded) {
@@ -58,7 +61,12 @@ var ChildComment = React.createClass({
           id={props.id}
           threadId={props.threadId}
           replyingTo={props.replyingTo}
-          category={props.category}>
+          category={props.category}
+          chattyActions={props.chattyActions}
+          username={props.username}
+          password={props.password}
+          >
+          
           {replies}
         </ChildCommentExpanded>
       );

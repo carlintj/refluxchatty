@@ -47,14 +47,7 @@ module.exports = React.createClass({
         //keymaster.unbind('f');
     },
     render: function () {
-        //         <CommentList threads={this.props.threads} 
-        //   visibleThreads={this.props.visibleThreads}
-        //   replyingTo={this.props.replyingTo} 
-        //   username={this.props.username}
-        //   chattyActions={this.props.chattyActions}
-        //   userActions={this.props.userActions}
-        //   />
-
+        
         return (<CommentList {...this.props} />);
     }
 });

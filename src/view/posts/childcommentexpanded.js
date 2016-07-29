@@ -34,13 +34,14 @@ var styles = {
 };
 
 
-module.exports = React.createClass({
+let ChildCommentExpanded =  React.createClass({
   render: function() {
     var props = this.props;
     
     var replyBox = null;
     if(props.replyingTo == props.id) {
-      replyBox = <ReplyBox parentCommentId={props.id}/>;
+      replyBox = <ReplyBox parentCommentId={props.id} username={props.username} 
+      password={props.password} chattyActions={props.chattyActions}/>;
     }
     
     var commentStyle = styles.highlightedComment;
@@ -54,7 +55,8 @@ module.exports = React.createClass({
             <div ref="anchor" onClick={this.handleClick} style={commentStyle}>
               <div style={styles.username}>
                 {props.author} @ <span style={styles.date}>{props.dateStr}</span>
-                <ReplyButton threadId = {props.threadId} commentId = {props.id} />
+                <ReplyButton threadId = {props.threadId} commentId = {props.id} 
+                  chattyActions={props.chattyActions}/>
               </div>
               <div>
                 <PostBody body={props.body} />
@@ -72,3 +74,5 @@ module.exports = React.createClass({
     e.stopPropagation();
   }
 });
+
+module.exports = ChildCommentExpanded;

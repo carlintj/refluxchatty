@@ -98,7 +98,7 @@ var calculateAgeStyle = function(date) {
   return null;
 };
 
-module.exports = React.createClass({
+let ChildCommentCollapsed = React.createClass({
   mixins: [HoverMixin],
   render: function() {
     var props = this.props;
@@ -137,3 +137,5 @@ module.exports = React.createClass({
     this.props.onClickEvent(e);
   }
 });
+
+module.exports = ChildCommentCollapsed;

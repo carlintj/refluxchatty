@@ -1,8 +1,8 @@
 var React = require('react');
 var UserActions = require('../../store/useractions.js');
 var combine = require('../../util/styleutil.js');
-var Router = require('react-router');
-var { IndexLink } = Router;
+//var Router = require('react-router');
+//var { IndexLink } = Router;
 var ReplyBox = require('../posts/replybox.js');
 
 var styles = {
@@ -39,12 +39,12 @@ var styles = {
     float: 'right',
     //paddingRight: '5px',
     cursor: 'pointer',
-    height:'100%',
+    height: '100%',
   },
   menubutton: {
     paddingLeft: '10px',
     paddingRight: '10px',
-    height:'100%',
+    height: '100%',
   },
   replyBoxContainer: {
     margin: '15px',
@@ -61,82 +61,81 @@ module.exports = React.createClass({
     username: React.PropTypes.string.isRequired,
     connected: React.PropTypes.bool.isRequired,
     unseenReplies: React.PropTypes.array.isRequired,
-    showHomeLink: React.PropTypes.bool.isRequired,
+    //showHomeLink: React.PropTypes.bool.isRequired,
     showNewThreadBox: React.PropTypes.bool.isRequired,
   },
-  fullRefresh: function() {
-    this.props.fullRefresh();
+  fullRefresh: function () {
+    this.props.chattyActions.fullRefresh();
   },
-  onReorderClick: function() {
-    this.props.reorderThreads();
+  onReorderClick: function () {
+    this.props.chattyActions.reorderThreads();
   },
-  checkPMs: function() {
+  checkPMs: function () {
     UserActions.requestMessageCount();
   },
-  componentDidMount: function() {
+  componentDidMount: function () {
     this.checkPMs();
-    this.messageTimer = setInterval(this.checkPMs,5 * 60 * 1000);
+    this.messageTimer = setInterval(this.checkPMs, 5 * 60 * 1000);
   },
-  onMenuClick: function() {
-    UserActions.toggleMenu();
+  onMenuClick: function () {
+    this.props.chattyActions.toggleMenu();
   },
-  onNewThreadClick: function() {
-    this.props.showNewThread();
+  onNewThreadClick: function () {
+    this.props.chattyActions.showNewThread();
   },
-  onCancelNewThreadClick: function() {
-    this.props.cancelNewThread();
+  onCancelNewThreadClick: function () {
+    this.props.chattyActions.cancelNewThread();
   },
-  render: function() {
-    var homeLink,status,replyBox = null;
+  render: function () {
+    var homeLink, status, replyBox = null;
     var props = this.props;
-    if(this.props.showHomeLink) {
-      homeLink = <IndexLink  to="/">Back to Chatty</IndexLink>;
-    }
-    
-    if(props.connected) {
-      status = <span style={styles.success}>Connected</span>;
-    } else {
-      status = <a onClick={this.fullRefresh}>Not connected - click to connect
-        </a>;
+    if (this.props.showHomeLink) {
+      //homeLink = <IndexLink  to="/">Back to Chatty</IndexLink>;
     }
 
-    if(props.showNewThreadBox == true) {
+    if (props.connected) {
+      status = <span style={styles.success}>Connected</span>;
+    } else {
+      status = <a onClick={this.fullRefresh}>Not connected - click to connect</a>;
+    }
+
+    if (props.showNewThreadBox == true) {
       replyBox = <div style={styles.replyBoxContainer}>
         <div><strong>New Thread</strong>
-          <span style={combine(styles.clickable,styles.closeButton)} onClick={this.onCancelNewThreadClick}>Close</span>
+          <span style={combine(styles.clickable, styles.closeButton) } onClick={this.onCancelNewThreadClick}>Close</span>
         </div>
-          <ReplyBox parentCommentId={0}/>
+        <ReplyBox parentCommentId={0}/>
       </div>;
     }
     var notifications = props.unseenReplies.length;
-    
-    if(notifications === 0) {
+
+    if (notifications === 0) {
       notifications = null;
     }
-    
+
     return (
       <div style={styles.parent}>
         <div style={styles.statusbar}>
           {homeLink} {status}
           <div style={styles.menubuttons}>
-            <img 
-              src="build/icons/sort-amount-desc.svg" 
-              style={styles.menubutton} 
-              onClick={this.onReorderClick} 
-            />
-            <img 
-              src="build/icons/pencil.svg" 
-              style={styles.menubutton} 
-              onClick={this.onNewThreadClick} 
-            />
-            <span data-badge={notifications} className="badge1"
-              onClick={this.onMenuClick} 
-              >
-              <img 
-                src="build/icons/menu.svg" 
-                style={styles.menubutton} 
-                
+            <img
+              src="icons/sort-amount-desc.svg"
+              style={styles.menubutton}
+              onClick={this.onReorderClick}
               />
+            <img
+              src="icons/pencil.svg"
+              style={styles.menubutton}
+              onClick={this.onNewThreadClick}
+              />
+            <span data-badge={notifications} className="badge1"
+              onClick={this.onMenuClick}
+              >
+              <img
+                src="icons/menu.svg"
+                style={styles.menubutton}
+
+                />
             </span>
           </div>
         </div>

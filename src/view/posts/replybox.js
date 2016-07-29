@@ -1,7 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
-var ChattyActions = require('../../store/chattyactions.js');
 
 var styles = {
   commentBox: {
@@ -10,10 +9,12 @@ var styles = {
   },
 };
 
-module.exports = React.createClass({
+let ReplyBox = React.createClass({
   mixins: [LinkedStateMixin],
   propTypes: { 
-    parentCommentId: React.PropTypes.number.isRequired
+    parentCommentId: React.PropTypes.number.isRequired,
+    username: React.PropTypes.string.isRequired,
+    password: React.PropTypes.string.isRequired
   },
   componentDidMount: function() {
     var textNode = ReactDOM.findDOMNode(this.refs.commentBox);
@@ -85,10 +86,13 @@ module.exports = React.createClass({
   },
   onSubmitComment: function(event) {
     event.stopPropagation();
-    ChattyActions.submitComment(this.props.parentCommentId, this.state.body);
+    let {parentCommentId, username, password} = this.props;
+    this.props.chattyActions.submitComment(parentCommentId, this.state.body, username, password);
   },
   //this seems like a dumb hack
   onTextClick: function(event) {
     event.stopPropagation();
   }
 });
+
+module.exports = ReplyBox;

@@ -1,7 +1,7 @@
 var React = require('react');
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
-module.exports =  React.createClass({
+let SearchBox =  React.createClass({
   displayName: 'SearchBox',
   mixins: [LinkedStateMixin],
   getInitialState: function() {
@@ -18,3 +18,5 @@ module.exports =  React.createClass({
     </div>);
   }
 });
+
+module.exports = SearchBox;

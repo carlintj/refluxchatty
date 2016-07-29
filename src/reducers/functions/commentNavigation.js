@@ -1,20 +1,6 @@
 import _ from 'lodash';
 import highlightParent from './highlightParent';
-
-export function findChildComment (parentThread, childCommentId) {
-    if (parentThread.id == childCommentId) return parentThread;
-    for (var i = 0; i < parentThread.children.length; i++) {
-        var child = parentThread.children[i];
-        if (child.id == childCommentId) {
-            return child;
-        }
-        var grandchild = findChildComment(child, childCommentId);
-        if (grandchild) {
-            return grandchild;
-        }
-    }
-    return undefined;
-}
+import findChildComment from './findChildComment';
 
 export function getSiblings (parentThread, comment) {
     var parentComment = findChildComment(parentThread, comment.parentId);
@@ -128,4 +114,10 @@ export function selectNextComment(state) {
         }
     }
     return state;
+}
+
+
+export function reorderThreads(state) {
+    state.threads = _.orderBy(state.threads, ['latestReply'], ['desc']);
+    return selectFirstParent(state)
 }

@@ -93,3 +93,17 @@ export function waitForEvent(state, action) {
 
   return state;
 }
+
+export function loadThreads(state, action) {
+  state.threadsToLoad = _.difference(state.threadsToLoad, action.threads);
+
+  return state;
+}
+
+export function loadThreadsCompleted(state, action) {
+  let {threads} = action;
+  let newThreads = _.map(threads, raw => processThread(raw));
+  state.threads = state.threads.concat(newThreads);
+
+  return state;
+}

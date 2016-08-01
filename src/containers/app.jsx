@@ -25,6 +25,9 @@ export default class App extends React.Component {
     const {dispatch} = this.props;
     const action = chattyactions.getChatty();
     dispatch(action);
+
+
+    //_.delay(() => dispatch(chattyactions.loadThreads([31162211,31162001])), 10000);
   }
 
   componentWillMount() {
@@ -35,10 +38,16 @@ export default class App extends React.Component {
     this.getChatty();
   }
 
+  componentWillReceiveProps(nextProps) {
+    let {dispatch, chattyreducer} = nextProps;
+    if(chattyreducer.threadsToLoad.length > 0) {
+     dispatch(chattyactions.loadThreads(chattyreducer.threadsToLoad));
+    }
+  }
+
   render() {
     const {chattyreducer} = this.props;
     
-
     return (
       <div>
         <StatusBar

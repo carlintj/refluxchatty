@@ -14,7 +14,8 @@ module.exports = React.createClass({
         keymaster('x', function () {
             chattyActions.toggleParentComment();
         });
-        keymaster('r', function () {
+        keymaster('r', function (event) {
+            event.preventDefault();
             chattyActions.openReply();
         });
         keymaster('home', function () {

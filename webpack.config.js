@@ -40,7 +40,8 @@ const common = {
   plugins: [
     new HtmlwebpackPlugin({
       template: 'node_modules/html-webpack-template/index.ejs',
-      title: 'Kanban app',
+      title: 'Redux Chatty',
+      favicon: 'favicon.ico',
       appMountId: 'app',
       inject: false
     })
@@ -110,8 +111,8 @@ if(TARGET === 'build' || TARGET === 'stats') {
         // Extract CSS during build
         {
           test: /\.css$/,
-          loader: ExtractTextPlugin.extract('style', 'css'),
-          include: PATHS.app
+          loader:'style!css!',
+          include: PATHS.style
         }
       ]
     },

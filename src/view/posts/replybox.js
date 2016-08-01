@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var LinkedStateMixin = require('react-addons-linked-state-mixin');
+import linkState from '../../util/linkstate'
+
+
 
 var styles = {
   commentBox: {
@@ -10,7 +12,6 @@ var styles = {
 };
 
 let ReplyBox = React.createClass({
-  mixins: [LinkedStateMixin],
   propTypes: { 
     parentCommentId: React.PropTypes.number.isRequired,
     username: React.PropTypes.string.isRequired,
@@ -52,8 +53,13 @@ let ReplyBox = React.createClass({
     return <div>
     <div style={container}>
       <div style={fixed}>
-        <textarea ref="commentBox" valueLink={this.linkState('body')} 
-          style={styles.commentBox} onClick={this.onTextClick}></textarea>
+        <textarea ref="commentBox" 
+          onChange={linkState(this, 'body')}
+          type="text"
+          value={this.state['body']}
+ 
+          style={styles.commentBox} 
+          onClick={this.onTextClick}></textarea>
       </div>
       <div style={flexed}>
         <div style={subdiv}>

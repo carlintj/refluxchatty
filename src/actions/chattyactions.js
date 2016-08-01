@@ -33,6 +33,9 @@ export const LOADPOSTIFNOTFOUND = 'LOADPOSTIFNOTFOUND';
 export const SHOWNEWTHREAD = 'SHOWNEWTHREAD';
 export const CANCELNEWTHREAD = 'CANCELNEWTHREAD';
 
+export const LOADTHREADS = 'LOADTHREADS';
+export const LOADTHREADSCOMPLETED = 'LOADTHREADSCOMPLETED';
+
 const URLs = {
     getChatty: '//winchatty.com/v2/getChatty',
     getNewestEventId: '//winchatty.com/v2/getNewestEventId',
@@ -85,7 +88,7 @@ export function getNewestEventId() {
             .then(r => r.json())
             .then(data => {
                 dispatch(getNewestEventIdCompleted(data.eventId));
-                dispatch(waitForEvent(data.eventId));
+                //dispatch(waitForEvent(data.eventId));
             })
     }
 }
@@ -199,7 +202,7 @@ export function openReply(threadId, commentId) {
     }
 }
 
-export function submitComment(parentCommentId, body,username, password) {
+export function submitComment(parentCommentId, body, username, password) {
     return (dispatch) => {
         dispatch({
             type: SUBMITCOMMENT
@@ -215,15 +218,40 @@ export function submitComment(parentCommentId, body,username, password) {
                 text: body
             }
         })
-        .then(() => {
-            dispatch(submitCommentCompleted());
-        });
+            .then(() => {
+                dispatch(submitCommentCompleted());
+            });
     }
 }
 
-export function  submitCommentCompleted() {
+export function submitCommentCompleted() {
     return {
         type: SUBMITCOMMENTCOMPLETED
     }
 
+}
+
+export function loadThreads(threads) {
+    return (dispatch) => {
+        dispatch({
+            type: LOADTHREADS,
+            threads
+        });
+        let ids = _.join(threads, ',');
+        fetch(URLs.getThread + ids, { mode: 'cors' })
+            .then(r => r.json())
+            .then(data => {
+                if (data.threads) {
+                    dispatch(loadThreadsCompleted(data.threads))
+                }
+            });
+
+    }
+}
+
+export function loadThreadsCompleted(threads) {
+    return {
+        type: LOADTHREADSCOMPLETED,
+        threads
+    }
 }

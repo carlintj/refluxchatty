@@ -1,8 +1,7 @@
 import React from 'react';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
+import linkState from '../../util/linkstate'
 
 module.exports = React.createClass({
-  mixins: [LinkedStateMixin],
   getInitialState: function() {
     return {
       username: '',
@@ -11,8 +10,13 @@ module.exports = React.createClass({
   },
   render: function() {
     return(<div>
-      <span>User name: </span><input type="text" valueLink={this.linkState('username')}/>
-      <span>Password: </span><input type="password" valueLink={this.linkState('password')}/>
+      <span>User name: </span><input type="text" 
+          onChange={linkState(this, 'username')}
+          value={this.state['username']}/>
+      <span>Password: </span>
+        <input type="password" 
+          onChange={linkState(this, 'password')}
+          value={this.state['password']}/>
       <input type="submit" value="Login" onClick={this.onLogin} />
       <span>{this.props.loginMessage}</span>
     </div>

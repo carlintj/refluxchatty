@@ -1,5 +1,5 @@
 var React = require('react');
-var UserActions = require('../../store/useractions.js');
+//var UserActions = require('../../store/useractions.js');
 var combine = require('../../util/styleutil.js');
 //var Router = require('react-router');
 //var { IndexLink } = Router;
@@ -71,7 +71,7 @@ module.exports = React.createClass({
     this.props.chattyActions.reorderThreads();
   },
   checkPMs: function () {
-    UserActions.requestMessageCount();
+    //UserActions.requestMessageCount();
   },
   componentDidMount: function () {
     this.checkPMs();

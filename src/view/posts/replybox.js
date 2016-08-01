@@ -55,9 +55,8 @@ let ReplyBox = React.createClass({
       <div style={fixed}>
         <textarea ref="commentBox" 
           onChange={linkState(this, 'body')}
-          type="text"
           value={this.state['body']}
- 
+          type="text"
           style={styles.commentBox} 
           onClick={this.onTextClick}></textarea>
       </div>

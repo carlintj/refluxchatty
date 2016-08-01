@@ -13,4 +13,4 @@ export default function (component, key) {
     (component.__linkStateHandlers = {});
  
   return cache[key] || (cache[key] = createHandler(component, key));
-};
+}

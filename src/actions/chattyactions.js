@@ -88,7 +88,7 @@ export function getNewestEventId() {
             .then(r => r.json())
             .then(data => {
                 dispatch(getNewestEventIdCompleted(data.eventId));
-                //dispatch(waitForEvent(data.eventId));
+                dispatch(waitForEvent(data.eventId));
             })
     }
 }

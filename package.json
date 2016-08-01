@@ -42,7 +42,11 @@
     "redux-devtools-log-monitor": "^1.0.11",
     "style-loader": "^0.13.1",
     "webpack-dev-server": "^1.14.1",
-    "webpack-merge": "^0.14.1"
+    "webpack-merge": "^0.14.1",
+    "mocha": "^2.4.5",
+    "mocha-clean": "^1.0.0",
+    "expect": "^1.16.0"
+
   },
   "scripts": {
     "stats": "webpack --profile --json > stats.json",

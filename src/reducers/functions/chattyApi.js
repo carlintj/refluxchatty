@@ -8,12 +8,13 @@ var mergeEvents = function (threads, events, state) {
   try {
     _.each(events, (event) => {
       if(event.eventType == 'categoryChange') {
-        let post = findPost(threads, event.postId);
+        let {postId, category} = event.eventData;
+        let post = findPost(threads, postId);
         if(post) {
-          post.category = event.category;
+          post.category = category;
         }
         else {
-          console.warn('can\'t find post for category change:', event.postId);
+          console.warn('can\'t find post for category change:', postId);
         }
       }
       else if (event.eventType == 'newPost') {

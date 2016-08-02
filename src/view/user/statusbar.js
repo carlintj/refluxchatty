@@ -59,6 +59,7 @@ module.exports = React.createClass({
   displayName: 'StatusBar',
   propTypes: {
     username: React.PropTypes.string.isRequired,
+    password: React.PropTypes.string.isRequired,
     connected: React.PropTypes.bool.isRequired,
     unseenReplies: React.PropTypes.array.isRequired,
     //showHomeLink: React.PropTypes.bool.isRequired,
@@ -104,7 +105,8 @@ module.exports = React.createClass({
         <div><strong>New Thread</strong>
           <span style={combine(styles.clickable, styles.closeButton) } onClick={this.onCancelNewThreadClick}>Close</span>
         </div>
-        <ReplyBox parentCommentId={0}/>
+        <ReplyBox parentCommentId={0} username={props.username} 
+          password={props.password} chattyActions={props.chattyActions}/>
       </div>;
     }
     var notifications = props.unseenReplies.length;

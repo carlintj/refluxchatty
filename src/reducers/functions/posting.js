@@ -41,3 +41,14 @@ export function submitCommentCompleted(state  /*, action */) {
     
     return state;
 }
+
+export function showNewThread(state /*, action */) {
+  state.showNewThreadBox = true;
+  state.replyingTo = 0;
+  return state;
+}
+
+export function cancelNewThread(state) {
+  state.showNewThreadBox = false;
+  return state;
+}

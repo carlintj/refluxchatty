@@ -27,7 +27,9 @@ handlers[types.SELECTLASTPARENT] = navigation.selectLastParent;
 handlers[types.REORDERTHREADS] = navigation.reorderThreads;
 
 
-handlers[types.OPENREPLY] = posting.openReply; 
+handlers[types.OPENREPLY] = posting.openReply;
+handlers[types.SHOWNEWTHREAD] = posting.showNewThread;
+handlers[types.CANCELNEWTHREAD] = posting.cancelNewThread;
 handlers[types.SUBMITCOMMENT] = posting.submitComment;
 handlers[types.SUBMITCOMMENTCOMPLETED] = posting.submitCommentCompleted;
 

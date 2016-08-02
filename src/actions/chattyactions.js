@@ -202,6 +202,18 @@ export function openReply(threadId, commentId) {
     }
 }
 
+export function showNewThread() {
+    return {
+        type: SHOWNEWTHREAD
+    }
+}
+
+export function cancelNewThread() {
+    return {
+        type: CANCELNEWTHREAD
+    }
+}
+
 export function submitComment(parentCommentId, body, username, password) {
     return (dispatch) => {
         dispatch({

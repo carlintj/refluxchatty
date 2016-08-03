@@ -123,7 +123,8 @@ export function reorderThreads(state) {
 }
 
 export function showThreads(state, action) {
-    let {threadsToShow} = action;
-    state.visibleThreads = threadsToShow;
+    let {threads} = action;
+    state.visibleThreads = threads;
+    state.unseenReplies = _.differenceWith(state.unseenReplies,threads, (l, r) => l.threadId == r.threadId);
     return state;
 }

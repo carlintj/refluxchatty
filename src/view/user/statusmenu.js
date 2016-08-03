@@ -23,6 +23,9 @@ var styles = {
 };
 
 var StatusMenu = React.createClass({
+  propTypes: {
+    unseenReplies: React.PropTypes.array.isRequired
+  },
   showLogin: function() {
     this.props.chattyActions.showLoginForm();
   },
@@ -30,13 +33,13 @@ var StatusMenu = React.createClass({
     this.props.chattyActions.reorderThreads();
   },
   getInitialState: function() {
-    return {showingReplies : true};
+    return {showingReplies : false};
   },
   onShowReplies: function() {
     if(this.props.unseenReplies.length == 0) {
-      this.state.showingReplies = false;
+      this.setState({showingReplies: false});
     } else {
-      this.state.showingReplies = true;
+      this.setState({showingReplies: true});
     }
     
     this.props.chattyActions.showThreads(this.props.unseenReplies);

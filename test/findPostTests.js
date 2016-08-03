@@ -36,7 +36,6 @@ describe('find posts', () => {
 
     it('should find a child post', () => {
         let post = findPost(state.threads, 3);
-        console.log(post);
         expect(post).toExist();
         expect(post.id).toEqual(3);
     });

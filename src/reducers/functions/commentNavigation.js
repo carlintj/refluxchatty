@@ -121,3 +121,9 @@ export function reorderThreads(state) {
     state.threads = _.orderBy(state.threads, ['latestReply'], ['desc']);
     return selectFirstParent(state)
 }
+
+export function showThreads(state, action) {
+    let {threadsToShow} = action;
+    state.visibleThreads = threadsToShow;
+    return state;
+}

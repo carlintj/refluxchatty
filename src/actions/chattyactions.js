@@ -214,6 +214,13 @@ export function cancelNewThread() {
     }
 }
 
+
+export function showThreads(threads) {
+    return {
+        type: SHOWTHREADS,
+        threads
+    }
+}
 export function submitComment(parentCommentId, body, username, password) {
     return (dispatch) => {
         dispatch({

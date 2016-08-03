@@ -30,7 +30,7 @@ var StatusMenu = React.createClass({
     this.props.chattyActions.reorderThreads();
   },
   getInitialState: function() {
-    return {showingReplies : false};
+    return {showingReplies : true};
   },
   onShowReplies: function() {
     if(this.props.unseenReplies.length == 0) {
@@ -39,8 +39,7 @@ var StatusMenu = React.createClass({
       this.state.showingReplies = true;
     }
     
-    this.props.showThreads(this.props.unseenReplies);
-    //UserActions.clearReplies();
+    this.props.chattyActions.showThreads(this.props.unseenReplies);
   },
   render: function() {
     var loginScreen = null;

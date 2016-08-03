@@ -25,6 +25,7 @@ handlers[types.SELECTPREVCOMMENT] = navigation.selectPrevComment;
 handlers[types.SELECTFIRSTPARENT] = navigation.selectFirstParent;
 handlers[types.SELECTLASTPARENT] = navigation.selectLastParent;
 handlers[types.REORDERTHREADS] = navigation.reorderThreads;
+handlers[types.SHOWTHREADS] = navigation.showThreads;
 
 
 handlers[types.OPENREPLY] = posting.openReply;

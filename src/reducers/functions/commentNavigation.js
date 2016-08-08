@@ -128,3 +128,15 @@ export function showThreads(state, action) {
     state.unseenReplies = _.differenceWith(state.unseenReplies,threads, (l, r) => l.threadId == r.threadId);
     return state;
 }
+
+export function hideSelectedThread(state /*, action */) {
+    let selectedThread = _.find(state.threads, {focused: true});
+
+    state = selectNextParent(state)
+
+    if(selectedThread) {
+        selectedThread.hidden = true;
+    }
+
+    return state;
+}

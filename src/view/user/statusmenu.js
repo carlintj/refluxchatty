@@ -43,6 +43,9 @@ var StatusMenu = React.createClass({
     
     this.props.chattyActions.showThreads(this.props.unseenReplies);
   },
+  onDumpState: function() {
+    this.props.chattyActions.dumpState();
+  },
   render: function() {
     var loginScreen = null;
     if(this.props.showLogin) {
@@ -78,6 +81,7 @@ var StatusMenu = React.createClass({
       {loginScreen}
       {userinfo}
       {searchBox}
+      <div><a style={styles.clickable} onClick={this.onDumpState}>Dump State</a></div>
     </div>);
     }
 });

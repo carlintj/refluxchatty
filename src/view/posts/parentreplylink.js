@@ -17,6 +17,11 @@ var ParentReplyLink = React.createClass({
     expanded: React.PropTypes.bool.isRequired,
     replyCount: React.PropTypes.number.isRequired,
   },
+  getInitialState: function() {
+    return ({
+      seenReplies: 0
+    });
+  },
   componentDidUpdate: function() {
     var repliesDiv = this.refs.replies;
     if(repliesDiv) {
@@ -27,6 +32,13 @@ var ParentReplyLink = React.createClass({
         },10000);  
       }
     }
+  },
+  componentWillMount: function() {
+    this.setState({seenReplies: this.props.replyCount});
+  },
+  onRepliesClick() {
+    this.setState({seenReplies: this.props.replyCount});
+    this.props.onRepliesClick();
   },
   render: function() {
     var props = this.props;
@@ -41,9 +53,14 @@ var ParentReplyLink = React.createClass({
             highlightClass = 'highlight';
           }
           var replyStr = props.replyCount > 1 ? 'replies' : 'reply';
+          var replies = props.replyCount;
+          if(props.replyCount - this.state.seenReplies != 0 && this.state.seenReplies > 0) {
+            let newCount = props.replyCount - this.state.seenReplies;
+            replies += ' (' + newCount + ' new)';
+          }
           return (<div ref="replies" className={highlightClass}><a style={styles.clickable} 
-              onClick={props.onRepliesClick}>
-              {props.replyCount} {replyStr}</a>
+              onClick={this.onRepliesClick}>
+              {replies} {replyStr}</a>
               &nbsp;<span style={styles.date}>Last reply @ {props.latestReply}</span>
             </div>);
           }

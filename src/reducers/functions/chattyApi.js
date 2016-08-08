@@ -4,51 +4,55 @@ import {processThread, getPost} from '../../util/apiservice';
 import findChildComment from './findChildComment';
 import findPost from './findPost';
 
-var mergeEvents = function (threads, events, state) {
+let addChildPost = function (newPost, state) {
+  let thread = _.find(state.threads, {
+    id: newPost.threadId
+  });
+  if (thread) {
+    let parent = findChildComment(thread, newPost.parentId);
+
+    if (parent) {
+      let fixedPost = getPost(newPost);
+
+      parent.children.push(fixedPost);
+      thread.replyCount++;
+      thread.latestReply = fixedPost.date;
+      thread.latestReplyStr = fixedPost.dateStr;
+
+      if (parent.author === state.username) {
+        state.unseenReplies.push({ threadId: thread.id, commentId: newPost.id });
+      }
+    }
+    else {
+      console.warn('unable to find parent comment in thread', newPost);
+    }
+  }
+  else {
+    state.threadsToLoad.push(newPost.threadId);
+  }
+}
+
+export function mergeEvents(threads, events, state) {
   try {
     _.each(events, (event) => {
-      if(event.eventType == 'categoryChange') {
+      if (event.eventType == 'categoryChange') {
         let {postId, category} = event.eventData;
         let post = findPost(threads, postId);
-        if(post) {
+        if (post) {
+          let oldCat = post.category;
           post.category = category;
+          console.log('updated post to', post.category, 'from', oldCat);
         }
         else {
           console.warn('can\'t find post for category change:', postId);
         }
       }
       else if (event.eventType == 'newPost') {
-        var newPost = event.eventData.post;
+        let newPost = event.eventData.post;
         if (newPost.parentId !== 0) {
-          var thread = _.find(threads, {
-            id: newPost.threadId
-          });
-          if (thread) {
-            var parent = findChildComment(thread, newPost.parentId);
-
-            if (parent) {
-              var fixedPost = getPost(newPost);
-
-              parent.children.push(fixedPost);
-              thread.replyCount++;
-              thread.latestReply = fixedPost.date;
-              thread.latestReplyStr = fixedPost.dateStr;
-
-              if (parent.author === state.username) {
-                state.unseenReplies.push({threadId: thread.id, commentId: newPost.id});
-              }
-            }
-            else {
-              console.warn('unable to find parent comment in thread', newPost);
-            }
-          }
-          else {
-            console.warn('unable to find thread', newPost.threadId, newPost);
-            state.threadsToLoad.push(newPost.threadId);
-            //chattyActions.getThread(newPost.threadId);
-          }
+          addChildPost(newPost, state);
         } else {
-          var newThread = getPost(newPost);
+          let newThread = getPost(newPost);
           newThread.latestReply = newThread.date;
           newThread.latestReplyStr = newThread.dateStr;
           newThread.threadId = newPost.threadId;
@@ -67,7 +71,7 @@ var mergeEvents = function (threads, events, state) {
     console.error('error merging events', e, events, threads);
     state.connected = false;
   }
-};
+}
 
 export function getChatty(state, action) {
   state.threads = _.map(action.chatty.threads, raw => processThread(raw));

@@ -32,6 +32,7 @@ export const RUNSEARCH = 'RUNSEARCH';
 export const LOADPOSTIFNOTFOUND = 'LOADPOSTIFNOTFOUND';
 export const SHOWNEWTHREAD = 'SHOWNEWTHREAD';
 export const CANCELNEWTHREAD = 'CANCELNEWTHREAD';
+export const DUMPSTATE = 'DUMPSTATE';
 
 export const LOADTHREADS = 'LOADTHREADS';
 export const LOADTHREADSCOMPLETED = 'LOADTHREADSCOMPLETED';
@@ -44,6 +45,17 @@ const URLs = {
     getThread: '//winchatty.com/v2/getThread?id=',
     submitComment: '//winchatty.com/v2/postComment'
 };
+
+function makeActionCreator(type, ...argNames) {
+  return function(...args) {
+    let action = { type }
+    argNames.forEach((arg, index) => {
+      action[argNames[index]] = args[index]
+    })
+    return action
+  }
+}
+
 
 
 export function getChatty() {
@@ -62,19 +74,8 @@ export function getChatty() {
     }
 }
 
-export function getChattyCompleted(chatty) {
-    return {
-        type: GETCHATTYCOMPLETED,
-        chatty
-    };
-}
-
-export function getChattyError(error) {
-    return {
-        type: GETCHATTYERROR,
-        error
-    }
-}
+export const getChattyCompleted = makeActionCreator(GETCHATTYCOMPLETED, 'chatty');
+export const getChattyError= makeActionCreator(GETCHATTYERROR,'error');
 
 export function startChatty() {
     return (dispatch) => {
@@ -93,12 +94,7 @@ export function getNewestEventId() {
     }
 }
 
-export function getNewestEventIdCompleted(eventId) {
-    return {
-        type: GETNEWESTEVENTIDCOMPLETED,
-        eventId
-    }
-}
+export const getNewestEventIdCompleted = makeActionCreator(GETNEWESTEVENTIDCOMPLETED, 'eventId');
 
 export function waitForEvent(eventId) {
     return (dispatch) => {
@@ -124,103 +120,22 @@ export function waitForEventCompleted(data) {
     }
 }
 
-export function waitForEventError(/* data */) {
-    return {
-        type: WAITFOREVENTERROR
-    }
-}
+export const waitForEventError = makeActionCreator(WAITFOREVENTERROR);
+export const toggleParentComment = makeActionCreator(TOGGLEPARENTCOMMENT, 'parentId');
+export const highlightParent = makeActionCreator(HIGHLIGHTPARENT, 'parentId');
+export const selectComment = makeActionCreator(SELECTCOMMENT, 'threadId', 'commentId');
+export const selectNextParent = makeActionCreator(SELECTNEXTPARENT);
+export const selectPrevParent = makeActionCreator(SELECTPREVPARENT);
+export const selectNextComment = makeActionCreator(SELECTNEXTCOMMENT);
+export const selectPrevComment = makeActionCreator(SELECTPREVCOMMENT);
+export const selectFirstParent = makeActionCreator(SELECTFIRSTPARENT);
+export const selectLastParent = makeActionCreator(SELECTLASTPARENT);
+export const reorderThreads = makeActionCreator(REORDERTHREADS);
+export const openReply = makeActionCreator(OPENREPLY,'threadId','commentId');
+export const showNewThread = makeActionCreator(SHOWNEWTHREAD);
 
-export function toggleParentComment(parentId) {
-    return {
-        type: TOGGLEPARENTCOMMENT,
-        parentId
-    }
-}
-
-export function highlightParent(parentId) {
-    return {
-        type: HIGHLIGHTPARENT,
-        parentId
-    }
-}
-
-export function selectComment(threadId, commentId) {
-    return {
-        type: SELECTCOMMENT,
-        threadId,
-        commentId
-    }
-}
-
-export function selectNextParent() {
-    return {
-        type: SELECTNEXTPARENT
-    }
-}
-
-export function selectPrevParent() {
-    return {
-        type: SELECTPREVPARENT
-    }
-}
-
-export function selectNextComment() {
-    return {
-        type: SELECTNEXTCOMMENT
-    }
-}
-
-export function selectPrevComment() {
-    return {
-        type: SELECTPREVCOMMENT
-    }
-}
-
-export function selectFirstParent() {
-    return {
-        type: SELECTFIRSTPARENT
-    }
-}
-
-export function selectLastParent() {
-    return {
-        type: SELECTLASTPARENT
-    }
-}
-
-export function reorderThreads() {
-    return {
-        type: REORDERTHREADS
-    }
-}
-
-export function openReply(threadId, commentId) {
-    return {
-        type: OPENREPLY,
-        threadId,
-        commentId
-    }
-}
-
-export function showNewThread() {
-    return {
-        type: SHOWNEWTHREAD
-    }
-}
-
-export function cancelNewThread() {
-    return {
-        type: CANCELNEWTHREAD
-    }
-}
-
-
-export function showThreads(threads) {
-    return {
-        type: SHOWTHREADS,
-        threads
-    }
-}
+export const cancelNewThread = makeActionCreator(CANCELNEWTHREAD);
+export const showThreads = makeActionCreator(SHOWTHREADS,'threads');
 export function submitComment(parentCommentId, body, username, password) {
     return (dispatch) => {
         dispatch({
@@ -243,12 +158,7 @@ export function submitComment(parentCommentId, body, username, password) {
     }
 }
 
-export function submitCommentCompleted() {
-    return {
-        type: SUBMITCOMMENTCOMPLETED
-    }
-
-}
+export const submitCommentCompleted = makeActionCreator(SUBMITCOMMENTCOMPLETED);
 
 export function loadThreads(threads) {
     return (dispatch) => {
@@ -268,9 +178,6 @@ export function loadThreads(threads) {
     }
 }
 
-export function loadThreadsCompleted(threads) {
-    return {
-        type: LOADTHREADSCOMPLETED,
-        threads
-    }
-}
+export const loadThreadsCompleted = makeActionCreator(LOADTHREADSCOMPLETED,'threads');
+export const hideSelectedThread = makeActionCreator(HIDESELECTEDTHREAD);
+export const dumpState = makeActionCreator(DUMPSTATE);

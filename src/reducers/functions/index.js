@@ -5,6 +5,7 @@ import toggleParentComment from './toggleParentComment';
 import selectComment from './selectComment';
 import * as navigation from './commentNavigation';
 import * as posting from './posting';
+import * as debug from './debug'
 
 const handlers = {}
 
@@ -25,6 +26,7 @@ handlers[types.SELECTPREVCOMMENT] = navigation.selectPrevComment;
 handlers[types.SELECTFIRSTPARENT] = navigation.selectFirstParent;
 handlers[types.SELECTLASTPARENT] = navigation.selectLastParent;
 handlers[types.REORDERTHREADS] = navigation.reorderThreads;
+handlers[types.HIDESELECTEDTHREAD] = navigation.hideSelectedThread;
 handlers[types.SHOWTHREADS] = navigation.showThreads;
 
 
@@ -33,5 +35,7 @@ handlers[types.SHOWNEWTHREAD] = posting.showNewThread;
 handlers[types.CANCELNEWTHREAD] = posting.cancelNewThread;
 handlers[types.SUBMITCOMMENT] = posting.submitComment;
 handlers[types.SUBMITCOMMENTCOMPLETED] = posting.submitCommentCompleted;
+
+handlers[types.DUMPSTATE] = debug.dumpState;
 
 export default handlers;

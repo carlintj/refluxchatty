@@ -4,28 +4,17 @@ var HoverMixin = require('..//misc/hovermixin.js');
 
 var styles = {
   commentAge1: {
-    background: '#FFA675'
+    background: '#4FC3F7',
+    fontWeight: 'bold'
   },
   commentAge2: {
-    background: '#FFB186'
+    background: '#81D4FA'
   },
   commentAge3: {
-    background: '#FFBC97'
+    background: '#B3E5FC'
   },
   commentAge4: {
-    background: '#FFC7A8'
-  },
-  commentAge5: {
-    background: '#FFD2BA'
-  },
-  commentAge6: {
-    background: '#FFDDCB'
-  },
-  commentAge7: {
-    background: '#FFE8DC'
-  },
-  commentAge8: {
-    background: '#FFF3ED'
+    background: '#E1F5FE'
   },
   username: {
     color: '#3F82C5'
@@ -77,23 +66,17 @@ var calculateAgeStyle = function(date) {
   var now = Date.now();
   var delta = (now - date) / 60000;
 
-  if (delta < 1) {
+  if (delta < 2) {
     return styles.commentAge1;
   }
-  else if (delta < 2) {
-    return styles.commentAge3;
-  }
   else if (delta < 5) {
-    return styles.commentAge5;
+    return styles.commentAge2;
   }
   else if (delta < 10) {
-    return styles.commentAge6;
+    return styles.commentAge3;
   }
   else if (delta < 20) {
-    return styles.commentAge7;
-  }
-  else if (delta < 30) {
-    return styles.commentAge8;
+    return styles.commentAge4;
   }
   return null;
 };

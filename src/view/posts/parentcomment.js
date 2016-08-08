@@ -20,11 +20,10 @@ var styles = {
     fontSize: 10
   },
   highlightedParent: {
-    background: '#E0F3FF',
-    border: '1px solid #cddaf3',
+    background: '#FFFFFF',
   },
   dummyBorder: {
-    border: '1px solid #FFFFFF',
+    borderBottom: '1px solid #9E9E9D',
   },
   parentInformative: {
     fontWeight: 'bold',
@@ -34,15 +33,18 @@ var styles = {
     fontWeight: 'bold',
     color: '#FF0000'
   },
-  parentContainer: {
-    background: '#FFFFFF',
-    margin: '5px',
-    boxShadow: '0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24)',
+  parentPolitical: {
+    fontWeight: 'bold',
+    color: '#929B5A'
   },
-  parentComment: {
-    padding: '5px',
-    fontFamily: 'Helvetica,Arial,sans-serif',
-    //fontSize: '0.8em',
+  parentNuked: {
+    fontWeight: 'bold',
+    color: '#FF006E'
+  },
+  parentContainer: {
+    borderColor: '#ddd',
+    borderWidth: '1px',
+    borderRadius: '4px 4px 4px 4px'
   },
   searchMatch: {
     background: '#FF00FF'
@@ -114,7 +116,6 @@ var ParentComment = React.createClass({
         props.chattyActions);
     }
 
-
     if (props.focused && (props.id === props.expandedChildId || !props.expanded)) {
       scroller = <AutoscrollingMixin parent={this} />;
     } else {
@@ -134,23 +135,31 @@ var ParentComment = React.createClass({
       categoryStyle = styles.parentNWS;
     } else if (props.category === 'informative') {
       categoryStyle = styles.parentInformative;
+    } else if (props.category === 'political') {
+      categoryStyle = styles.parentPolitical;
+    } else if(props.category === 'nuked') {
+      categoryStyle = styles.parentNuked;
     }
 
+
     return (
-      <div style={styles.parentContainer}>
-        <div style={combine(styles.parentComment, props.searchMatch && styles.searchMatch) }>
+      <div style={combine(styles.dummyBorder, styles.parentContainer)}>
+        <div style={combine(props.searchMatch && styles.searchMatch) }>
           {scroller}
           <div ref="anchor"
-            style={combine(styles.dummyBorder, props.focused && styles.highlightedParent) }
-            onClick={this.onParentClick}
-            >
+            style={combine(props.focused && styles.highlightedParent) }
+            onClick={this.onParentClick}>
             <span style={styles.username}>
               {props.author}
             </span>
             &nbsp; @&nbsp; <span style={styles.date}>{props.dateStr}</span>
             &nbsp; <span style={categoryStyle}>{props.category}</span>
-            <ReplyButton threadId = {props.threadId} commentId = {props.id} chattyActions={props.chattyActions}/>
             <PostBody body={props.body} />
+            <div>
+              <ReplyButton threadId={props.threadId} 
+                commentId={props.id} 
+                chattyActions={props.chattyActions} />
+              </div>
             {replies}
           </div>
           {replyBox}

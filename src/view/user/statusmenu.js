@@ -13,7 +13,6 @@ var styles = {
     height: '100%',
     width: '200px',
     borderLeft: 'solid 2px #6F6F70',
-    fontFamily: 'Helvetica,Arial,sans-serif',
     fontSize: '1em',
   },
   clickable: {

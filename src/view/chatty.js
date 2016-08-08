@@ -2,7 +2,7 @@ var React = require('react');
 var CommentList = require('./posts/commentlist.js');
 var keymaster = require('keymaster');
 
-module.exports = React.createClass({
+let Chatty = React.createClass({
     componentDidMount: function () {
         let {chattyActions} = this.props;
         keymaster('j', function () {
@@ -52,3 +52,5 @@ module.exports = React.createClass({
         return (<CommentList {...this.props} />);
     }
 });
+
+export default Chatty;

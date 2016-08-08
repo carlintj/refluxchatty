@@ -71,6 +71,7 @@ var mergeEvents = function (threads, events, state) {
 
 export function getChatty(state, action) {
   state.threads = _.map(action.chatty.threads, raw => processThread(raw));
+  state.threads[0].focused = true;
   return state;
 }
 

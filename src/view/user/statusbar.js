@@ -30,7 +30,6 @@ var styles = {
     borderBottom: '2px solid #000000',
     padding: 2,
     position: 'fixed',
-    fontFamily: 'Helvetica,Arial,sans-serif',
     fontSize: '0.8em',
     width: '100%',
     height: '16pt',

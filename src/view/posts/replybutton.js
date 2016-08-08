@@ -7,14 +7,16 @@ var styles = {
     cursor: 'pointer',
     color: '#004FFF'
   },
+  
   button: {
-    padding: '5px',
-    borderRadius: '2px',
+    //padding: '5px',
+    //borderRadius: '2px',
     boxShadow: '0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24)',
-    boxSizing: 'border-box',
+    //boxSizing: 'border-box',
     display: 'inline-block',
     float: 'right'
   },
+  
   buttonHover: {
     background: '#D9D9D9',
   },

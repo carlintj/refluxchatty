@@ -7,7 +7,7 @@ var PostBody = require('./postbody.js');
 
 var styles = {
   highlightedComment: {
-    background: '#E0F3FF',
+    background: '#FFFFFF',
     //fontSize: '0.8em',
     whiteSpace: 'normal',
     border: '1px solid #cddaf3',
@@ -34,43 +34,44 @@ var styles = {
 };
 
 
-let ChildCommentExpanded =  React.createClass({
-  render: function() {
+let ChildCommentExpanded = React.createClass({
+  render: function () {
     var props = this.props;
-    
+
     var replyBox = null;
-    if(props.replyingTo == props.id) {
-      replyBox = <ReplyBox parentCommentId={props.id} username={props.username} 
-      password={props.password} chattyActions={props.chattyActions}/>;
-    }
-    
-    var commentStyle = styles.highlightedComment;
-    if(props.category === 'informative') {
-      commentStyle = styleutil(commentStyle,styles.commentExpandedInformative);
-    } else if(props.category === 'nws') {
-      commentStyle = styleutil(commentStyle,styles.commentExpandedNWS);
+    if (props.replyingTo == props.id) {
+      replyBox = <ReplyBox parentCommentId={props.id} username={props.username}
+        password={props.password} chattyActions={props.chattyActions}/>;
     }
 
-    return (<div style={styles.commentContainer}>
-            <div ref="anchor" onClick={this.handleClick} style={commentStyle}>
-              <div style={styles.username}>
-                {props.author} @ <span style={styles.date}>{props.dateStr}</span>
-                <ReplyButton threadId = {props.threadId} commentId = {props.id} 
-                  chattyActions={props.chattyActions}/>
-              </div>
-              <div>
-                <PostBody body={props.body} />
-              </div>
-            </div>
-            {replyBox}
-            <div>
-              {props.children}
-            </div>
-            <AutoscrollingMixin parent={this} />
+    var commentStyle = styles.highlightedComment;
+    if (props.category === 'informative') {
+      commentStyle = styleutil(commentStyle, styles.commentExpandedInformative);
+    } else if (props.category === 'nws') {
+      commentStyle = styleutil(commentStyle, styles.commentExpandedNWS);
+    }
+
+    return (
+      <div style={styles.commentContainer}>
+        <div ref="anchor" onClick={this.handleClick} style={commentStyle}>
+          <div style={styles.username}>
+            {props.author} @<span style={styles.date}>{props.dateStr}</span>
+            <ReplyButton threadId = {props.threadId} commentId = {props.id}
+              chattyActions={props.chattyActions}/>
           </div>
+          <div>
+            <PostBody body={props.body} />
+          </div>
+        </div>
+        {replyBox}
+        <div>
+          {props.children}
+        </div>
+        <AutoscrollingMixin parent={this} />
+      </div>
     );
   },
-  handleClick: function(e) {
+  handleClick: function (e) {
     e.stopPropagation();
   }
 });

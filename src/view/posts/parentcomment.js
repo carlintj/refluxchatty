@@ -44,7 +44,8 @@ var styles = {
   parentContainer: {
     borderColor: '#ddd',
     borderWidth: '1px',
-    borderRadius: '4px 4px 4px 4px'
+    borderRadius: '4px 4px 4px 4px',
+    background: '#F7F7F7'
   },
   searchMatch: {
     background: '#FF00FF'

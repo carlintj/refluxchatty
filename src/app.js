@@ -16,7 +16,7 @@ WebFont.load({
 
 const store = configureStore();
 let style = {
-  background: '#F7F7F7',
+  background: '#DBDBDB',
   fontFamily: 'Open Sans'
 }
 

@@ -22,26 +22,8 @@ var styles = {
 };
 
 var StatusMenu = React.createClass({
-  propTypes: {
-    unseenReplies: React.PropTypes.array.isRequired
-  },
   showLogin: function() {
     this.props.chattyActions.showLoginForm();
-  },
-    onReorderClick: function() {
-    this.props.chattyActions.reorderThreads();
-  },
-  getInitialState: function() {
-    return {showingReplies : false};
-  },
-  onShowReplies: function() {
-    if(this.props.unseenReplies.length == 0) {
-      this.setState({showingReplies: false});
-    } else {
-      this.setState({showingReplies: true});
-    }
-    
-    this.props.chattyActions.showThreads(this.props.unseenReplies);
   },
   onDumpState: function() {
     this.props.chattyActions.dumpState();
@@ -61,14 +43,7 @@ var StatusMenu = React.createClass({
     else if(!this.props.showLogin){
       userinfo = <a href="#" onClick={this.showLogin}>Login</a>;  
     }
-    
-    var replies = null;
-    if(this.state.showingReplies && this.props.unseenReplies.length == 0) {
-      replies = <div><a style={styles.clickable} onClick={this.onShowReplies}>Show all</a></div>;
-    } else if (this.props.unseenReplies.length !== 0) {
-       replies = <div><a style={styles.clickable} onClick={this.onShowReplies}>{this.props.unseenReplies.length} Replies</a></div>;
-    }
-    
+   
     var searchBox = null;
     if(this.props.showSearch) {
       searchBox = <SearchBox />;
@@ -77,7 +52,6 @@ var StatusMenu = React.createClass({
     if(!this.props.isMenuOpened) return null;
     return (<div style={styles.openedMenu}>
       <div>Last Event ID: {this.props.lastEventId}</div> 
-      {replies}
       {loginScreen}
       {userinfo}
       {searchBox}

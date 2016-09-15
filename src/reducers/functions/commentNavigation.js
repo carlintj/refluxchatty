@@ -149,7 +149,7 @@ export function showNewsPosts(state, action) {
     if(posts && !!posts.length) {
         state.unseenNewsPosts = _.difference(state.unseenNewsPosts, posts);
         newsPostsId = _.intersectionWith(newsPostsId, posts,
-            (l,r) => l.threadId == r);
+            (l,r) => l.threadId == r.threadId);
     } else if(state.visibleThreads.length != 0) { //toggle showing news posts
         state.visibleThreads = [];
         return state;

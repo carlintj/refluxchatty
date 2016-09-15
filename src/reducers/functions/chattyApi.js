@@ -21,7 +21,7 @@ let addChildPost = function (newPost, state) {
 
       if (parent.author === state.username) {
         state.unseenReplies.push({ threadId: thread.id, commentId: newPost.id });
-      }
+      } 
     }
     else {
       console.warn('unable to find parent comment in thread', newPost);
@@ -55,6 +55,7 @@ export function mergeEvents(threads, events, state) {
           newThread.searchMatch = false;
           if (newThread.author === 'Shacknews') {
             newThread.body = newThread.body.replace('href="', 'href="http://www.shacknews.com');
+            state.unseenNewsPosts.push({ threadId: newThread.id });
           }
 
           state.threads.push(newThread);

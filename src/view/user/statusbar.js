@@ -90,10 +90,13 @@ let StatusBar = React.createClass({
   onCancelNewThreadClick: function () {
     this.props.chattyActions.cancelNewThread();
   },
+  onShowRepliesClick: function() {
+    this.props.chattyActions.showThreads(this.props.unseenReplies);
+  },
   render: function () {
     var homeLink, status, replyBox = null;
     var props = this.props;
-    if (this.props.showHomeLink) {
+    if (props.showHomeLink) {
       //homeLink = <IndexLink  to="/">Back to Chatty</IndexLink>;
     }
 
@@ -112,15 +115,15 @@ let StatusBar = React.createClass({
           password={props.password} chattyActions={props.chattyActions}/>
       </div>;
     }
-    var notifications = props.unseenReplies.length;
-
-    if (notifications === 0) {
-      notifications = null;
-    }
 
     let newPostsBadge = props.unseenNewsPosts.length > 0 ? props.unseenNewsPosts.length : null; 
     let newsPosts = <span data-badge={newPostsBadge} className="badge1" onClick={this.onShowNewsClick}>
                       <img src="icons/folded-newspaper.svg" style={styles.menubutton} />
+                    </span>;
+    
+    let repliesBadge = props.unseenReplies.length > 0 ? props.unseenReplies.length : null;
+    let replies = <span data-badge={repliesBadge} className="badge1" onClick={this.onShowRepliesClick}>
+                      <img src="icons/envelope.svg" style={styles.menubutton} />
                     </span>;
 
     return (
@@ -128,12 +131,11 @@ let StatusBar = React.createClass({
         <div style={styles.statusbar}>
           {homeLink} {status}
           <div style={styles.menubuttons}>
-            <img src="icons/sort-amount-desc.svg" style={styles.menubutton} onClick={this.onReorderClick} />
             {newsPosts}
+            {replies}
             <img src="icons/pencil.svg" style={styles.menubutton} onClick={this.onNewThreadClick} />
-            <span data-badge={notifications} className="badge1" onClick={this.onMenuClick} >
-              <img src="icons/menu.svg" style={styles.menubutton} />
-            </span>
+            <img src="icons/sort-amount-desc.svg" style={styles.menubutton} onClick={this.onReorderClick} />
+            <img src="icons/menu.svg" style={styles.menubutton} onClick={this.onMenuClick} />
           </div>
         </div>
         {replyBox}

@@ -17,5 +17,7 @@ export const initialState = {
     unreadPMs: 0,
     unseenReplies: [],
     isMenuOpened: false,
-    threadsToLoad: []
+    threadsToLoad: [],
+    newsPosts: [],
+    unseenNewsPosts: [],
 };

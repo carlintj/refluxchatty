@@ -24,6 +24,7 @@ var styles = {
   },
   dummyBorder: {
     borderBottom: '1px solid #9E9E9D',
+    paddingBottom: '2px',
   },
   parentInformative: {
     fontWeight: 'bold',
@@ -45,7 +46,8 @@ var styles = {
     borderColor: '#ddd',
     borderWidth: '1px',
     borderRadius: '4px 4px 4px 4px',
-    background: '#F7F7F7'
+    background: '#F7F7F7',
+    marginBottom: '3px'
   },
   searchMatch: {
     background: '#FF00FF'

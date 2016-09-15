@@ -125,7 +125,8 @@ export function reorderThreads(state) {
 export function showThreads(state, action) {
     let {threads} = action;
     state.visibleThreads = threads;
-    state.unseenReplies = _.differenceWith(state.unseenReplies,threads, (l, r) => l.threadId == r.threadId);
+    state.unseenReplies = _.differenceWith(state.unseenReplies,threads, 
+        (l, r) => l.threadId == r.threadId);
     return state;
 }
 
@@ -138,5 +139,21 @@ export function hideSelectedThread(state /*, action */) {
         selectedThread.hidden = true;
     }
 
+    return state;
+}
+
+export function showNewsPosts(state, action) {
+    let {posts} = action;
+    let newsPosts = _.filter(state.threads, p => p.author == 'Shacknews');
+    let newsPostsId = _.map(newsPosts, t => ({threadId: t.id}));
+    if(posts && !!posts.length) {
+        state.unseenNewsPosts = _.difference(state.unseenNewsPosts, posts);
+        newsPostsId = _.intersectionWith(newsPostsId, posts,
+            (l,r) => l.threadId == r);
+    } else if(state.visibleThreads.length != 0) { //toggle showing news posts
+        state.visibleThreads = [];
+        return state;
+    }
+    state.visibleThreads = newsPostsId;
     return state;
 }

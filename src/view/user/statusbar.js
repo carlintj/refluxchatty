@@ -54,7 +54,7 @@ var styles = {
   }
 };
 
-module.exports = React.createClass({
+let StatusBar = React.createClass({
   displayName: 'StatusBar',
   propTypes: {
     username: React.PropTypes.string.isRequired,
@@ -63,6 +63,7 @@ module.exports = React.createClass({
     unseenReplies: React.PropTypes.array.isRequired,
     //showHomeLink: React.PropTypes.bool.isRequired,
     showNewThreadBox: React.PropTypes.bool.isRequired,
+    unseenNewsPosts: React.PropTypes.array.isRequired
   },
   fullRefresh: function () {
     this.props.chattyActions.fullRefresh();
@@ -79,6 +80,9 @@ module.exports = React.createClass({
   },
   onMenuClick: function () {
     this.props.chattyActions.toggleMenu();
+  },
+  onShowNewsClick: function() {
+    this.props.chattyActions.showNewsPosts(this.props.unseenNewsPosts);
   },
   onNewThreadClick: function () {
     this.props.chattyActions.showNewThread();
@@ -114,29 +118,21 @@ module.exports = React.createClass({
       notifications = null;
     }
 
+    let newPostsBadge = props.unseenNewsPosts.length > 0 ? props.unseenNewsPosts.length : null; 
+    let newsPosts = <span data-badge={newPostsBadge} className="badge1" onClick={this.onShowNewsClick}>
+                      <img src="icons/folded-newspaper.svg" style={styles.menubutton} />
+                    </span>;
+
     return (
       <div style={styles.parent}>
         <div style={styles.statusbar}>
           {homeLink} {status}
           <div style={styles.menubuttons}>
-            <img
-              src="icons/sort-amount-desc.svg"
-              style={styles.menubutton}
-              onClick={this.onReorderClick}
-              />
-            <img
-              src="icons/pencil.svg"
-              style={styles.menubutton}
-              onClick={this.onNewThreadClick}
-              />
-            <span data-badge={notifications} className="badge1"
-              onClick={this.onMenuClick}
-              >
-              <img
-                src="icons/menu.svg"
-                style={styles.menubutton}
-
-                />
+            <img src="icons/sort-amount-desc.svg" style={styles.menubutton} onClick={this.onReorderClick} />
+            {newsPosts}
+            <img src="icons/pencil.svg" style={styles.menubutton} onClick={this.onNewThreadClick} />
+            <span data-badge={notifications} className="badge1" onClick={this.onMenuClick} >
+              <img src="icons/menu.svg" style={styles.menubutton} />
             </span>
           </div>
         </div>
@@ -144,3 +140,5 @@ module.exports = React.createClass({
       </div>);
   },
 });
+
+export default StatusBar;

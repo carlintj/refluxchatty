@@ -52,7 +52,6 @@ let newPostEvent = {
     ]
 }
 
-
 let categoryChangeEvent = {
     'lastEventId': 4769483,
     'events': [
@@ -82,7 +81,8 @@ describe('merge category change event', () => {
     });
     it('should merge new posts', () => {
         let newState = _.cloneDeep(state);
-        newState = mergeEvents(newState.threads, newPostEvent, newState);
+        let newnewState = mergeEvents(newState.threads, newPostEvent, newState);
+        expect(newnewState).toBe(undefined);
 
     });
 });

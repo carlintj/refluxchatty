@@ -48,7 +48,6 @@ let Chatty = React.createClass({
         //keymaster.unbind('f');
     },
     render: function () {
-        
         return (<CommentList {...this.props} />);
     }
 });

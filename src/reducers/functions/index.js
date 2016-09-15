@@ -28,6 +28,7 @@ handlers[types.SELECTLASTPARENT] = navigation.selectLastParent;
 handlers[types.REORDERTHREADS] = navigation.reorderThreads;
 handlers[types.HIDESELECTEDTHREAD] = navigation.hideSelectedThread;
 handlers[types.SHOWTHREADS] = navigation.showThreads;
+handlers[types.SHOWNEWSPOSTS] = navigation.showNewsPosts;
 
 
 handlers[types.OPENREPLY] = posting.openReply;

@@ -34,6 +34,8 @@ export const SHOWNEWTHREAD = 'SHOWNEWTHREAD';
 export const CANCELNEWTHREAD = 'CANCELNEWTHREAD';
 export const DUMPSTATE = 'DUMPSTATE';
 
+export const SHOWNEWSPOSTS = 'SHOWNEWSPOSTS';
+
 export const LOADTHREADS = 'LOADTHREADS';
 export const LOADTHREADSCOMPLETED = 'LOADTHREADSCOMPLETED';
 
@@ -181,3 +183,5 @@ export function loadThreads(threads) {
 export const loadThreadsCompleted = makeActionCreator(LOADTHREADSCOMPLETED,'threads');
 export const hideSelectedThread = makeActionCreator(HIDESELECTEDTHREAD);
 export const dumpState = makeActionCreator(DUMPSTATE);
+
+export const showNewsPosts = makeActionCreator(SHOWNEWSPOSTS, 'posts');

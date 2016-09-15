@@ -39,12 +39,7 @@ export function mergeEvents(threads, events, state) {
         let {postId, category} = event.eventData;
         let post = findPost(threads, postId);
         if (post) {
-          let oldCat = post.category;
           post.category = category;
-          console.log('updated post to', post.category, 'from', oldCat);
-        }
-        else {
-          console.warn('can\'t find post for category change:', postId);
         }
       }
       else if (event.eventType == 'newPost') {

@@ -109,6 +109,9 @@ export function waitForEvent(eventId) {
                 } else if (data.error) {
                     dispatch(waitForEventError(data));
                 }
+            })
+            .catch(() => {
+                dispatch(waitForEventError({}));
             });
     }
 }

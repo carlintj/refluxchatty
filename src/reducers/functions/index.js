@@ -12,6 +12,7 @@ const handlers = {}
 handlers[types.GETCHATTYCOMPLETED] = chattyApi.getChatty;
 handlers[types.GETNEWESTEVENTIDCOMPLETED] = chattyApi.getNewestEventId;
 handlers[types.WAITFOREVENTCOMPLETED] = chattyApi.waitForEvent;
+handlers[types.WAITFOREVENTERROR] = chattyApi.waitForEventError;
 handlers[types.LOADTHREADS] = chattyApi.loadThreads;
 handlers[types.LOADTHREADSCOMPLETED] = chattyApi.loadThreadsCompleted;
 

@@ -95,6 +95,12 @@ export function waitForEvent(state, action) {
   return state;
 }
 
+export function waitForEventError(state /*, action */) {
+  state.connected = false;
+
+  return state;
+}
+
 export function loadThreads(state, action) {
   state.threadsToLoad = _.difference(state.threadsToLoad, action.threads);
 

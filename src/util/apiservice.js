@@ -43,6 +43,7 @@ var getPost = function(post) {
     body: post.body,
     date: new Date(post.date),
     replyCount: 0,
+    seenReplyCount: 0,
     children: [],
     parentId: post.parentId,
     category: post.category
@@ -78,6 +79,7 @@ var processThread = function(thread) {
     latestReply = post.date;
   }
   post.replyCount = replyCount;
+  post.seenReplyCount = replyCount;
   post.latestReply = new Date(latestReply);
   post.latestReplyStr = getTimeString(post.latestReply);
   post.hidden = false;

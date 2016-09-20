@@ -107,6 +107,7 @@ var ParentComment = React.createClass({
 
     replies = <ParentReplyLink expanded={props.expanded || false}
       replyCount={props.replyCount}
+      seenReplyCount={props.seenReplyCount}
       latestReply={props.latestReply}
       highlightReplies={this.state.highlightReplies}
       onRepliesClick={this.onRepliesClick}

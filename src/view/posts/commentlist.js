@@ -20,6 +20,7 @@ let CommentList = React.createClass({
         body={comment.body}
         children = {comment.children}
         replyCount = {comment.replyCount}
+        seenReplyCount = {comment.seenReplyCount}
         date = {comment.date}
         dateStr = {comment.dateStr}
         expanded = {comment.expanded}

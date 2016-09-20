@@ -16,11 +16,7 @@ let ParentReplyLink = React.createClass({
   propTypes: {
     expanded: React.PropTypes.bool.isRequired,
     replyCount: React.PropTypes.number.isRequired,
-  },
-  getInitialState: function () {
-    return ({
-      seenReplies: 0
-    });
+    seenReplyCount: React.PropTypes.number.isRequired,
   },
   componentDidUpdate: function () {
     let repliesDiv = this.refs.replies;
@@ -33,19 +29,14 @@ let ParentReplyLink = React.createClass({
       }
     }
   },
-  componentWillMount: function () {
-    this.setState({ seenReplies: this.props.replyCount });
-  },
   onRepliesClick: function () {
-    this.setState({ seenReplies: this.props.replyCount });
     this.props.onRepliesClick();
   },
   onCollapseClick: function () {
-    this.setState({ seenReplies: this.props.replyCount });
     this.props.onCollapseClick();
   },
   render: function () {
-    let {replyCount, expanded, highlightReplies, latestReply} = this.props;
+    let {replyCount, expanded, highlightReplies, latestReply, seenReplyCount} = this.props;
     if (replyCount > 0) {
       if (expanded) {
         return (<div><a style={styles.clickable}
@@ -57,8 +48,8 @@ let ParentReplyLink = React.createClass({
         }
         let replyStr = replyCount > 1 ? 'replies' : 'reply';
         let replies = replyCount;
-        if (replyCount - this.state.seenReplies != 0 && this.state.seenReplies > 0) {
-          let newCount = replyCount - this.state.seenReplies;
+        if (replyCount - seenReplyCount != 0 && seenReplyCount > 0) {
+          let newCount = replyCount - seenReplyCount;
           replies += ' (' + newCount + ' new)';
         }
         return (<div ref="replies" className={highlightClass}><a style={styles.clickable}

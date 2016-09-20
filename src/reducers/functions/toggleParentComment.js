@@ -11,6 +11,7 @@ export default function (state, action) {
         id: parentId
     });
     thread.expanded = !thread.expanded;
+    thread.seenReplyCount = thread.replyCount;
 
     return state;
 }

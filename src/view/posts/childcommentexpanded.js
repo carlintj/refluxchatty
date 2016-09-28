@@ -19,6 +19,9 @@ var styles = {
   commentExpandedNWS: {
     border: '2px solid #FF0000',
   },
+  commentExpandedNuked: {
+    border: '2px solid #A411FF',
+  },
   commentContainer: {
     marginLeft: 12,
     borderLeft: '1px solid #cdced0',
@@ -49,6 +52,8 @@ let ChildCommentExpanded = React.createClass({
       commentStyle = styleutil(commentStyle, styles.commentExpandedInformative);
     } else if (props.category === 'nws') {
       commentStyle = styleutil(commentStyle, styles.commentExpandedNWS);
+    } else if (props.category === 'nuked') {
+      commentStyle = styleutil(commentStyle, styles.commentExpandedNuked);
     }
 
     return (

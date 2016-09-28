@@ -40,6 +40,9 @@ var styles = {
   commentNWS: {
     borderLeft: '2px solid #FF0000',
   },
+  commentNuked: {
+    borderLeft: '2px solid #A411FF',
+  },
   hoveredComment: {
     background: '#E0F3FF',
     cursor: 'pointer',
@@ -104,6 +107,8 @@ let ChildCommentCollapsed = React.createClass({
       commentStyle = styleutil(commentStyle,styles.commentInformative);
     } else if(props.category === 'nws') {
       commentStyle = styleutil(commentStyle,styles.commentNWS);
+    } else if(props.category === 'nuked') {
+      commentStyle = styleMedia(commentStyle,styles.commentNuked);
     }
 
     return (<div style={styles.commentContainer}>

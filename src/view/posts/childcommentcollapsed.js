@@ -108,7 +108,7 @@ let ChildCommentCollapsed = React.createClass({
     } else if(props.category === 'nws') {
       commentStyle = styleutil(commentStyle,styles.commentNWS);
     } else if(props.category === 'nuked') {
-      commentStyle = styleMedia(commentStyle,styles.commentNuked);
+      commentStyle = styleutil(commentStyle,styles.commentNuked);
     }
 
     return (<div style={styles.commentContainer}>

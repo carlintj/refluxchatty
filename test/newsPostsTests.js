@@ -4,6 +4,7 @@
 import expect from 'expect';
 import state from './testState';
 import {showNewsPosts} from '../src/reducers/functions/commentNavigation';
+import _ from 'lodash';
 
 describe('show news posts', () => {
     it('should find all news post', () => {
@@ -17,8 +18,9 @@ describe('show news posts', () => {
     });
 
     it('should find one unseen post', () => {
-        state.unseenNewsPosts = [35274655,35272654]
-        let newState = showNewsPosts(state,{posts: [35272654]});
+        let testState = _.cloneDeep(state);
+        testState.unseenNewsPosts = [35274655,35272654]
+        let newState = showNewsPosts(testState,{posts: [35272654]});
         
         expect(newState.visibleThreads.length).toEqual(1);
         expect(newState.visibleThreads[0].threadId).toEqual(35272654);
@@ -28,9 +30,10 @@ describe('show news posts', () => {
     });
 
     it('should toggle visible news posts', () => {
-        state.unseenNewsPosts = []
-        state.visibleThreads = [35274655,35272654]
-        let newState = showNewsPosts(state,{});
+        let testState = _.cloneDeep(state);
+        testState.unseenNewsPosts = []
+        testState.visibleThreads = [35274655,35272654]
+        let newState = showNewsPosts(testState,{});
 
         expect(newState.visibleThreads.length).toEqual(0);
     });

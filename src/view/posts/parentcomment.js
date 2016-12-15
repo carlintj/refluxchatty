@@ -7,6 +7,10 @@ var ReplyButton = require('./replybutton.js');
 var _ = require('lodash');
 var PostBody = require('./postbody.js');
 var ParentReplyLink = require('./parentreplylink.js');
+import ReactDOM from 'react-dom';
+import {isElementInViewport,isElementOutViewport} from '../../util/elementscrolling';
+import ParentCommentBar from './parentcommentbar';
+
 
 var styles = {
   clickable: {
@@ -65,9 +69,12 @@ var ParentComment = React.createClass({
     searchMatch: React.PropTypes.bool.isRequired
   },
   getInitialState: function () {
-    return ({ 'highlightReplies': false });
+    return ({
+      'highlightReplies': false,
+      'showParentBar': false
+    });
   },
-  shouldComponentUpdate: function (nextProps) {
+  shouldComponentUpdate: function (nextProps, nextState) {
     if (this.props.replyingTo != nextProps.replyingTo) return true;
     if (this.props.hidden != nextProps.hidden) return true;
     if (this.props.replyCount != nextProps.replyCount) return true;
@@ -76,6 +83,7 @@ var ParentComment = React.createClass({
     if (this.props.expanded != nextProps.expanded) return true;
     if (this.props.visibleThreads.length != nextProps.visibleThreads.length) return true;
     if (this.props.searchMatch != nextProps.searchMatch) return true;
+    if (this.state.showParentBar != nextState.showParentBar) return true;
     return false;
   },
   componentWillReceiveProps: function (nextProps) {
@@ -83,6 +91,14 @@ var ParentComment = React.createClass({
       this.setState({ 'highlightReplies': true });
     } else {
       this.setState({ 'highlightReplies': false });
+    }
+
+    //register scroll listening when focused
+    if(nextProps.focused && !this.props.focused) {
+      window.addEventListener('scroll', this.onScroll);
+    } else if(!nextProps.focused && this.props.focused) {
+      window.removeEventListener('scroll', this.onScroll);
+      this.setState({'showParentBar': false});
     }
   },
   onRepliesClick: function () {
@@ -94,6 +110,18 @@ var ParentComment = React.createClass({
   onParentClick: function () {
     if (this.expandedChildId !== 0) {
       this.props.chattyActions.highlightParent(this.props.id);
+    }
+  },
+  onScroll: function() {
+    let topElement = ReactDOM.findDOMNode(this.refs.top);
+    let bodyElement = ReactDOM.findDOMNode(this.refs.parentbody);
+    //show bar only if bottom is visible but top is not
+    if(topElement && bodyElement) {
+      let topVisible = isElementInViewport(topElement);
+      let bodyVisible = !isElementOutViewport(bodyElement, {bottom: 30});
+      let showParentBar = !topVisible && bodyVisible;
+
+      this.setState({'showParentBar' : showParentBar})
     }
   },
   render: function () {
@@ -145,12 +173,18 @@ var ParentComment = React.createClass({
       categoryStyle = styles.parentNuked;
     }
 
+    let parentBar = null;
+    
+    if(this.state.showParentBar) {
+      parentBar = <ParentCommentBar {...this.props} />;
+    }
 
     return (
       <div style={combine(styles.dummyBorder, styles.parentContainer)}>
-        <div style={combine(props.searchMatch && styles.searchMatch) }>
+        <div ref="top" />
+        <div style={combine(props.searchMatch && styles.searchMatch) } ref="parentbody">
           {scroller}
-          <div ref="anchor"
+          <div 
             style={combine(props.focused && styles.highlightedParent) }
             onClick={this.onParentClick}>
             <span style={styles.username}>
@@ -159,7 +193,7 @@ var ParentComment = React.createClass({
             &nbsp; @&nbsp; <span style={styles.date}>{props.dateStr}</span>
             &nbsp; <span style={categoryStyle}>{props.category}</span>
             <PostBody body={props.body} />
-            <div>
+            <div ref="anchor" >
               <ReplyButton threadId={props.threadId} 
                 commentId={props.id} 
                 chattyActions={props.chattyActions} />
@@ -168,6 +202,7 @@ var ParentComment = React.createClass({
           </div>
           {replyBox}
           {replyPosts}
+          {parentBar}
         </div>
       </div>
     );

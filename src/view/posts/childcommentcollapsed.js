@@ -1,6 +1,7 @@
 var React = require('react');
 var styleutil = require('../../util/styleutil.js');
 var HoverMixin = require('..//misc/hovermixin.js');
+import {fixComment, getVisibleLength} from '../../util/commenttruncation';
 
 var styles = {
   commentAge1: {
@@ -53,17 +54,7 @@ var styles = {
   }
 };
 
-var fixComment = function(comment) {
-  var div = document.createElement('div');
-  div.innerHTML = comment;
-  return div.innerHTML;
-};
 
-var getVisibleLength = function(comment) {
-  var div = document.createElement('div');
-  div.innerHTML = comment;
-  return div.textContent.length;
-};
 
 var calculateAgeStyle = function(date) {
   var now = Date.now();

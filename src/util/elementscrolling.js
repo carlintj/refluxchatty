@@ -9,6 +9,13 @@ var isElementInViewport = function(el) {
   );
 }
 
+let isElementOutViewport = function (el, buffer = {top: 0, bottom: 0}) {
+    let {top, bottom} = buffer;  
+    var rect = el.getBoundingClientRect();
+    return rect.bottom - bottom < 0 || rect.right < 0 || rect.left > window.innerWidth || rect.top - top > window.innerHeight;
+}
+
+
 var scrollIntoView = function(el) {
   var scrollTop = false;
   //if element.top is closer to 0 than the bottom of the screen scroll to top
@@ -26,5 +33,6 @@ var scrollIntoView = function(el) {
 
 module.exports = {
   isElementInViewport: isElementInViewport,
-  scrollIntoView: scrollIntoView
+  scrollIntoView: scrollIntoView,
+  isElementOutViewport
 };

@@ -25,6 +25,7 @@ var styles = {
   },
   highlightedParent: {
     background: '#FFFFFF',
+    color: '#000000'
   },
   dummyBorder: {
     borderBottom: '1px solid #9E9E9D',
@@ -50,8 +51,9 @@ var styles = {
     borderColor: '#ddd',
     borderWidth: '1px',
     borderRadius: '4px 4px 4px 4px',
-    background: '#F7F7F7',
-    marginBottom: '3px'
+    background: '#F2F2F2',
+    marginBottom: '3px',
+    color: 'rgba(0, 0, 0, 0.5)'
   },
   searchMatch: {
     background: '#FF00FF'

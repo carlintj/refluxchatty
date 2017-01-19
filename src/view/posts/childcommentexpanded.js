@@ -12,6 +12,7 @@ var styles = {
     whiteSpace: 'normal',
     border: '1px solid #cddaf3',
     padding: '2px',
+    color: '#000000'
   },
   commentExpandedInformative: {
     border: '2px solid #0003FD',

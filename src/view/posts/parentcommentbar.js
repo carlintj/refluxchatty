@@ -1,5 +1,5 @@
 import React from 'react';
-import ReplyBox from './replybox';
+//import ReplyBox from './replybox';
 import ReplyButton from './replybutton';
 import { fixComment, getVisibleLength } from '../../util/commenttruncation';
 
@@ -14,7 +14,7 @@ let styles = {
         width: 'calc(100% - 42px)',
         overflow: 'hidden',
         height: '16pt',
-        top: '80px',
+        top: '30px',
         zIndex: '100'
     },
     username: {
@@ -27,7 +27,7 @@ export default class ParentCommentBar extends React.Component {
         super(props);
     }
     render() {
-        let {author, body, latestReply, category} = this.props;
+        let {author, body} = this.props;
         let shortBody = body.replace(/<br \/>/g, ' ');
         if (getVisibleLength(shortBody) > 180) {
             shortBody = shortBody.substring(0, 180);

@@ -178,7 +178,7 @@ var ParentComment = React.createClass({
     let parentBar = null;
     
     if(this.state.showParentBar) {
-      parentBar = <ParentCommentBar {...this.props} />;
+      parentBar = <ParentCommentBar {...this.props} chattyActions={props.chattyActions} />;
     }
 
     return (
@@ -192,8 +192,8 @@ var ParentComment = React.createClass({
             <span style={styles.username}>
               {props.author}
             </span>
-            &nbsp; @&nbsp; <span style={styles.date}>{props.dateStr}</span>
-            &nbsp; <span style={categoryStyle}>{props.category}</span>
+             @ <span style={styles.date}>{props.dateStr}</span>
+             <span style={categoryStyle}>{props.category}</span>
             <PostBody body={props.body} />
             <div ref="anchor" >
               <ReplyButton threadId={props.threadId} 

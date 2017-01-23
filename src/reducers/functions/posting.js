@@ -32,7 +32,7 @@ export function openReply(state, action) {
 
 export function submitComment(state /*, action */) {
     state.replyingTo = 0;
-    
+    state.showNewThreadBox = false;
     return state;
 }
 

@@ -27,7 +27,7 @@ export default class ParentCommentBar extends React.Component {
         super(props);
     }
     render() {
-        let {author, body} = this.props;
+        let {author, body, chattyActions} = this.props;
         let shortBody = body.replace(/<br \/>/g, ' ');
         if (getVisibleLength(shortBody) > 180) {
             shortBody = shortBody.substring(0, 180);
@@ -37,7 +37,7 @@ export default class ParentCommentBar extends React.Component {
             <div style={styles.parentbar}>
                 <span style={styles.username}>{author}</span>
                 <span dangerouslySetInnerHTML={{__html: shortBody}} ></span>
-                <ReplyButton />
+                <ReplyButton chattyActions={chattyActions}/>
             </div>
         );
     }

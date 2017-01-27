@@ -1,12 +1,12 @@
-var React = require('react');
-var combine = require('../../util/styleutil.js');
-var renderChildComments = require('./childcomment.js').renderChildComments;
-var AutoscrollingMixin = require('../misc/autoscrollingmixin.js');
-var ReplyBox = require('./replybox.js');
-var ReplyButton = require('./replybutton.js');
-var _ = require('lodash');
-var PostBody = require('./postbody.js');
-var ParentReplyLink = require('./parentreplylink.js');
+import React from 'react';
+import combine from '../../util/styleutil.js';
+import { renderChildComments } from './childcomment.js';
+import AutoscrollingMixin from '../misc/autoscrollingmixin.js';
+import ReplyBox from './replybox.js';
+import ReplyButton from './replybutton.js';
+import _ from 'lodash';
+import PostBody from './postbody.js';
+import ParentReplyLink from './parentreplylink.js';
 import ReactDOM from 'react-dom';
 import {isElementInViewport,isElementOutViewport} from '../../util/elementscrolling';
 import ParentCommentBar from './parentcommentbar';
@@ -60,8 +60,8 @@ var styles = {
   },
 };
 
-var ParentComment = React.createClass({
-  propTypes: {
+class ParentComment extends React.Component {
+  static propTypes = {
     id: React.PropTypes.number.isRequired,
     replyingTo: React.PropTypes.number.isRequired,
     username: React.PropTypes.string.isRequired,
@@ -69,14 +69,14 @@ var ParentComment = React.createClass({
     latestReply: React.PropTypes.string.isRequired,
     category: React.PropTypes.string.isRequired,
     searchMatch: React.PropTypes.bool.isRequired
-  },
-  getInitialState: function () {
-    return ({
-      'highlightReplies': false,
-      'showParentBar': false
-    });
-  },
-  shouldComponentUpdate: function (nextProps, nextState) {
+  };
+
+  state = {
+    'highlightReplies': false,
+    'showParentBar': false
+  };
+
+  shouldComponentUpdate(nextProps, nextState) {
     if (this.props.replyingTo != nextProps.replyingTo) return true;
     if (this.props.hidden != nextProps.hidden) return true;
     if (this.props.replyCount != nextProps.replyCount) return true;
@@ -87,8 +87,9 @@ var ParentComment = React.createClass({
     if (this.props.searchMatch != nextProps.searchMatch) return true;
     if (this.state.showParentBar != nextState.showParentBar) return true;
     return false;
-  },
-  componentWillReceiveProps: function (nextProps) {
+  }
+
+  componentWillReceiveProps(nextProps) {
     if (nextProps.replyCount != this.props.replyCount) {
       this.setState({ 'highlightReplies': true });
     } else {
@@ -102,19 +103,23 @@ var ParentComment = React.createClass({
       window.removeEventListener('scroll', this.onScroll);
       this.setState({'showParentBar': false});
     }
-  },
-  onRepliesClick: function () {
+  }
+
+  onRepliesClick = () => {
     this.props.chattyActions.toggleParentComment(this.props.id);
-  },
-  onCollapseClick: function () {
+  };
+
+  onCollapseClick = () => {
     this.props.chattyActions.toggleParentComment(this.props.id);
-  },
-  onParentClick: function () {
+  };
+
+  onParentClick = () => {
     if (this.expandedChildId !== 0) {
       this.props.chattyActions.highlightParent(this.props.id);
     }
-  },
-  onScroll: function() {
+  };
+
+  onScroll = () => {
     let topElement = ReactDOM.findDOMNode(this.refs.top);
     let bodyElement = ReactDOM.findDOMNode(this.refs.parentbody);
     //show bar only if bottom is visible but top is not
@@ -125,8 +130,9 @@ var ParentComment = React.createClass({
 
       this.setState({'showParentBar' : showParentBar})
     }
-  },
-  render: function () {
+  };
+
+  render() {
     if (this.props.hidden) return null;
     var props = this.props;
     if (props.visibleThreads.length > 0 && !_.find(props.visibleThreads, { threadId: props.id })) {
@@ -208,7 +214,7 @@ var ParentComment = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
 
 module.exports = ParentComment;

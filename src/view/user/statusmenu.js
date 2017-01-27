@@ -1,6 +1,6 @@
-var React = require('react');
-var LoginScreen = require('./login.js');
-var SearchBox = require('../posts/searchbox.js');
+import React from 'react';
+import LoginScreen from './login.js';
+import SearchBox from '../posts/searchbox.js';
 
 var styles = {
   openedMenu: {
@@ -21,14 +21,16 @@ var styles = {
   },
 };
 
-var StatusMenu = React.createClass({
-  showLogin: function() {
-    this.props.chattyActions.showLoginForm();
-  },
-  onDumpState: function() {
+class StatusMenu extends React.Component {
+  onDumpState = () => {
     this.props.chattyActions.dumpState();
-  },
-  render: function() {
+  };
+
+  showLogin = () => {
+    this.props.chattyActions.showLoginForm();
+  };
+
+  render() {
     var loginScreen = null;
     if(this.props.showLogin) {
       loginScreen = <LoginScreen loginMessage={this.props.loginMessage}
@@ -58,6 +60,6 @@ var StatusMenu = React.createClass({
       <div><a style={styles.clickable} onClick={this.onDumpState}>Dump State</a></div>
     </div>);
     }
-});
+}
 
 module.exports = StatusMenu;

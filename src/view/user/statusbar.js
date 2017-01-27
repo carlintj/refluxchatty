@@ -1,9 +1,6 @@
-var React = require('react');
-//var UserActions = require('../../store/useractions.js');
-var combine = require('../../util/styleutil.js');
-//var Router = require('react-router');
-//var { IndexLink } = Router;
-var ReplyBox = require('../posts/replybox.js');
+import React from 'react';
+import combine from '../../util/styleutil.js';
+import ReplyBox from '../posts/replybox.js';
 
 var styles = {
   parent: {
@@ -54,9 +51,10 @@ var styles = {
   }
 };
 
-let StatusBar = React.createClass({
-  displayName: 'StatusBar',
-  propTypes: {
+class StatusBar extends React.Component {
+  static displayName = 'StatusBar';
+
+  static propTypes = {
     username: React.PropTypes.string.isRequired,
     password: React.PropTypes.string.isRequired,
     connected: React.PropTypes.bool.isRequired,
@@ -64,36 +62,46 @@ let StatusBar = React.createClass({
     //showHomeLink: React.PropTypes.bool.isRequired,
     showNewThreadBox: React.PropTypes.bool.isRequired,
     unseenNewsPosts: React.PropTypes.array.isRequired
-  },
-  fullRefresh: function () {
-    this.props.chattyActions.fullRefresh();
-  },
-  onReorderClick: function () {
-    this.props.chattyActions.reorderThreads();
-  },
-  checkPMs: function () {
-    //UserActions.requestMessageCount();
-  },
-  componentDidMount: function () {
+  };
+
+  componentDidMount() {
     this.checkPMs();
     this.messageTimer = setInterval(this.checkPMs, 5 * 60 * 1000);
-  },
-  onMenuClick: function () {
-    this.props.chattyActions.toggleMenu();
-  },
-  onShowNewsClick: function() {
-    this.props.chattyActions.showNewsPosts(this.props.unseenNewsPosts);
-  },
-  onNewThreadClick: function () {
-    this.props.chattyActions.showNewThread();
-  },
-  onCancelNewThreadClick: function () {
+  }
+
+  onCancelNewThreadClick = () => {
     this.props.chattyActions.cancelNewThread();
-  },
-  onShowRepliesClick: function() {
+  };
+
+  onMenuClick = () => {
+    this.props.chattyActions.toggleMenu();
+  };
+
+  onNewThreadClick = () => {
+    this.props.chattyActions.showNewThread();
+  };
+
+  onReorderClick = () => {
+    this.props.chattyActions.reorderThreads();
+  };
+
+  onShowNewsClick = () => {
+    this.props.chattyActions.showNewsPosts(this.props.unseenNewsPosts);
+  };
+
+  onShowRepliesClick = () => {
     this.props.chattyActions.showThreads(this.props.unseenReplies);
-  },
-  render: function () {
+  };
+
+  checkPMs = () => {
+    //UserActions.requestMessageCount();
+  };
+
+  fullRefresh = () => {
+    this.props.chattyActions.fullRefresh();
+  };
+
+  render() {
     var homeLink, status, replyBox = null;
     var props = this.props;
     if (props.showHomeLink) {
@@ -140,7 +148,7 @@ let StatusBar = React.createClass({
         </div>
         {replyBox}
       </div>);
-  },
-});
+  }
+}
 
 export default StatusBar;

@@ -1,4 +1,4 @@
-var ReactDOM = require('react-dom');
+import ReactDOM from 'react-dom';
 
 module.exports = {
   componentWillMount: function() {

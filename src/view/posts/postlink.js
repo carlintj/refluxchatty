@@ -27,34 +27,36 @@ var imageEmbeds = {
 };
 
 
-var ChattyLink = React.createClass({
-  propTypes: {
+class ChattyLink extends React.Component {
+  static propTypes = {
     url: React.PropTypes.string.isRequired
-  },
-  render: function () {
+  };
+
+  render() {
     var m = chattyRegex.exec(this.props.url);
     var threadId = m[1];
     var postId = m[3];
     return <Link to="SinglePost" query={{threadId: threadId, postId: postId}}>{this.props.url}</Link>;
   }
-});
+}
 
-var ImageLink = React.createClass({
-  propTypes: {
+class ImageLink extends React.Component {
+  static propTypes = {
     url: React.PropTypes.string.isRequired
-  },
-  getInitialState: function() {
-    return {isExpanded: false};
-  },
-  onImageClick: function(e) {
+  };
+
+  state = {isExpanded: false};
+
+  onImageClick = (e) => {
     //handle if ctrlKey is not pressed and not using middle mouse button
     //so the browser can do the default event otherwise
     if(!e.ctrlKey && e.button !== 1) {
       e.preventDefault();
       this.setState({isExpanded: !this.state.isExpanded});
     }
-  },
-  render: function() {
+  };
+
+  render() {
     if(!this.state.isExpanded) {
       return <a href={this.props.url} onClick={this.onImageClick}>{this.props.url}</a>;
     }
@@ -64,23 +66,24 @@ var ImageLink = React.createClass({
     }
     return <a href={this.props.url} onClick={this.onImageClick}>{this.props.url}</a>;
   }
-});
+}
 
-module.exports = React.createClass({
-    propTypes: {
-      url: React.PropTypes.string.isRequired,
-      text: React.PropTypes.string.isRequired,
-    },
-    render: function() {
-      var m = chattyRegex.exec(this.props.url);
-      var noLink = false; //routing is busted atm
-      if(m && noLink) {
-        return  <ChattyLink url={this.props.url} />;
-      }
-      m = imageHostRegex.exec(this.props.url);
-      if(m) {
-        return <ImageLink url={this.props.url} />;
-      }
-      return <a href={this.props.url} target="_blank">{this.props.text}</a>;
+module.exports = class extends React.Component {
+  static propTypes = {
+    url: React.PropTypes.string.isRequired,
+    text: React.PropTypes.string.isRequired,
+  };
+
+  render() {
+    var m = chattyRegex.exec(this.props.url);
+    var noLink = false; //routing is busted atm
+    if(m && noLink) {
+      return  <ChattyLink url={this.props.url} />;
     }
-});
+    m = imageHostRegex.exec(this.props.url);
+    if(m) {
+      return <ImageLink url={this.props.url} />;
+    }
+    return <a href={this.props.url} target="_blank">{this.props.text}</a>;
+  }
+};

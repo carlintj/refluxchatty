@@ -1,6 +1,6 @@
-var React = require('react');
-var styleutil = require('../../util/styleutil.js');
-var HoverMixin = require('..//misc/hovermixin.js');
+import React from 'react';
+import styleutil from '../../util/styleutil.js';
+import HoverMixin from '..//misc/hovermixin.js';
 import {fixComment, getVisibleLength} from '../../util/commenttruncation';
 
 var styles = {

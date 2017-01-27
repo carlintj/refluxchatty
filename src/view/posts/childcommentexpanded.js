@@ -1,9 +1,9 @@
-var React = require('react');
-var styleutil = require('../../util/styleutil.js');
-var AutoscrollingMixin = require('../misc/autoscrollingmixin.js');
-var ReplyBox = require('./replybox.js');
-var ReplyButton = require('./replybutton.js');
-var PostBody = require('./postbody.js');
+import React from 'react';
+import styleutil from '../../util/styleutil.js';
+import AutoscrollingMixin from '../misc/autoscrollingmixin.js';
+import ReplyBox from './replybox.js';
+import ReplyButton from './replybutton.js';
+import PostBody from './postbody.js';
 
 var styles = {
   highlightedComment: {
@@ -38,8 +38,8 @@ var styles = {
 };
 
 
-let ChildCommentExpanded = React.createClass({
-  render: function () {
+class ChildCommentExpanded extends React.Component {
+  render() {
     var props = this.props;
 
     var replyBox = null;
@@ -76,10 +76,11 @@ let ChildCommentExpanded = React.createClass({
         <AutoscrollingMixin parent={this} />
       </div>
     );
-  },
-  handleClick: function (e) {
-    e.stopPropagation();
   }
-});
+
+  handleClick = (e) => {
+    e.stopPropagation();
+  };
+}
 
 module.exports = ChildCommentExpanded;

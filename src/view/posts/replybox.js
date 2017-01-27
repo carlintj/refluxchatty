@@ -11,20 +11,21 @@ var styles = {
   },
 };
 
-let ReplyBox = React.createClass({
-  propTypes: { 
+class ReplyBox extends React.Component {
+  static propTypes = { 
     parentCommentId: React.PropTypes.number.isRequired,
     username: React.PropTypes.string.isRequired,
     password: React.PropTypes.string.isRequired
-  },
-  componentDidMount: function() {
+  };
+
+  state = {body: ''};
+
+  componentDidMount() {
     var textNode = ReactDOM.findDOMNode(this.refs.commentBox);
     textNode.focus();
-  },
-  getInitialState: function() {
-    return {body: ''};
-  },
-  render: function(){
+  }
+
+  render() {
     //JSX can't escape {
     var red = 'r{ ... }r';
     var green = 'g{ ... }g';
@@ -88,16 +89,18 @@ let ReplyBox = React.createClass({
     </div>
     <div><input type="submit" value="Submit" onClick={this.onSubmitComment} /></div>
     </div>;
-  },
-  onSubmitComment: function(event) {
+  }
+
+  onSubmitComment = (event) => {
     event.stopPropagation();
     let {parentCommentId, username, password} = this.props;
     this.props.chattyActions.submitComment(parentCommentId, this.state.body, username, password);
-  },
+  };
+
   //this seems like a dumb hack
-  onTextClick: function(event) {
+  onTextClick = (event) => {
     event.stopPropagation();
-  }
-});
+  };
+}
 
 module.exports = ReplyBox;

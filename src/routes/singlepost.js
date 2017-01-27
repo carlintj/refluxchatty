@@ -1,5 +1,5 @@
-var React = require('react');
-var ParentComment = require('../view/posts/parentcomment.js');
+import React from 'react';
+import ParentComment from '../view/posts/parentcomment.js';
 
 var styles = {
   commentBody : {

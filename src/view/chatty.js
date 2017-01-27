@@ -1,9 +1,9 @@
-var React = require('react');
-var CommentList = require('./posts/commentlist.js');
-var keymaster = require('keymaster');
+import React from 'react';
+import CommentList from './posts/commentlist.js';
+import keymaster from 'keymaster';
 
-let Chatty = React.createClass({
-    componentDidMount: function () {
+class Chatty extends React.Component {
+    componentDidMount() {
         let {chattyActions} = this.props;
         keymaster('j', function () {
             chattyActions.selectNextParent();
@@ -36,8 +36,9 @@ let Chatty = React.createClass({
         // keymaster('f', () => {
         //   this.setState({showSearch: !this.state.showSearch});
         // });
-    },
-    componentWillUnmount: function () {
+    }
+
+    componentWillUnmount() {
         keymaster.unbind('j');
         keymaster.unbind('k');
         keymaster.unbind('x');
@@ -46,10 +47,11 @@ let Chatty = React.createClass({
         keymaster.unbind('end');
         keymaster.unbind('h');
         //keymaster.unbind('f');
-    },
-    render: function () {
+    }
+
+    render() {
         return (<CommentList {...this.props} />);
     }
-});
+}
 
 export default Chatty;

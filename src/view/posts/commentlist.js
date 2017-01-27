@@ -1,5 +1,5 @@
-var React = require('react');
-var ParentComment = require('./parentcomment.js');
+import React from 'react';
+import ParentComment from './parentcomment.js';
 import _ from 'lodash';
 
 var styles = {
@@ -10,8 +10,8 @@ var styles = {
   },
 };
 
-let CommentList = React.createClass({
-  render: function () {
+class CommentList extends React.Component {
+  render() {
     let {replyingTo, visibleThreads, username, chattyActions, userActions, threads, password} = this.props;
     var comments = _.map(threads, comment => {
       return (<ParentComment key={comment.id}
@@ -47,6 +47,6 @@ let CommentList = React.createClass({
       </div>
     );
   }
-});
+}
 
 module.exports = CommentList;

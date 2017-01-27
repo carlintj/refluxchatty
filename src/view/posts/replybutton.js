@@ -24,6 +24,9 @@ var styles = {
 
 let ReplyButton = React.createClass({
   mixins: [HoverMixin],
+    onClickHandler : function() {
+      this.props.chattyActions.openReply(this.props.threadId,this.props.commentId);
+    },
     render: function(){
       var style = combine(
         styles.button,
@@ -34,9 +37,6 @@ let ReplyButton = React.createClass({
           <a onClick={this.onClickHandler}>
             Reply</a>
         </div>);
-    },
-    onClickHandler : function() {
-      this.props.chattyActions.openReply(this.props.threadId,this.props.commentId);
     }
 });
 

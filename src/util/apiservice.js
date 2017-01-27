@@ -1,4 +1,4 @@
-var _ = require('lodash');
+import _ from 'lodash';
 
 var getTimeString = function(date) {
   var now = new Date(Date.now());

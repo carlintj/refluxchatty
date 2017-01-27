@@ -1,6 +1,6 @@
-var React = require('react');
-var ChildCommentCollapsed = require('./childcommentcollapsed.js');
-var ChildCommentExpanded = require('./childcommentexpanded.js');
+import React from 'react';
+import ChildCommentCollapsed from './childcommentcollapsed.js';
+import ChildCommentExpanded from './childcommentexpanded.js';
 import _ from 'lodash';
 
 var renderChildComments = function (threadId, children, expandedChildId, replyingTo, 
@@ -24,8 +24,8 @@ username, password, chattyActions) {
   });
 };
 
-var ChildComment = React.createClass({
-  propTypes: {
+class ChildComment extends React.Component {
+  static propTypes = {
     date: React.PropTypes.object.isRequired, //date isn't a proptype
     threadId: React.PropTypes.number.isRequired,
     children: React.PropTypes.array.isRequired,
@@ -37,8 +37,16 @@ var ChildComment = React.createClass({
     username: React.PropTypes.string.isRequired,
     password: React.PropTypes.string.isRequired,
     chattyActions: React.PropTypes.object.isRequired
-  },
-  render: function () {
+  };
+
+  handleClick = (e) => {
+    e.stopPropagation();
+    //ChattyActions.selectComment(this.props.threadId,this.props.id);
+    let {chattyActions, threadId, id} = this.props;
+    chattyActions.selectComment(threadId, id);
+  };
+
+  render() {
     var props = this.props;
     var replies = renderChildComments(props.threadId, props.children,
       props.expandedChildId, props.replyingTo, props.username,props.password, props.chattyActions);
@@ -71,13 +79,7 @@ var ChildComment = React.createClass({
         </ChildCommentExpanded>
       );
     }
-  },
-  handleClick: function (e) {
-    e.stopPropagation();
-    //ChattyActions.selectComment(this.props.threadId,this.props.id);
-    let {chattyActions, threadId, id} = this.props;
-    chattyActions.selectComment(threadId, id);
   }
-});
+}
 
 module.exports = { ChildComment: ChildComment, renderChildComments: renderChildComments };

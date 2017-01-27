@@ -1,14 +1,13 @@
 import React from 'react';
 import linkState from '../../util/linkstate'
 
-module.exports = React.createClass({
-  getInitialState: function() {
-    return {
-      username: '',
-      password: ''
-      };
-  },
-  render: function() {
+module.exports = class extends React.Component {
+  state = {
+    username: '',
+    password: ''
+    };
+
+  render() {
     return(<div>
       <span>User name: </span><input type="text" 
           onChange={linkState(this, 'username')}
@@ -21,9 +20,10 @@ module.exports = React.createClass({
       <span>{this.props.loginMessage}</span>
     </div>
     );
-  },
-  onLogin: function() {
+  }
+
+  onLogin = () => {
     const {username, password} = this.state;
     this.props.chattyActions.login(username,password);
-  }
-});
+  };
+};

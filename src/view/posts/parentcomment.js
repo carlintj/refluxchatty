@@ -200,8 +200,8 @@ class ParentComment extends React.Component {
             </span>
              @ <span style={styles.date}>{props.dateStr}</span>
              <span style={categoryStyle}>{props.category}</span>
-            <PostBody body={props.body} />
-            <div ref="anchor" >
+            <PostBody body={props.body}  ref="anchor"/>
+            <div>
               <ReplyButton threadId={props.threadId} 
                 commentId={props.id} 
                 chattyActions={props.chattyActions} />

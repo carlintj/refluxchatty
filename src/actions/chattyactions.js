@@ -138,9 +138,9 @@ export const selectLastParent = makeActionCreator(SELECTLASTPARENT);
 export const reorderThreads = makeActionCreator(REORDERTHREADS);
 export const openReply = makeActionCreator(OPENREPLY,'threadId','commentId');
 export const showNewThread = makeActionCreator(SHOWNEWTHREAD);
-
 export const cancelNewThread = makeActionCreator(CANCELNEWTHREAD);
 export const showThreads = makeActionCreator(SHOWTHREADS,'threads');
+
 export function submitComment(parentCommentId, body, username, password) {
     return (dispatch) => {
         dispatch({
